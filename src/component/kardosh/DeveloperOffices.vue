@@ -1,7 +1,7 @@
 <template>
   <div v-if="offices.length" class="developer-offices">
     <h3 class="text-lg md:text-xl font-semibold text-slate-900 dark:text-white mb-5">
-      Offices &amp; sales contacts
+      Offices
     </h3>
     <div class="grid md:grid-cols-2 gap-5">
       <article
@@ -67,60 +67,6 @@
           </li>
         </ul>
 
-        <ul
-          v-if="office.contacts.length"
-          class="mt-5 pt-5 border-t border-slate-100 dark:border-slate-800 space-y-4 list-none p-0"
-        >
-          <li
-            v-for="contact in office.contacts"
-            :key="contact.id"
-          >
-            <p class="font-medium text-slate-900 dark:text-white">{{ contact.name }}</p>
-            <p
-              v-if="contact.role"
-              class="text-xs text-slate-500 dark:text-slate-400 mt-0.5"
-            >
-              {{ contact.role }}
-            </p>
-            <ul
-              v-if="contact.languages?.length"
-              class="flex flex-wrap gap-1 mt-2 list-none p-0"
-            >
-              <li
-                v-for="(lang, li) in contact.languages"
-                :key="li"
-                class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
-              >
-                {{ lang }}
-              </li>
-            </ul>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <a
-                v-if="contact.whatsapp"
-                :href="contact.whatsapp"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="developer-offices__chip developer-offices__chip--wa"
-              >
-                WhatsApp
-              </a>
-              <a
-                v-else-if="contact.phone"
-                :href="`tel:+${contact.phone.replace(/\D/g, '')}`"
-                class="developer-offices__chip"
-              >
-                +{{ contact.phone }}
-              </a>
-              <a
-                v-if="contact.email"
-                :href="`mailto:${contact.email}`"
-                class="developer-offices__chip"
-              >
-                Email
-              </a>
-            </div>
-          </li>
-        </ul>
       </article>
     </div>
   </div>

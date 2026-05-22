@@ -1,7 +1,7 @@
 <template>
   <div role="status" aria-label="Loading developer profile">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-      <SkeletonBlock v-for="n in 4" :key="n" class="h-16 rounded-xl" />
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-10">
+      <SkeletonBlock v-for="n in 3" :key="n" class="h-16 rounded-xl" />
     </div>
     <div class="grid lg:grid-cols-12 gap-8">
       <div class="lg:col-span-4">

@@ -318,6 +318,7 @@ const propertyWhatsApp = computed(() => {
   font-weight: 600;
   line-height: 1.25;
   text-align: center;
+  white-space: nowrap;
   text-decoration: none;
   border-radius: 0.625rem;
   border: 1px solid transparent;

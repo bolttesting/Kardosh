@@ -1,0 +1,82 @@
+/*********************************/
+/*   Kardosh CTA buttons         */
+/*===============================*/
+
+/* Keep labels on one line (avoids "View all" / "developers" splits) */
+.btn {
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Rows of primary + secondary actions */
+.kardosh-btn-row,
+.kardosh-cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.kardosh-btn-row > .btn,
+.kardosh-btn-row > a.btn,
+.kardosh-btn-row > button.btn,
+.kardosh-cta-row > .btn,
+.kardosh-cta-row > a.btn,
+.kardosh-cta-row > button.btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+}
+
+/* Narrow sidebars (featured developers, etc.) — stay stacked full width */
+.kardosh-btn-row--stack {
+    flex-direction: column;
+}
+
+.kardosh-btn-row--stack > .btn,
+.kardosh-btn-row--stack > a.btn,
+.kardosh-btn-row--stack > button.btn {
+    width: 100%;
+}
+
+.kardosh-btn-row--center {
+    align-items: stretch;
+}
+
+@media (min-width: 640px) {
+    .kardosh-btn-row:not(.kardosh-btn-row--stack),
+    .kardosh-cta-row:not(.kardosh-btn-row--stack) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        width: auto;
+        max-width: 100%;
+    }
+
+    .kardosh-btn-row:not(.kardosh-btn-row--stack) > .btn,
+    .kardosh-btn-row:not(.kardosh-btn-row--stack) > a.btn,
+    .kardosh-btn-row:not(.kardosh-btn-row--stack) > button.btn,
+    .kardosh-cta-row:not(.kardosh-btn-row--stack) > .btn,
+    .kardosh-cta-row:not(.kardosh-btn-row--stack) > a.btn,
+    .kardosh-cta-row:not(.kardosh-btn-row--stack) > button.btn {
+        width: auto;
+        flex: 0 1 auto;
+    }
+
+    .kardosh-btn-row--center:not(.kardosh-btn-row--stack),
+    .kardosh-cta-row.kardosh-btn-row--center:not(.kardosh-btn-row--stack) {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+/* Dark band CTAs — equal min width on tablet+ */
+@media (min-width: 640px) {
+    .kardosh-btn-row--center:not(.kardosh-btn-row--stack) > .btn,
+    .kardosh-btn-row--center:not(.kardosh-btn-row--stack) > a.btn {
+        min-width: 10.5rem;
+    }
+}

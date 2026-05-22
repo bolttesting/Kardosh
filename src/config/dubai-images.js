@@ -7,7 +7,7 @@ import heroMarina from '@/assets/images/bg/02.jpg'
 import heroDistrict from '@/assets/images/bg/03.jpg'
 import heroTwilight from '@/assets/images/bg/04.jpg'
 import aboutEditorial from '@/assets/images/about.jpg'
-import heroWide from '@/assets/images/hero.jpg'
+import whyInvestDubai from '@/assets/images/Why invest in Dubai.jpg'
 import property1 from '@/assets/images/property/1.jpg'
 import property2 from '@/assets/images/property/2.jpg'
 import property3 from '@/assets/images/property/3.jpg'
@@ -39,7 +39,7 @@ export const PAGE_HERO_IMAGES = {
 /** Section imagery on home & about blocks */
 export const SECTION_IMAGES = {
   about: aboutEditorial,
-  whyInvest: heroWide,
+  whyInvest: whyInvestDubai,
   cta: heroTwilight,
   homeHeroPoster: heroTwilight,
 }

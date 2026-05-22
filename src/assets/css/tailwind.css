@@ -64,6 +64,7 @@
 @import "./custom/structure/_footer.css";
 @import "./custom/_footer-preferences.css";
 @import "./components/_buttons.css";
+@import "./custom/components/_kardosh-buttons.css";
 @import "./custom/pages/_hero.css";
 @import "./custom/pages/_map-page.css";
 @import "./custom/pages/_countdown.css";
@@ -73,6 +74,8 @@
 @import "./custom/components/_testimonials-columns.css";
 @import "./custom/components/_footer-hover.css";
 @import "./custom/components/_property-listing-card.css";
+@import "./custom/components/_investor-favourites-carousel.css";
+@import "./custom/components/_about-pillars-carousel.css";
 @import "./custom/components/_property-image-watermark.css";
 @import "./custom/components/_developer.css";
 @import "./custom/_rtl.css";

@@ -261,8 +261,8 @@ video {
 /* Enquiry card — long CTA text */
 @media (max-width: 400px) {
     .property-contact-card__btn {
-        font-size: 0.9375rem;
-        padding-inline: 0.875rem;
+        font-size: 0.8125rem;
+        padding-inline: 0.75rem;
     }
 
     .property-contact-card__agency-name {
@@ -387,5 +387,170 @@ video {
         min-height: 2.75rem;
         display: flex;
         align-items: center;
+    }
+}
+
+/* ——— Grid children: prevent flex/grid overflow ——— */
+[class*='grid'] > * {
+    min-width: 0;
+}
+
+/* ——— Overlapping profile / page stat strips ——— */
+.kardosh-profile-stats {
+    width: 100%;
+}
+
+.kardosh-profile-stats > li {
+    min-width: 0;
+    padding-inline: 0.25rem;
+}
+
+.kardosh-profile-stats .kardosh-profile-stats__value {
+    font-size: clamp(1.25rem, 4.5vw, 1.875rem);
+    line-height: 1.2;
+}
+
+.kardosh-profile-stats .kardosh-profile-stats__label {
+    font-size: clamp(0.6875rem, 2.8vw, 0.875rem);
+    line-height: 1.35;
+    hyphens: auto;
+}
+
+@media (max-width: 479px) {
+    .kardosh-profile-stats--cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem 0.5rem;
+        padding-inline: 0.75rem !important;
+        padding-block: 1.25rem !important;
+    }
+
+    .kardosh-profile-stats--cols-3 > li:last-child:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 359px) {
+    .kardosh-profile-stats--cols-4 {
+        grid-template-columns: 1fr;
+        gap: 0.875rem;
+    }
+}
+
+/* ——— Developer profile page ——— */
+@media (max-width: 1023px) {
+    .developer-profile__logo-wrap {
+        position: static !important;
+        top: auto !important;
+    }
+}
+
+@media (max-width: 639px) {
+    .developer-profile__logo-wrap {
+        padding: 1.25rem !important;
+    }
+
+    .developer-profile__desc {
+        font-size: 0.875rem;
+    }
+
+    .developer-offices__card {
+        padding: 1rem !important;
+    }
+
+    .developer-offices .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ——— Why invest (home) image stat pills ——— */
+@media (max-width: 479px) {
+    .why-invest-visual__stats {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .why-invest-visual__stats > div {
+        padding: 0.75rem 1rem;
+    }
+
+    .why-invest-visual__stats p:last-child {
+        font-size: 0.6875rem;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 639px) {
+    .why-invest-visual__stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .why-invest-visual__stats p:first-child {
+        font-size: 1rem;
+    }
+
+    .why-invest-visual__stats p:last-child {
+        font-size: 0.625rem;
+        line-height: 1.25;
+    }
+}
+
+/* ——— Property cards: amenity chips on narrow cards ——— */
+@media (max-width: 399px) {
+    .kardosh-property-card__chip--amenity {
+        max-width: 100%;
+    }
+
+    .kardosh-property-card--luxury .kardosh-property-card__body {
+        padding: 1rem 1.125rem 1.125rem;
+    }
+}
+
+/* ——— Page section headings (mobile) ——— */
+@media (max-width: 639px) {
+    .kardosh-section-heading {
+        font-size: 1.625rem !important;
+        line-height: 1.25;
+    }
+}
+
+/* ——— Featured developers / wide panels ——— */
+@media (max-width: 639px) {
+    .featured-developers-panel {
+        padding: 1.25rem !important;
+    }
+
+    .featured-developers-panel .rounded-3xl {
+        border-radius: 1.25rem;
+    }
+}
+
+/* ——— Contact / get-in-touch panels ——— */
+@media (max-width: 639px) {
+    .get-in-touch-panel {
+        padding: 1.25rem !important;
+    }
+
+    .get-in-touch-panel .rounded-3xl {
+        border-radius: 1.25rem;
+    }
+}
+
+/* ——— Testimonials column grid on small tablets ——— */
+@media (max-width: 639px) {
+    .testimonials-columns {
+        max-height: none !important;
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+    }
+}
+
+/* ——— Utility pages (terms, privacy) prose ——— */
+@media (max-width: 639px) {
+    .prose-policy {
+        font-size: 0.9375rem;
+    }
+
+    .prose-policy h2 {
+        font-size: 1.25rem;
     }
 }

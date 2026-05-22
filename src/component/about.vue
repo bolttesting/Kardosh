@@ -35,34 +35,66 @@
           <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">About Kardosh Realty</p>
           <h2
             id="about-kardosh-heading"
-            class="text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+            class="about-kardosh__headline text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
           >
-            <span class="block">Efficiency.</span>
-            <span class="block">Transparency.</span>
-            <span class="block text-slate-600 dark:text-slate-300">Control.</span>
+            <span class="about-kardosh__headline-word">Efficiency.</span>
+            <span class="about-kardosh__headline-word">Transparency.</span>
+            <span class="about-kardosh__headline-word text-slate-600 dark:text-slate-300">Control.</span>
           </h2>
           <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-xl leading-relaxed">
             {{ BRAND.tagline }} Browse off-plan and ready properties with transparent AED pricing,
             RERA-aligned workflows, and support from licensed brokers across the Emirates.
           </p>
 
-          <div class="mt-8 grid sm:grid-cols-3 gap-4">
-            <div
-              v-for="pillar in PILLARS"
-              :key="pillar.title"
-              class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition duration-300 hover:border-primary/30 hover:shadow-sm dark:hover:border-primary/40"
+          <div class="about-pillars-carousel">
+            <button
+              type="button"
+              class="about-pillars-carousel__nav about-pillars-carousel__nav--prev"
+              aria-label="Previous pillar"
             >
-              <div
-                class="flex size-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
-              >
-                <component :is="pillar.icon" class="size-5" aria-hidden="true" />
-              </div>
-              <h3 class="font-semibold text-slate-900 dark:text-white mt-3 text-sm">{{ pillar.title }}</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">{{ pillar.desc }}</p>
-            </div>
+              <ChevronLeft class="size-4" aria-hidden="true" />
+            </button>
+
+            <Swiper
+              :modules="swiperModules"
+              :slides-per-view="1.15"
+              :space-between="16"
+              :breakpoints="pillarBreakpoints"
+              :navigation="{
+                prevEl: '.about-pillars-carousel__nav--prev',
+                nextEl: '.about-pillars-carousel__nav--next',
+              }"
+              class="about-pillars-carousel__swiper"
+            >
+              <SwiperSlide v-for="pillar in PILLARS" :key="pillar.title">
+                <article
+                  class="about-pillars-carousel__card rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 md:p-5 transition duration-300 hover:border-primary/30 hover:shadow-sm dark:hover:border-primary/40"
+                >
+                  <div
+                    class="flex size-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
+                  >
+                    <component :is="pillar.icon" class="size-5" aria-hidden="true" />
+                  </div>
+                  <h3 class="font-semibold text-slate-900 dark:text-white mt-3 text-sm md:text-base">
+                    {{ pillar.title }}
+                  </h3>
+                  <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+                    {{ pillar.desc }}
+                  </p>
+                </article>
+              </SwiperSlide>
+            </Swiper>
+
+            <button
+              type="button"
+              class="about-pillars-carousel__nav about-pillars-carousel__nav--next"
+              aria-label="Next pillar"
+            >
+              <ChevronRight class="size-4" aria-hidden="true" />
+            </button>
           </div>
 
-          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <div class="kardosh-btn-row mt-8">
             <RouterLink
               v-if="showAboutCta"
               to="/aboutus"
@@ -126,12 +158,23 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { ArrowRight, Eye, MapPin, Play, SlidersHorizontal, X, Zap } from 'lucide-vue-next'
+import { ArrowRight, ChevronLeft, ChevronRight, Eye, MapPin, Play, SlidersHorizontal, X, Zap } from 'lucide-vue-next'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import { BRAND } from '@/config/brand'
 import { HERO_YOUTUBE_ID, heroYouTubeEmbedUrl } from '@/config/marketing'
 import { SECTION_IMAGES } from '@/config/dubai-images'
 
 const image = SECTION_IMAGES.about
+
+const swiperModules = [Navigation]
+
+const pillarBreakpoints = {
+  640: { slidesPerView: 2.15, spaceBetween: 18 },
+  1024: { slidesPerView: 3, spaceBetween: 20 },
+}
 
 const PILLARS = [
   {

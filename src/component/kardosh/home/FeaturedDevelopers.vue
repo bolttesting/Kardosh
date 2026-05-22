@@ -2,7 +2,7 @@
   <section class="lg:mt-24 mt-16" aria-labelledby="trusted-partners-heading">
     <div class="container-fluid">
       <div
-        class="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
+        class="featured-developers-panel rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
       >
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <div class="lg:col-span-4 lg:sticky lg:top-28">
@@ -56,13 +56,13 @@
               </div>
             </div>
 
-            <div class="mt-8 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
+            <div class="kardosh-btn-row kardosh-btn-row--stack mt-8">
               <RouterLink
                 to="/developers"
                 class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-6"
               >
                 View all developers
-                <ArrowRight class="size-4" aria-hidden="true" />
+                <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
               </RouterLink>
               <RouterLink
                 to="/off-plan"

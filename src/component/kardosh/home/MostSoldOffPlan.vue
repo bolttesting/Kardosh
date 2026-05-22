@@ -14,8 +14,8 @@
         </p>
       </div>
 
-      <div v-if="loading" class="mt-10 lg:mt-12">
-        <ListingGridSkeleton :count="8" />
+      <div v-if="loading" class="investor-favourites-carousel__loading" aria-busy="true">
+        <PropertyCardSkeleton v-for="n in CAROUSEL_COUNT" :key="n" />
       </div>
 
       <p
@@ -32,28 +32,53 @@
         Off-plan highlights will appear here once the catalogue loads.
       </p>
 
-      <div
-        v-else
-        class="mt-10 lg:mt-12 grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 lg:gap-7"
-      >
-        <PropertyListingCard
-          v-for="(item, index) in displayed"
-          :key="`most-sold-${item.id}-${index}`"
-          :item="item"
-          :badge="demandBadge(item)"
-          variant="luxury"
-        />
+      <div v-else class="investor-favourites-carousel">
+        <button
+          type="button"
+          class="investor-favourites-carousel__nav investor-favourites-carousel__nav--prev"
+          aria-label="Previous properties"
+        >
+          <ChevronLeft class="size-5" aria-hidden="true" />
+        </button>
+
+        <Swiper
+          :modules="modules"
+          :slides-per-view="1.12"
+          :space-between="16"
+          :breakpoints="carouselBreakpoints"
+          :navigation="{
+            prevEl: '.investor-favourites-carousel__nav--prev',
+            nextEl: '.investor-favourites-carousel__nav--next',
+          }"
+          class="investor-favourites-carousel__swiper"
+        >
+          <SwiperSlide v-for="(item, index) in displayed" :key="`most-sold-${item.id}-${index}`">
+            <PropertyListingCard
+              :item="item"
+              :badge="demandBadge(item)"
+              variant="luxury"
+            />
+          </SwiperSlide>
+        </Swiper>
+
+        <button
+          type="button"
+          class="investor-favourites-carousel__nav investor-favourites-carousel__nav--next"
+          aria-label="Next properties"
+        >
+          <ChevronRight class="size-5" aria-hidden="true" />
+        </button>
       </div>
 
-      <p class="text-center mt-10">
+      <div v-if="!loading && displayed.length" class="investor-favourites-carousel__footer">
         <RouterLink
           to="/off-plan"
           class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-8"
         >
           View all off-plan
-          <ArrowRight class="size-4" aria-hidden="true" />
+          <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
         </RouterLink>
-      </p>
+      </div>
     </div>
   </section>
 </template>
@@ -61,22 +86,35 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation } from 'swiper/modules'
 import { useReelly } from '@/composables/useReelly'
 import PropertyListingCard from '@/component/kardosh/PropertyListingCard.vue'
-import ListingGridSkeleton from '@/component/kardosh/skeleton/ListingGridSkeleton.vue'
+import PropertyCardSkeleton from '@/component/kardosh/skeleton/PropertyCardSkeleton.vue'
 import { demandBadge, pickMostSoldOffPlan } from '@/utils/offPlanRanking'
 
-const ROWS = 2
-const COLS_XL = 4
-const DISPLAY_COUNT = ROWS * COLS_XL
+import 'swiper/css'
+import 'swiper/css/navigation'
+
+/** One row on desktop (4-up); carousel scrolls on smaller viewports */
+const CAROUSEL_COUNT = 4
+
+const modules = [Navigation]
+
+const carouselBreakpoints = {
+  480: { slidesPerView: 1.35, spaceBetween: 18 },
+  640: { slidesPerView: 2.1, spaceBetween: 20 },
+  1024: { slidesPerView: 3.05, spaceBetween: 24 },
+  1280: { slidesPerView: 4, spaceBetween: 28 },
+}
 
 const { loading, error, projects, loadProjects } = useReelly()
 
 const displayed = computed(() => {
-  const featuredIds = projects.value.slice(0, 8).map((p) => p.id)
+  const featuredIds = projects.value.slice(0, CAROUSEL_COUNT).map((p) => p.id)
   return pickMostSoldOffPlan(projects.value, {
-    limit: DISPLAY_COUNT,
+    limit: CAROUSEL_COUNT,
     excludeIds: featuredIds,
   })
 })

@@ -12,13 +12,13 @@
   <section class="relative z-10 -mt-8 lg:-mt-10">
     <div class="container-fluid">
       <ul
-        class="grid grid-cols-2 lg:grid-cols-4 gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
+        class="kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
       >
         <li v-for="stat in ABOUT_STATS" :key="stat.label" class="text-center px-2">
-          <p class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
+          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
             {{ stat.value }}
           </p>
-          <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
+          <p class="kardosh-profile-stats__label text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
         </li>
       </ul>
     </div>
@@ -299,7 +299,7 @@
         <p class="text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
           Browse off-plan projects, open the map, or book a call with our DIFC team.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
           <RouterLink
             to="/off-plan"
             class="btn bg-white text-primary hover:bg-slate-100 rounded-lg inline-flex items-center justify-center px-8 font-semibold"

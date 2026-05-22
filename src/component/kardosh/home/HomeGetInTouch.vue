@@ -6,16 +6,16 @@
   >
     <div class="container-fluid">
       <div
-        class="rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
+        class="get-in-touch-panel rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
       >
         <div class="max-w-3xl mx-auto text-center">
           <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Contact</p>
           <h2
             id="get-in-touch-heading"
-            class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+            class="about-kardosh__headline justify-center text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
           >
-            Have a question?<br />
-            <span class="text-slate-600 dark:text-slate-300">Get in touch.</span>
+            <span class="about-kardosh__headline-word">Have a question?</span>
+            <span class="about-kardosh__headline-word text-slate-600 dark:text-slate-300">Get in touch.</span>
           </h2>
           <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed mx-auto">
             Speak with our DIFC team about off-plan, ready homes, rentals, or selling your property.
@@ -130,7 +130,7 @@
                   />
                 </div>
 
-                <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <div class="kardosh-btn-row mt-6">
                   <button
                     type="submit"
                     :disabled="submitting"

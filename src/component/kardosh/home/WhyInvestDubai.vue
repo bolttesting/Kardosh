@@ -5,7 +5,7 @@
         <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Why invest in Dubai</p>
         <h2
           id="why-dubai-heading"
-          class="text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="kardosh-section-heading text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
         >
           A global hub built for property investors
         </h2>
@@ -20,8 +20,8 @@
           <div class="relative rounded-2xl overflow-hidden shadow-xl min-h-[300px] lg:min-h-full lg:aspect-auto aspect-[4/3]">
             <img
               :src="SECTION_IMAGES.whyInvest"
-              alt="Dubai skyline at dusk"
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              alt="Dubai skyline along the waterfront"
+              class="absolute inset-0 w-full h-full object-cover object-[center_40%] transition-transform duration-700 group-hover:scale-[1.02]"
               loading="lazy"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-slate-950/10" />
@@ -33,14 +33,14 @@
                 UAE · Off-plan market
               </span>
             </div>
-            <div class="absolute bottom-0 inset-x-0 p-5 md:p-8 grid sm:grid-cols-3 gap-3">
+            <div class="why-invest-visual__stats absolute bottom-0 inset-x-0 p-4 sm:p-5 md:p-8 grid grid-cols-1 min-[480px]:grid-cols-3 gap-2 sm:gap-3">
               <div
                 v-for="stat in MARKET_STATS"
                 :key="stat.label"
-                class="rounded-xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md"
+                class="rounded-xl border border-white/15 bg-white/10 px-3 sm:px-4 py-2.5 sm:py-3 backdrop-blur-md min-w-0"
               >
-                <p class="text-lg md:text-xl font-semibold text-white tabular-nums">{{ stat.value }}</p>
-                <p class="text-xs text-white/75 mt-0.5 leading-snug">{{ stat.label }}</p>
+                <p class="text-base sm:text-lg md:text-xl font-semibold text-white tabular-nums">{{ stat.value }}</p>
+                <p class="text-[11px] sm:text-xs text-white/75 mt-0.5 leading-snug">{{ stat.label }}</p>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@
                 {{ point }}
               </li>
             </ul>
-            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <div class="kardosh-btn-row mt-8">
               <RouterLink
                 to="/why-dubai"
                 class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-6"

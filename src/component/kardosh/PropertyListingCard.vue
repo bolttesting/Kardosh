@@ -48,20 +48,32 @@
         v-if="item.square || displayAmenities.length || extraAmenityCount > 0"
         class="kardosh-property-card__meta"
       >
-        <span v-if="item.square" class="kardosh-property-card__area">
-          <Maximize class="kardosh-property-card__area-icon" aria-hidden="true" />
+        <span
+          v-if="item.square"
+          class="kardosh-property-card__chip kardosh-property-card__chip--area"
+        >
+          <Maximize class="kardosh-property-card__chip-icon" aria-hidden="true" />
           {{ item.areaLabel || formatArea(item.square) }}
         </span>
-        <span v-if="displayAmenities.length || extraAmenityCount > 0" class="kardosh-property-card__amenities">
-          <template v-for="(a, i) in displayAmenities" :key="i">
-            <span v-if="i > 0 || item.square" class="kardosh-property-card__amenity-sep" aria-hidden="true">·</span>
-            <span>{{ a }}</span>
-          </template>
-          <span v-if="extraAmenityCount > 0" class="kardosh-property-card__amenity-more">
-            <span class="kardosh-property-card__amenity-sep" aria-hidden="true">·</span>
-            +{{ extraAmenityCount }}
-          </span>
-        </span>
+        <ul
+          v-if="displayAmenities.length || extraAmenityCount > 0"
+          class="kardosh-property-card__amenity-pills"
+        >
+          <li
+            v-for="(a, i) in displayAmenities"
+            :key="i"
+          >
+            <span
+              class="kardosh-property-card__chip kardosh-property-card__chip--amenity"
+              :title="a"
+            >{{ a }}</span>
+          </li>
+          <li v-if="extraAmenityCount > 0">
+            <span class="kardosh-property-card__chip kardosh-property-card__chip--more">
+              +{{ extraAmenityCount }}
+            </span>
+          </li>
+        </ul>
       </div>
 
       <div class="kardosh-property-card__footer">
@@ -121,25 +133,35 @@
       </div>
 
       <div
-        class="py-4 border-y border-slate-100 dark:border-gray-800 flex flex-wrap items-center gap-x-4 gap-y-2 min-h-[3.5rem]"
+        v-if="item.square || displayAmenities.length || extraAmenityCount > 0"
+        class="py-4 border-y border-slate-100 dark:border-gray-800 kardosh-property-card__meta kardosh-property-card__meta--default"
       >
-        <div v-if="item.square" class="flex items-center shrink-0">
-          <Maximize class="size-5 me-1.5 text-primary shrink-0" />
-          <span class="text-sm font-medium whitespace-nowrap">{{ item.areaLabel || formatArea(item.square) }}</span>
-        </div>
-
-        <div v-if="displayAmenities.length" class="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
-          <span
+        <span
+          v-if="item.square"
+          class="kardosh-property-card__chip kardosh-property-card__chip--area"
+        >
+          <Maximize class="kardosh-property-card__chip-icon" aria-hidden="true" />
+          {{ item.areaLabel || formatArea(item.square) }}
+        </span>
+        <ul
+          v-if="displayAmenities.length || extraAmenityCount > 0"
+          class="kardosh-property-card__amenity-pills"
+        >
+          <li
             v-for="(a, i) in displayAmenities"
             :key="i"
-            class="text-[11px] px-2 py-0.5 rounded-full bg-primary/10 text-primary truncate max-w-[7rem]"
-            :title="a"
-          >{{ a }}</span>
-          <span
-            v-if="extraAmenityCount > 0"
-            class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500"
-          >+{{ extraAmenityCount }}</span>
-        </div>
+          >
+            <span
+              class="kardosh-property-card__chip kardosh-property-card__chip--amenity"
+              :title="a"
+            >{{ a }}</span>
+          </li>
+          <li v-if="extraAmenityCount > 0">
+            <span class="kardosh-property-card__chip kardosh-property-card__chip--more">
+              +{{ extraAmenityCount }}
+            </span>
+          </li>
+        </ul>
       </div>
 
       <div class="pt-4 mt-auto">

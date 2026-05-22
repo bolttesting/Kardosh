@@ -37,6 +37,7 @@ body {
 .container-fluid {
     @apply w-full mx-auto! px-4 sm:px-6 lg:px-8 xl:px-10;
     max-width: min(100% - 2rem, 1440px);
+    box-sizing: border-box;
 }
 
 @media (min-width: 1280px) {

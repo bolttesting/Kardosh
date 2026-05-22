@@ -21,13 +21,13 @@
   >
     <div class="container-fluid">
       <ul
-        class="grid grid-cols-2 lg:grid-cols-4 gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
+        class="kardosh-profile-stats kardosh-profile-stats--cols-3 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
       >
         <li v-for="stat in profileStats" :key="stat.label" class="text-center px-2">
-          <p class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
+          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
             {{ stat.value }}
           </p>
-          <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
+          <p class="kardosh-profile-stats__label text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
         </li>
       </ul>
     </div>
@@ -42,7 +42,7 @@
         <div class="grid lg:grid-cols-12 gap-8 lg:gap-10">
           <aside class="lg:col-span-4">
             <div
-              class="developer-profile__logo-wrap rounded-2xl border border-slate-200 dark:border-slate-700 p-6 md:p-8 text-center sticky top-24"
+              class="developer-profile__logo-wrap rounded-2xl border border-slate-200 dark:border-slate-700 p-6 md:p-8 text-center lg:sticky lg:top-24"
             >
               <div
                 class="mx-auto size-28 md:size-32 rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden"
@@ -232,7 +232,6 @@ const profileStats = computed(() => {
     { value: String(d.projectCount || displayProjects.value.length || 0), label: 'Active projects' },
     { value: String(d.regions?.length || 0), label: 'Regions' },
     { value: String(d.officeCount || 0), label: 'Offices' },
-    { value: String(d.contactCount || 0), label: 'Sales contacts' },
   ]
 })
 
