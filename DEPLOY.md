@@ -67,4 +67,4 @@ cp .env.example .env   # fill in keys
 npm run dev            # http://localhost:5173
 ```
 
-Local Reelly traffic uses the Vite proxy in `vite.config.js`; production uses `api/reelly/[...path].js` on Vercel.
+Local Reelly traffic uses the Vite proxy in `vite.config.js`; production uses `api/proxy-reelly.js` (via `vercel.json` rewrite) on Vercel.
