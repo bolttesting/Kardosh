@@ -9,6 +9,7 @@
 
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
 
 /* Tailwind CSS */
 @import "tailwindcss";
@@ -20,6 +21,7 @@
 @theme {
    /* Font Family */
    --font-league: "League Spartan", "serif";
+   --font-display: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
    /* Breakpoints */
    --breakpoint-xs: 540px;
    --breakpoint-sm: 640px;

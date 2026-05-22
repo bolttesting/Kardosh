@@ -10,9 +10,20 @@
               {{ BRAND.name }} · United Arab Emirates
             </p>
             <h1 class="home-hero__title">
-              Discover exceptional
-              <span class="home-hero__title-accent">properties</span>
-              across the UAE
+              <span class="home-hero__title-row home-hero__title-row--lead">
+                Discover exceptional
+              </span>
+              <span class="home-hero__title-row home-hero__title-row--accent">
+                <AnimatedTextCycle
+                  :words="heroRotatingWords"
+                  :interval="3000"
+                  motion="fade"
+                  word-class="home-hero__title-accent"
+                />
+              </span>
+              <span class="home-hero__title-row home-hero__title-row--suffix">
+                across the UAE
+              </span>
             </h1>
             <p class="home-hero__lead">
               Curated off-plan and ready homes across the UAE.
@@ -31,5 +42,8 @@
 <script setup>
 import { BRAND } from '@/config/brand'
 import HeroMedia from '@/component/kardosh/HeroMedia.vue'
+import AnimatedTextCycle from '@/components/ui/AnimatedTextCycle.vue'
 import PropertySearchBar from '@/component/kardosh/PropertySearchBar.vue'
+
+const heroRotatingWords = ['properties', 'villas', 'apartments']
 </script>
