@@ -462,35 +462,16 @@ video {
     }
 }
 
-/* ——— Why invest (home) image stat pills ——— */
-@media (max-width: 479px) {
-    .why-invest-visual__stats {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-    }
-
-    .why-invest-visual__stats > div {
-        padding: 0.75rem 1rem;
-    }
-
-    .why-invest-visual__stats p:last-child {
-        font-size: 0.6875rem;
+/* ——— Why invest (home): stats carousel on mobile; overlay grid on md+ ——— */
+@media (max-width: 767px) {
+    .why-invest-visual__stats--desktop {
+        display: none;
     }
 }
 
-@media (min-width: 480px) and (max-width: 639px) {
-    .why-invest-visual__stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.5rem;
-    }
-
-    .why-invest-visual__stats p:first-child {
-        font-size: 1rem;
-    }
-
-    .why-invest-visual__stats p:last-child {
-        font-size: 0.625rem;
-        line-height: 1.25;
+@media (min-width: 768px) {
+    .why-invest-stats-carousel {
+        display: none;
     }
 }
 

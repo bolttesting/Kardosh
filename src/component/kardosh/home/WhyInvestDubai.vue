@@ -1,5 +1,5 @@
 <template>
-  <section class="lg:mt-24 mt-16" aria-labelledby="why-dubai-heading">
+  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="why-dubai-heading">
     <div class="container-fluid">
       <div class="max-w-3xl mx-auto text-center">
         <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Why invest in Dubai</p>
@@ -15,9 +15,11 @@
         </p>
       </div>
 
-      <div class="mt-12 lg:mt-16 grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+      <div class="mt-8 lg:mt-16 grid lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
         <div class="lg:col-span-7 relative group">
-          <div class="relative rounded-2xl overflow-hidden shadow-xl min-h-[300px] lg:min-h-full lg:aspect-auto aspect-[4/3]">
+          <div
+            class="why-invest-visual__frame relative rounded-2xl overflow-hidden shadow-xl min-h-[220px] lg:min-h-full lg:aspect-auto aspect-[4/3]"
+          >
             <img
               :src="SECTION_IMAGES.whyInvest"
               alt="Dubai skyline along the waterfront"
@@ -33,7 +35,10 @@
                 UAE · Off-plan market
               </span>
             </div>
-            <div class="why-invest-visual__stats absolute bottom-0 inset-x-0 p-4 sm:p-5 md:p-8 grid grid-cols-1 min-[480px]:grid-cols-3 gap-2 sm:gap-3">
+            <!-- Desktop only: stats on image -->
+            <div
+              class="why-invest-visual__stats why-invest-visual__stats--desktop absolute bottom-0 inset-x-0 p-4 sm:p-5 md:p-8 grid grid-cols-3 gap-2 sm:gap-3"
+            >
               <div
                 v-for="stat in MARKET_STATS"
                 :key="stat.label"
@@ -44,11 +49,30 @@
               </div>
             </div>
           </div>
+
+          <!-- Mobile: horizontal stat strip (saves vertical space vs stacked pills) -->
+          <div class="why-invest-stats-carousel kardosh-mobile-carousel kardosh-mobile-carousel--tight">
+            <Swiper
+              :slides-per-view="1.12"
+              :space-between="12"
+              :breakpoints="statBreakpoints"
+              class="kardosh-mobile-carousel__swiper"
+            >
+              <SwiperSlide v-for="stat in MARKET_STATS" :key="`stat-${stat.label}`">
+                <div
+                  class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-900 text-white px-4 py-3 min-h-[4.5rem]"
+                >
+                  <p class="text-lg font-semibold tabular-nums">{{ stat.value }}</p>
+                  <p class="text-xs text-white/75 mt-0.5 leading-snug">{{ stat.label }}</p>
+                </div>
+              </SwiperSlide>
+            </Swiper>
+          </div>
         </div>
 
         <div class="lg:col-span-5 flex flex-col">
           <div
-            class="flex flex-1 flex-col rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900 p-7 md:p-8 shadow-sm"
+            class="flex flex-1 flex-col rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900 p-5 md:p-8 shadow-sm"
           >
             <h3 class="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white leading-snug">
               Dubai off-plan for international investors
@@ -57,7 +81,7 @@
               Curated projects from leading developers, transparent AED pricing, and licensed advisory from
               first enquiry through reservation.
             </p>
-            <ul class="mt-6 space-y-3.5 flex-1" role="list">
+            <ul class="mt-5 md:mt-6 space-y-3 flex-1" role="list">
               <li
                 v-for="point in VALUE_POINTS"
                 :key="point"
@@ -72,7 +96,7 @@
                 {{ point }}
               </li>
             </ul>
-            <div class="kardosh-btn-row mt-8">
+            <div class="kardosh-btn-row mt-6 md:mt-8">
               <RouterLink
                 to="/why-dubai"
                 class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-6"
@@ -91,15 +115,16 @@
         </div>
       </div>
 
-      <div class="mt-14 lg:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+      <!-- Desktop: advantage grid -->
+      <div class="why-invest-advantages--desktop mt-10 lg:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
         <article
           v-for="(item, i) in INVESTMENT_ADVANTAGES"
-          :key="item.title"
+          :key="`adv-d-${item.title}`"
           class="group relative rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 transition duration-300 hover:border-primary/30 hover:shadow-md dark:hover:border-primary/40"
         >
           <div class="flex items-start gap-4">
             <div
-              class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white dark:group-hover:text-slate-900"
+              class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
             >
               <component :is="ADVANTAGE_ICONS[i]" class="size-5" aria-hidden="true" />
             </div>
@@ -114,7 +139,38 @@
         </article>
       </div>
 
-      <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-6 max-w-2xl mx-auto">
+      <!-- Mobile: swipe through advantages -->
+      <div class="why-invest-advantages-carousel kardosh-mobile-carousel mt-8">
+        <Swiper
+          :slides-per-view="1.12"
+          :space-between="12"
+          :breakpoints="statBreakpoints"
+          class="kardosh-mobile-carousel__swiper"
+        >
+          <SwiperSlide v-for="(item, i) in INVESTMENT_ADVANTAGES" :key="`adv-m-${item.title}`">
+            <article
+              class="h-full rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5"
+            >
+              <div class="flex items-start gap-4">
+                <div
+                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
+                >
+                  <component :is="ADVANTAGE_ICONS[i]" class="size-5" aria-hidden="true" />
+                </div>
+                <div class="min-w-0">
+                  <span class="text-[11px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                    {{ String(i + 1).padStart(2, '0') }}
+                  </span>
+                  <h3 class="font-semibold text-slate-900 dark:text-white mt-1">{{ item.title }}</h3>
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.desc }}</p>
+                </div>
+              </div>
+            </article>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+
+      <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-4 md:mt-6 max-w-2xl mx-auto">
         Figures are indicative market benchmarks — speak with our team for project-specific yields and visa eligibility.
       </p>
     </div>
@@ -133,8 +189,12 @@ import {
   ShieldCheck,
   TrendingUp,
 } from 'lucide-vue-next'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 import { INVESTMENT_ADVANTAGES } from '@/config/marketing'
 import { SECTION_IMAGES } from '@/config/dubai-images'
+import { HOME_STRIP_CAROUSEL, toSwiperBreakpoints } from '@/config/home-carousels'
+
+import 'swiper/css'
 
 const MARKET_STATS = [
   { value: '0%', label: 'Personal income tax on property income' },
@@ -149,4 +209,6 @@ const VALUE_POINTS = [
 ]
 
 const ADVANTAGE_ICONS = [Percent, TrendingUp, Award, CalendarClock, ShieldCheck, Globe2]
+
+const statBreakpoints = toSwiperBreakpoints(HOME_STRIP_CAROUSEL)
 </script>

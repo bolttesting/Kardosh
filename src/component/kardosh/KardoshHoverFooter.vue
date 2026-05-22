@@ -16,49 +16,88 @@
         <div class="kardosh-hover-footer__menus">
           <div
             v-for="section in footerLinks"
-            :key="section.title"
-            class="kardosh-hover-footer__menu-col"
+            :key="section.id"
+            class="kardosh-hover-footer__menu-col kardosh-footer-accordion__section"
           >
-            <h4 class="text-white text-lg font-semibold mb-5">{{ section.title }}</h4>
-            <ul class="space-y-3 text-sm">
-              <li v-for="link in section.links" :key="link.label" class="relative">
-                <RouterLink
-                  :to="link.to"
-                  class="text-slate-400 hover:text-white transition-colors"
-                >
-                  {{ link.label }}
-                </RouterLink>
-                <span
-                  v-if="link.pulse"
-                  class="absolute top-1 -end-3 size-2 rounded-full bg-white animate-pulse"
-                  aria-hidden="true"
-                />
-              </li>
-            </ul>
+            <button
+              type="button"
+              class="kardosh-footer-accordion__trigger md:hidden"
+              :aria-expanded="isOpen(section.id)"
+              :aria-controls="`footer-panel-${section.id}`"
+              @click="toggleSection(section.id)"
+            >
+              <span class="text-white text-lg font-semibold">{{ section.title }}</span>
+              <ChevronDown
+                class="kardosh-footer-accordion__chevron size-5 shrink-0 text-slate-400"
+                :class="{ 'kardosh-footer-accordion__chevron--open': isOpen(section.id) }"
+                aria-hidden="true"
+              />
+            </button>
+            <h4 class="kardosh-footer-accordion__title hidden md:block text-white text-lg font-semibold mb-5">
+              {{ section.title }}
+            </h4>
+            <div
+              :id="`footer-panel-${section.id}`"
+              class="kardosh-footer-accordion__panel"
+              :class="{ 'kardosh-footer-accordion__panel--open': isOpen(section.id) }"
+            >
+              <ul class="space-y-3 text-sm">
+                <li v-for="link in section.links" :key="link.label" class="relative">
+                  <RouterLink
+                    :to="link.to"
+                    class="text-slate-400 hover:text-white transition-colors"
+                  >
+                    {{ link.label }}
+                  </RouterLink>
+                  <span
+                    v-if="link.pulse"
+                    class="absolute top-1 -end-3 size-2 rounded-full bg-white animate-pulse"
+                    aria-hidden="true"
+                  />
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div class="kardosh-hover-footer__menu-col">
-            <h4 class="text-white text-lg font-semibold mb-5">Contact us</h4>
-            <ul class="space-y-4 text-sm">
-              <li v-for="(item, i) in contactInfo" :key="i" class="flex items-start gap-3">
-                <component :is="item.icon" class="size-[18px] shrink-0 text-slate-300 mt-0.5" aria-hidden="true" />
-                <a
-                  v-if="item.href"
-                  :href="item.href"
-                  :target="item.external ? '_blank' : undefined"
-                  :rel="item.external ? 'noopener noreferrer' : undefined"
-                  class="text-slate-400 hover:text-white transition-colors"
-                >
-                  {{ item.text }}
-                </a>
-                <span
-                  v-else
-                  class="text-slate-400"
-                >
-                  {{ item.text }}
-                </span>
-              </li>
-            </ul>
+          <div class="kardosh-hover-footer__menu-col kardosh-footer-accordion__section">
+            <button
+              type="button"
+              class="kardosh-footer-accordion__trigger md:hidden"
+              :aria-expanded="isOpen('contact')"
+              aria-controls="footer-panel-contact"
+              @click="toggleSection('contact')"
+            >
+              <span class="text-white text-lg font-semibold">Contact us</span>
+              <ChevronDown
+                class="kardosh-footer-accordion__chevron size-5 shrink-0 text-slate-400"
+                :class="{ 'kardosh-footer-accordion__chevron--open': isOpen('contact') }"
+                aria-hidden="true"
+              />
+            </button>
+            <h4 class="kardosh-footer-accordion__title hidden md:block text-white text-lg font-semibold mb-5">
+              Contact us
+            </h4>
+            <div
+              id="footer-panel-contact"
+              class="kardosh-footer-accordion__panel"
+              :class="{ 'kardosh-footer-accordion__panel--open': isOpen('contact') }"
+            >
+              <ul class="space-y-4 text-sm">
+                <li v-for="(item, i) in contactInfo" :key="i" class="flex items-start gap-3">
+                  <component :is="item.icon" class="size-[18px] shrink-0 text-slate-300 mt-0.5" aria-hidden="true" />
+                  <a
+                    v-if="item.href"
+                    :href="item.href"
+                    :target="item.external ? '_blank' : undefined"
+                    :rel="item.external ? 'noopener noreferrer' : undefined"
+                    class="text-slate-400 hover:text-white transition-colors"
+                  >
+                    {{ item.text }}
+                  </a>
+                  <span v-else class="text-slate-400">{{ item.text }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -102,9 +141,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
-import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from 'lucide-vue-next'
+import { ChevronDown, Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from 'lucide-vue-next'
 import { BRAND, SOCIAL } from '@/config/brand'
 import { CONTACT } from '@/config/uae'
 import { whatsAppLink } from '@/config/marketing'
@@ -116,8 +155,23 @@ import TextHoverEffect from '@/component/ui/TextHoverEffect.vue'
 const year = new Date().getFullYear()
 const hoverBrandText = computed(() => BRAND.name.split(' ')[0] || 'Kardosh')
 
+const openSections = reactive({
+  explore: false,
+  helpful: false,
+  contact: false,
+})
+
+function isOpen(id) {
+  return Boolean(openSections[id])
+}
+
+function toggleSection(id) {
+  openSections[id] = !openSections[id]
+}
+
 const footerLinks = [
   {
+    id: 'explore',
     title: 'Explore',
     links: [
       { label: 'Off-plan', to: '/off-plan' },
@@ -128,6 +182,7 @@ const footerLinks = [
     ],
   },
   {
+    id: 'helpful',
     title: 'Helpful links',
     links: [
       { label: 'Contact', to: '/contact', pulse: true },

@@ -1,5 +1,5 @@
 <template>
-  <section class="lg:mt-24 mt-16" aria-labelledby="trusted-partners-heading">
+  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="trusted-partners-heading">
     <div class="container-fluid">
       <div
         class="featured-developers-panel rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
@@ -103,45 +103,37 @@
               Developer catalogue loading soon — check back shortly.
             </p>
 
-            <div v-else class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <RouterLink
-                v-for="dev in featured"
-                :key="dev.id"
-                :to="`/developer/${dev.id}`"
-                class="group flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 md:p-5 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-primary/40"
-              >
-                <div
-                  class="flex size-14 md:size-16 shrink-0 items-center justify-center rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 p-2 transition-colors duration-300 group-hover:border-primary/20 group-hover:bg-primary/5"
+            <template v-else>
+              <!-- Mobile: swipe partners instead of 9 stacked rows -->
+              <div class="md:hidden kardosh-mobile-carousel featured-devs-carousel -mx-1">
+                <Swiper
+                  :slides-per-view="1.15"
+                  :space-between="12"
+                  :breakpoints="devCarouselBreakpoints"
+                  class="kardosh-mobile-carousel__swiper"
                 >
-                  <img
-                    v-if="dev.logo?.url"
-                    :src="dev.logo.url"
-                    :alt="`${dev.name} logo`"
-                    class="max-h-full max-w-full object-contain"
-                    loading="lazy"
-                  />
-                  <span
-                    v-else
-                    class="text-xl font-bold text-primary"
-                  >{{ dev.name?.charAt(0) }}</span>
-                </div>
-                <div class="min-w-0 flex-1">
-                  <h3 class="font-semibold text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-primary transition-colors">
-                    {{ dev.name }}
-                  </h3>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    <template v-if="dev.projectCount">
-                      {{ dev.projectCount }} {{ dev.projectCount === 1 ? 'project' : 'projects' }}
-                    </template>
-                    <template v-else>View projects</template>
-                  </p>
-                </div>
-                <ChevronRight
-                  class="size-5 shrink-0 text-slate-300 dark:text-slate-600 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-primary"
-                  aria-hidden="true"
-                />
-              </RouterLink>
-            </div>
+                  <SwiperSlide v-for="dev in featuredMobile" :key="`dev-m-${dev.id}`">
+                    <RouterLink
+                      :to="`/developer/${dev.id}`"
+                      class="group flex h-full items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-primary/40"
+                    >
+                      <DeveloperCardInner :dev="dev" />
+                    </RouterLink>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+
+              <div class="hidden md:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <RouterLink
+                  v-for="dev in featured"
+                  :key="dev.id"
+                  :to="`/developer/${dev.id}`"
+                  class="group flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 md:p-5 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-primary/40"
+                >
+                  <DeveloperCardInner :dev="dev" />
+                </RouterLink>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -152,9 +144,16 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight, Check, ChevronRight, Layers } from 'lucide-vue-next'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { ArrowRight, Check, Layers } from 'lucide-vue-next'
 import { useReelly } from '@/composables/useReelly'
 import DeveloperGridSkeleton from '@/component/kardosh/skeleton/DeveloperGridSkeleton.vue'
+import DeveloperCardInner from '@/component/kardosh/home/DeveloperCardInner.vue'
+import { HOME_STRIP_CAROUSEL, toSwiperBreakpoints } from '@/config/home-carousels'
+
+import 'swiper/css'
+
+const devCarouselBreakpoints = toSwiperBreakpoints(HOME_STRIP_CAROUSEL)
 
 const TRUST_POINTS = [
   'Verified developer logos linked to live off-plan stock',
@@ -179,6 +178,8 @@ const featured = computed(() =>
     projectCount: projectCountByDeveloper.value[d.name] || 0,
   }))
 )
+
+const featuredMobile = computed(() => featured.value.slice(0, 6))
 
 const catalogStats = computed(() => ({
   developers: uaeDevelopers.value.length,

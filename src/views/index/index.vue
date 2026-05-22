@@ -3,7 +3,7 @@
 
   <HomeHero />
 
-  <section class="relative md:pb-24 pb-16">
+  <section class="relative md:pb-24 pb-16 home-page-stack">
     <Property />
     <WhyInvestDubai />
     <FeaturedDevelopers />

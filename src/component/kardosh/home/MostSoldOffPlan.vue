@@ -1,5 +1,5 @@
 <template>
-  <section class="lg:mt-24 mt-16" aria-labelledby="most-sold-off-plan-heading">
+  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="most-sold-off-plan-heading">
     <div class="container-fluid">
       <div class="max-w-3xl mx-auto text-center">
         <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Investor favourites</p>
@@ -15,7 +15,7 @@
       </div>
 
       <div v-if="loading" class="investor-favourites-carousel__loading" aria-busy="true">
-        <PropertyCardSkeleton v-for="n in CAROUSEL_COUNT" :key="n" />
+        <PropertyCardSkeleton v-for="n in VISIBLE_COUNT" :key="n" />
       </div>
 
       <p
@@ -45,7 +45,9 @@
           :modules="modules"
           :slides-per-view="1.12"
           :space-between="16"
+          :slides-per-group="1"
           :breakpoints="carouselBreakpoints"
+          :watch-overflow="false"
           :navigation="{
             prevEl: '.investor-favourites-carousel__nav--prev',
             nextEl: '.investor-favourites-carousel__nav--next',
@@ -97,27 +99,24 @@ import { demandBadge, pickMostSoldOffPlan } from '@/utils/offPlanRanking'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-/** One row on desktop (4-up); carousel scrolls on smaller viewports */
-const CAROUSEL_COUNT = 4
+/** 8 slides total; 4 visible per row on xl — slide to reveal 5–8 */
+const SLIDE_COUNT = 8
+const VISIBLE_COUNT = 4
 
 const modules = [Navigation]
 
 const carouselBreakpoints = {
-  480: { slidesPerView: 1.35, spaceBetween: 18 },
-  640: { slidesPerView: 2.1, spaceBetween: 20 },
-  1024: { slidesPerView: 3.05, spaceBetween: 24 },
-  1280: { slidesPerView: 4, spaceBetween: 28 },
+  480: { slidesPerView: 1.35, spaceBetween: 18, slidesPerGroup: 1 },
+  640: { slidesPerView: 2.1, spaceBetween: 20, slidesPerGroup: 1 },
+  1024: { slidesPerView: 3, spaceBetween: 24, slidesPerGroup: 1 },
+  1280: { slidesPerView: VISIBLE_COUNT, spaceBetween: 28, slidesPerGroup: 1 },
 }
 
 const { loading, error, projects, loadProjects } = useReelly()
 
-const displayed = computed(() => {
-  const featuredIds = projects.value.slice(0, CAROUSEL_COUNT).map((p) => p.id)
-  return pickMostSoldOffPlan(projects.value, {
-    limit: CAROUSEL_COUNT,
-    excludeIds: featuredIds,
-  })
-})
+const displayed = computed(() =>
+  pickMostSoldOffPlan(projects.value, { limit: SLIDE_COUNT })
+)
 
 onMounted(() => loadProjects())
 </script>
