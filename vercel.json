@@ -2,6 +2,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "build": {
+    "env": {
+      "VITE_HERO_USE_LOCAL_VIDEO": "true",
+      "VITE_HERO_VIDEO_URL": "/videos/dubai-hero.mp4"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/reelly/:path*",

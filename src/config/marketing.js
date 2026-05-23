@@ -47,22 +47,28 @@ export function parseYouTubeId(value) {
   return null
 }
 
-/**
- * Self-hosted hero MP4 (public/videos/…) — faster than YouTube, no embed play/pause UI.
- * Set VITE_HERO_USE_LOCAL_VIDEO=true and remove or comment VITE_HERO_YOUTUBE_URL.
- */
-export const HERO_USE_LOCAL_VIDEO = ['true', '1', 'yes'].includes(
+/** YouTube only when set in env — no hardcoded default (Vercel does not use .env). */
+const HERO_YOUTUBE_ID_FROM_ENV = parseYouTubeId(
+  import.meta.env.VITE_HERO_YOUTUBE_ID || import.meta.env.VITE_HERO_YOUTUBE_URL || ''
+)
+
+const HERO_FORCE_LOCAL = ['true', '1', 'yes'].includes(
   String(import.meta.env.VITE_HERO_USE_LOCAL_VIDEO || '').toLowerCase()
 )
 
-/** Default hero YouTube — skipped when HERO_USE_LOCAL_VIDEO is true */
-export const HERO_YOUTUBE_ID = HERO_USE_LOCAL_VIDEO
-  ? null
-  : parseYouTubeId(
-      import.meta.env.VITE_HERO_YOUTUBE_ID ||
-        import.meta.env.VITE_HERO_YOUTUBE_URL ||
-        'BYygyprG-7M'
-    )
+const HERO_FORCE_YOUTUBE = ['false', '0', 'no'].includes(
+  String(import.meta.env.VITE_HERO_USE_LOCAL_VIDEO || '').toLowerCase()
+)
+
+/**
+ * Self-hosted MP4 at public/videos/dubai-hero.mp4 — default when YouTube is not configured.
+ * Set VITE_HERO_USE_LOCAL_VIDEO=true on Vercel, or remove VITE_HERO_YOUTUBE_URL there.
+ */
+export const HERO_USE_LOCAL_VIDEO =
+  HERO_FORCE_LOCAL || (!HERO_FORCE_YOUTUBE && !HERO_YOUTUBE_ID_FROM_ENV)
+
+/** Active only when YouTube URL/id is in env and local video is not forced */
+export const HERO_YOUTUBE_ID = HERO_USE_LOCAL_VIDEO ? null : HERO_YOUTUBE_ID_FROM_ENV
 
 /** YouTube still frame for hero poster while the embed loads */
 export function heroYouTubeThumbnailUrl(videoId, quality = 'hqdefault') {
