@@ -1,5 +1,9 @@
 <template>
-  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="most-sold-off-plan-heading">
+  <section
+    ref="sectionRoot"
+    class="lg:mt-24 mt-16 home-section-compact scroll-mt-24"
+    aria-labelledby="most-sold-off-plan-heading"
+  >
     <div class="container-fluid">
       <div class="max-w-3xl mx-auto text-center">
         <h2
@@ -81,7 +85,8 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
+import { useDeferredCatalogLoad } from '@/composables/useDeferredCatalogLoad'
 import { RouterLink } from 'vue-router'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
@@ -131,5 +136,5 @@ const autoplayOptions = computed(() => {
   }
 })
 
-onMounted(() => loadProjects())
+const { root: sectionRoot } = useDeferredCatalogLoad(() => loadProjects())
 </script>

@@ -25,6 +25,7 @@ function preloadHeroImage(href, priority = 'high') {
     link.rel = 'preload'
     link.as = 'image'
     link.href = href
+    link.fetchPriority = priority
     document.head.appendChild(link)
   }
   const img = new Image()
@@ -32,11 +33,11 @@ function preloadHeroImage(href, priority = 'high') {
   img.src = href
 }
 
-/** Fetch instant frame + WebP poster before Vue mounts */
+/** Preload only the lightweight instant frame — full poster loads via useHeroPosterGate */
 if (HERO_VIDEO.poster) {
   const instant = resolveHeroPosterInstant(HERO_VIDEO.poster)
-  preloadHeroImage(instant, 'high')
-  preloadHeroImage(HERO_VIDEO.poster, 'high')
+  const lcpPoster = instant && instant !== HERO_VIDEO.poster ? instant : HERO_VIDEO.poster
+  preloadHeroImage(lcpPoster, 'high')
 }
 
 const app = createApp(App)

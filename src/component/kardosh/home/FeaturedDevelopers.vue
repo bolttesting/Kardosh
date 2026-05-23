@@ -1,5 +1,9 @@
 <template>
-  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="trusted-partners-heading">
+  <section
+    ref="sectionRoot"
+    class="lg:mt-24 mt-16 home-section-compact scroll-mt-24"
+    aria-labelledby="trusted-partners-heading"
+  >
     <div class="container-fluid">
       <div
         class="featured-developers-panel rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
@@ -135,7 +139,8 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
+import { useDeferredCatalogLoad } from '@/composables/useDeferredCatalogLoad'
 import { RouterLink } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ArrowRight, Check } from 'lucide-vue-next'
@@ -179,7 +184,7 @@ const catalogStats = computed(() => ({
   projects: projects.value.length,
 }))
 
-onMounted(async () => {
+const { root: sectionRoot } = useDeferredCatalogLoad(async () => {
   await loadProjects()
   await loadDeveloperLogos()
 })

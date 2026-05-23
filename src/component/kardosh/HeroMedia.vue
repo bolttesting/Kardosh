@@ -12,7 +12,7 @@
         aria-hidden="true"
       />
       <iframe
-        v-if="posterGateReady"
+        v-if="posterGateReady && embedVideo"
         ref="youtubeIframeRef"
         :src="youtubeEmbedUrl"
         title="Dubai hero background video"
@@ -41,7 +41,7 @@
         aria-hidden="true"
       />
       <video
-        v-if="posterGateReady"
+        v-if="posterGateReady && embedVideo"
         ref="videoEl"
         class="hero-video"
         :class="{ 'hero-video--ready': heroMediaReady }"
@@ -50,7 +50,10 @@
         muted
         loop
         playsinline
-        preload="auto"
+        disablepictureinpicture
+        disableremoteplayback
+        controlslist="nodownload nofullscreen noremoteplayback"
+        preload="none"
         aria-hidden="true"
         @playing="onVideoPlaying"
         @error="useMp4 = false"
@@ -75,6 +78,11 @@ import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { HERO_VIDEO, HERO_YOUTUBE_ID, heroYouTubeEmbedUrl } from '@/config/marketing'
 import { useHeroPosterGate } from '@/composables/useHeroPosterGate'
 import { useHeroVideoCover } from '@/composables/useHeroVideoCover'
+import {
+  deferUntilIdle,
+  shouldDeferHeroVideo,
+  heroVideoDeferMs,
+} from '@/composables/useDeferUntilIdle'
 
 const props = defineProps({
   mediaClass: { type: String, default: '' },
@@ -89,6 +97,8 @@ const { iframeStyle: youtubeIframeStyle, updateCover: updateYoutubeCover } =
   useHeroVideoCover(youtubeWrapRef)
 const useMp4 = ref(!HERO_YOUTUBE_ID && !!HERO_VIDEO.src)
 const heroMediaReady = ref(false)
+/** Poster is LCP; video loads after idle so YouTube does not compete on first paint */
+const embedVideo = ref(false)
 
 const { posterGateReady, posterImageReady, posterBackgroundStyle, youtubeIframeReady, heroPosterFullUrl } =
   useHeroPosterGate({ hidePoster: props.hidePoster })
@@ -130,7 +140,7 @@ function onVideoPlaying() {
 }
 
 watch(posterGateReady, (ready) => {
-  if (!ready) return
+  if (!ready || !embedVideo.value) return
   if (youtubeEmbedUrl.value) return
   tryRevealHeroVideo()
   startMp4WhenReady()
@@ -145,8 +155,30 @@ async function startMp4WhenReady() {
   })
 }
 
+function scheduleHeroVideo() {
+  if (props.hidePoster) {
+    embedVideo.value = true
+    return
+  }
+  if (!youtubeEmbedUrl.value && !useMp4.value) return
+  if (shouldDeferHeroVideo()) return
+
+  const { delay, timeout } = heroVideoDeferMs()
+  deferUntilIdle(() => {
+    embedVideo.value = true
+  }, { delay, timeout })
+}
+
+watch(embedVideo, (ready) => {
+  if (!ready) return
+  if (youtubeEmbedUrl.value) return
+  tryRevealHeroVideo()
+  startMp4WhenReady()
+})
+
 onMounted(() => {
-  if (posterGateReady.value && !youtubeEmbedUrl.value) {
+  scheduleHeroVideo()
+  if (embedVideo.value && posterGateReady.value && !youtubeEmbedUrl.value) {
     startMp4WhenReady()
   }
 })

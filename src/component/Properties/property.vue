@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid lg:mt-24 mt-16 home-section-compact scroll-mt-24">
+  <div ref="sectionRoot" class="container-fluid lg:mt-24 mt-16 home-section-compact scroll-mt-24">
     <div class="max-w-3xl mx-auto text-center pb-6 md:pb-8">
       <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold text-slate-900 dark:text-white">
         Featured off-plan projects
@@ -75,7 +75,8 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
+import { useDeferredCatalogLoad } from '@/composables/useDeferredCatalogLoad'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
@@ -99,7 +100,7 @@ const carouselBreakpoints = toSwiperBreakpoints(HOME_PROPERTY_CAROUSEL)
 
 const { loading: reellyLoading, error: reellyError, projects, loadProjects } = useReelly()
 
-onMounted(() => loadProjects())
+const { root: sectionRoot } = useDeferredCatalogLoad(() => loadProjects())
 
 const displayed = computed(() => projects.value.slice(0, DESKTOP_COUNT))
 const displayedMobile = computed(() => projects.value.slice(0, MOBILE_SLIDE_COUNT))

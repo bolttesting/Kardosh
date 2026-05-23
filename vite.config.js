@@ -9,6 +9,22 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [vue(), tailwindcss()],
+    build: {
+      target: 'es2020',
+      cssCodeSplit: true,
+      modulePreload: { polyfill: false },
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/swiper')) return 'swiper'
+            if (id.includes('node_modules/vue-router')) return 'vue-vendor'
+            if (id.includes('node_modules/vue/') || id.includes('node_modules/@vue')) return 'vue-vendor'
+            if (id.includes('node_modules/vue-select')) return 'vue-select'
+            if (id.includes('node_modules/lucide-vue-next')) return 'icons'
+          },
+        },
+      },
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

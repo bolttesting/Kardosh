@@ -8,7 +8,7 @@ function appendInlineScript(content) {
   document.head.appendChild(script)
 }
 
-onMounted(() => {
+function loadAnalytics() {
   if (ANALYTICS.gtmId) {
     appendInlineScript(`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -37,6 +37,15 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','${ANALYTICS.metaPixelId}');fbq('track','PageView');`)
+  }
+}
+
+onMounted(() => {
+  const run = () => loadAnalytics()
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(run, { timeout: 5000 })
+  } else {
+    setTimeout(run, 2500)
   }
 })
 </script>

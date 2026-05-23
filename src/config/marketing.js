@@ -47,12 +47,22 @@ export function parseYouTubeId(value) {
   return null
 }
 
-/** Default hero: https://youtu.be/BYygyprG-7M */
-export const HERO_YOUTUBE_ID = parseYouTubeId(
-  import.meta.env.VITE_HERO_YOUTUBE_ID ||
-    import.meta.env.VITE_HERO_YOUTUBE_URL ||
-    'BYygyprG-7M'
+/**
+ * Self-hosted hero MP4 (public/videos/…) — faster than YouTube, no embed play/pause UI.
+ * Set VITE_HERO_USE_LOCAL_VIDEO=true and remove or comment VITE_HERO_YOUTUBE_URL.
+ */
+export const HERO_USE_LOCAL_VIDEO = ['true', '1', 'yes'].includes(
+  String(import.meta.env.VITE_HERO_USE_LOCAL_VIDEO || '').toLowerCase()
 )
+
+/** Default hero YouTube — skipped when HERO_USE_LOCAL_VIDEO is true */
+export const HERO_YOUTUBE_ID = HERO_USE_LOCAL_VIDEO
+  ? null
+  : parseYouTubeId(
+      import.meta.env.VITE_HERO_YOUTUBE_ID ||
+        import.meta.env.VITE_HERO_YOUTUBE_URL ||
+        'BYygyprG-7M'
+    )
 
 /** YouTube still frame for hero poster while the embed loads */
 export function heroYouTubeThumbnailUrl(videoId, quality = 'hqdefault') {
@@ -60,8 +70,8 @@ export function heroYouTubeThumbnailUrl(videoId, quality = 'hqdefault') {
   return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`
 }
 
-/** Extra scale on hero iframe to crop YouTube UI chrome (title, controls) */
-export const HERO_YOUTUBE_COVER_BLEED = 1.45
+/** Extra scale on hero iframe to crop YouTube UI chrome (title, play/pause) */
+export const HERO_YOUTUBE_COVER_BLEED = 1.58
 
 export function heroYouTubeEmbedUrl(videoId, options = {}) {
   const params = new URLSearchParams({
@@ -75,7 +85,6 @@ export function heroYouTubeEmbedUrl(videoId, options = {}) {
     cc_load_policy: '0',
     disablekb: '1',
     fs: '0',
-    enablejsapi: '1',
     /** No playlist= — avoids prev/pause/next playlist controls in the embed */
   })
   if (options.origin) params.set('origin', options.origin)
