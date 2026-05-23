@@ -129,7 +129,7 @@
               </div>
             </div>
 
-            <div class="hero-search-actions">
+            <div v-if="!isListing" class="hero-search-actions">
               <button type="submit" :class="submitButtonClass">
                 <span class="hero-search-submit__long">Search properties</span>
                 <span class="hero-search-submit__short">Search</span>
@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Search } from 'lucide-vue-next'
 import vSelect from 'vue-select'
@@ -243,7 +243,11 @@ const currentBudgetOptions = computed(() =>
   isHero.value || mode.value !== 'rent' ? BUDGET_RANGE_OPTIONS : RENT_BUDGET_RANGE_OPTIONS
 )
 
+let syncingFromRoute = false
+let keywordDebounceId = null
+
 function readQuery() {
+  syncingFromRoute = true
   const q = route.query
   keyword.value = (q.q || '').toString()
   propertyType.value = q.type || null
@@ -254,6 +258,9 @@ function readQuery() {
   if (!isHero.value && q.mode && tabs.some((t) => t.id === q.mode)) {
     mode.value = q.mode.toString()
   }
+  nextTick(() => {
+    syncingFromRoute = false
+  })
 }
 
 watch(() => route.query, readQuery, { immediate: true })
@@ -262,7 +269,7 @@ watch(isHero, (hero) => {
   if (hero) mode.value = 'off-plan'
 }, { immediate: true })
 
-function submit() {
+function buildSearchTarget() {
   const tab = isHero.value
     ? displayTabs.value[0]
     : tabs.find((t) => t.id === mode.value) || tabs[0]
@@ -277,12 +284,45 @@ function submit() {
   if (max) query.max = String(max)
   query.mode = tab.id
 
-  if (tab.id === 'sell') {
-    router.push({ path: '/sell', query })
-    return
-  }
-  router.push({ path: tab.path, query })
+  const path = tab.id === 'sell' ? '/sell' : tab.path
+  return { path, query }
 }
+
+function queryMatchesRoute(query) {
+  const keys = new Set([...Object.keys(query), ...Object.keys(route.query)])
+  for (const key of keys) {
+    const next = query[key] == null ? '' : String(query[key])
+    const cur = route.query[key] == null ? '' : String(route.query[key])
+    if (next !== cur) return false
+  }
+  return true
+}
+
+function submit() {
+  if (syncingFromRoute) return
+
+  const { path, query } = buildSearchTarget()
+  if (route.path === path && queryMatchesRoute(query)) return
+
+  router.push({ path, query })
+}
+
+function scheduleAutoSearch() {
+  if (!isListing.value || syncingFromRoute) return
+  if (keywordDebounceId) clearTimeout(keywordDebounceId)
+  keywordDebounceId = setTimeout(() => {
+    keywordDebounceId = null
+    submit()
+  }, 350)
+}
+
+watch(keyword, () => {
+  if (isListing.value) scheduleAutoSearch()
+})
+
+watch([propertyType, developer, bedrooms, budgetRange], () => {
+  if (isListing.value) submit()
+})
 </script>
 
 <style scoped>
@@ -304,23 +344,4 @@ function submit() {
   max-width: 100%;
 }
 
-/* Listing card: ensure readable text (hero styles set white) */
-:deep(.property-search-bar--listing .hero-search-field--listing) {
-  color: rgb(15 23 42) !important;
-}
-
-:deep(.property-search-bar--listing .hero-search-field--listing::placeholder) {
-  color: rgb(100 116 139) !important;
-}
-
-:deep(.property-search-bar--listing .hero-search-control .hero-search-vselect .vs__selected),
-:deep(.property-search-bar--listing .hero-search-control .hero-search-vselect .vs__search),
-:deep(.property-search-bar--listing .hero-search-control .hero-search-vselect .vs__search input) {
-  color: rgb(15 23 42) !important;
-}
-
-:deep(.property-search-bar--listing .hero-search-control .hero-search-vselect .vs__placeholder) {
-  color: rgb(100 116 139) !important;
-  opacity: 1 !important;
-}
 </style>

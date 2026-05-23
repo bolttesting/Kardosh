@@ -169,13 +169,8 @@ const showSection = computed(
 
 <style scoped>
 .property-location {
-  margin-top: 2.5rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid #e2e8f0;
-}
-
-.dark .property-location {
-  border-top-color: #334155;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .property-location__header {

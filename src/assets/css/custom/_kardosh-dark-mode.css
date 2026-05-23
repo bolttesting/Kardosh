@@ -1,0 +1,135 @@
+/*********************************/
+/*  Kardosh dark mode fixes      */
+/*  --color-primary inverts for  */
+/*  links; use --kardosh-ink on  */
+/*  white / light button surfaces */
+/*===============================*/
+
+:root {
+    --kardosh-ink: #0a0a0a;
+    --kardosh-paper: #ffffff;
+    --kardosh-surface: #ffffff;
+    --kardosh-surface-muted: #f8fafc;
+}
+
+.dark {
+    --kardosh-ink: #0a0a0a;
+    --kardosh-paper: #fafafa;
+    --kardosh-surface: rgb(30 41 59);
+    --kardosh-surface-muted: rgb(15 23 42);
+}
+
+/* Primary buttons must stay dark text on light fill in dark mode */
+.dark .btn.bg-primary,
+.dark .btn.bg-primary:hover,
+.dark .btn.bg-primary.text-white,
+.dark .btn.bg-primary.text-white:hover,
+.dark .btn.bg-white,
+.dark .btn.bg-white:hover,
+.dark .btn.bg-white.text-primary,
+.dark .btn.bg-white.text-primary:hover {
+    color: var(--kardosh-ink) !important;
+}
+
+/* Slide CTA */
+.dark .kardosh-slide-btn {
+    color: var(--kardosh-ink);
+    background: var(--kardosh-paper);
+}
+
+.dark .kardosh-slide-btn:hover {
+    background: rgb(245 245 245);
+}
+
+.dark .kardosh-slide-btn:focus-visible {
+    outline-color: var(--kardosh-paper);
+}
+
+/* Property cards */
+.dark .kardosh-property-card--luxury {
+    background: var(--kardosh-surface);
+    border-color: rgb(71 85 105);
+}
+
+.dark .kardosh-property-card--luxury .kardosh-property-card__footer {
+    border-top-color: rgb(51 65 85);
+}
+
+.dark .kardosh-property-card__chip--area {
+    color: rgb(226 232 240);
+    background: rgb(51 65 85 / 0.55);
+    border-color: rgb(100 116 139);
+}
+
+.dark .kardosh-property-card__chip--amenity {
+    color: rgb(241 245 249);
+    background: rgb(51 65 85 / 0.7);
+    border-color: rgb(100 116 139);
+}
+
+.dark .kardosh-property-card__chip--more {
+    color: rgb(203 213 225);
+    background: rgb(51 65 85 / 0.45);
+    border-color: rgb(100 116 139);
+}
+
+.dark .kardosh-property-card--luxury .kardosh-property-card__cta,
+.dark .community-card--luxury .kardosh-property-card__cta,
+.dark .emirate-overview-card--luxury .kardosh-property-card__cta {
+    border-color: var(--kardosh-paper);
+    background: var(--kardosh-paper);
+    color: var(--kardosh-ink);
+}
+
+.kardosh-property-card__cta svg,
+.kardosh-slide-btn svg {
+    color: currentColor;
+}
+
+/* Section panels — lift off page background */
+.dark .featured-developers-panel,
+.dark .get-in-touch-panel,
+.dark .why-invest-section .why-invest-advantages-grid {
+    background-color: rgb(30 41 59 / 0.55);
+    border-color: rgb(71 85 105 / 0.85);
+}
+
+/* Form fields */
+.dark .form-input,
+.dark .form-select.form-input,
+.dark textarea.form-input {
+    background-color: rgb(30 41 59) !important;
+    border-color: rgb(71 85 105) !important;
+    color: rgb(248 250 252);
+}
+
+.dark .form-input::placeholder,
+.dark textarea.form-input::placeholder {
+    color: rgb(148 163 184);
+    opacity: 1;
+}
+
+.dark .form-input:focus,
+.dark .form-select.form-input:focus,
+.dark textarea.form-input:focus {
+    border-color: rgb(148 163 184) !important;
+}
+
+.dark .hero-search-submit--listing {
+    color: var(--kardosh-ink, #0a0a0a) !important;
+    background: var(--kardosh-paper, #fafafa) !important;
+}
+
+.dark .hero-search-submit--listing:hover {
+    background: rgb(245 245 245) !important;
+    color: var(--kardosh-ink, #0a0a0a) !important;
+}
+
+/* Listing search: light-field rules must not override dark (specificity) */
+.dark .property-search-bar--listing .hero-search-field--listing {
+    color: rgb(248 250 252) !important;
+}
+
+.dark .property-search-bar--listing .hero-search-field--listing::placeholder {
+    color: rgb(148 163 184) !important;
+}

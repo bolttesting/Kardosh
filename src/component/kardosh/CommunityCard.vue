@@ -1,9 +1,11 @@
 <template>
-  <RouterLink
-    :to="`/communities/${community.slug}`"
-    class="community-card group flex flex-col overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 transition-all duration-300 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-lg hover:-translate-y-0.5"
+  <article
+    class="community-card community-card--luxury group flex flex-col overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 transition-all duration-300 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-lg hover:-translate-y-0.5"
   >
-    <div class="community-card__media relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
+    <RouterLink
+      :to="detailTo"
+      class="community-card__media relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800 block"
+    >
       <img
         :src="image"
         :alt="`${community.name}, UAE`"
@@ -16,12 +18,15 @@
       >
         {{ emirateName }}
       </span>
-    </div>
+    </RouterLink>
 
-    <div class="flex flex-1 flex-col p-5 md:p-6">
-      <h3 class="text-lg font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+    <div class="community-card__body flex flex-1 flex-col p-5 md:p-6 min-w-0">
+      <RouterLink
+        :to="detailTo"
+        class="text-lg font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2"
+      >
         {{ community.name }}
-      </h3>
+      </RouterLink>
       <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed line-clamp-2">
         {{ community.tagline }}
       </p>
@@ -34,20 +39,31 @@
           {{ h }}
         </li>
       </ul>
-      <span
-        class="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-primary"
-      >
-        Explore area
-        <ArrowUpRight class="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-      </span>
+
+      <div class="community-card__footer">
+        <div>
+          <p class="kardosh-property-card__price-label">Community</p>
+          <p class="kardosh-property-card__price-value">{{ emirateName }}</p>
+        </div>
+        <RouterLink
+          :to="detailTo"
+          class="kardosh-property-card__cta"
+          :aria-label="`Explore ${community.name}`"
+        >
+          <span class="kardosh-property-card__cta-text">Explore</span>
+          <span class="kardosh-property-card__cta-icon" aria-hidden="true">
+            <ArrowRight class="size-5" />
+          </span>
+        </RouterLink>
+      </div>
     </div>
-  </RouterLink>
+  </article>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowUpRight } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 import { emirateLabel } from '@/config/communities'
 import { communityHeroImage } from '@/config/dubai-images'
 
@@ -55,6 +71,7 @@ const props = defineProps({
   community: { type: Object, required: true },
 })
 
+const detailTo = computed(() => `/communities/${props.community.slug}`)
 const image = computed(() => communityHeroImage(props.community.slug))
 const emirateName = computed(() => emirateLabel(props.community.emirate))
 </script>

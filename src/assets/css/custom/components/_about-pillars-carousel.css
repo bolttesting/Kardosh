@@ -2,7 +2,23 @@
 /*   About section pillar slides */
 /*===============================*/
 
-/* Shared inline section headlines (About, Get in touch, etc.) */
+/* About copy column — full width on laptop so lines don’t clip */
+.about-kardosh__content {
+    max-width: 100%;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .about-kardosh__content h2 {
+        font-size: 2.125rem;
+        line-height: 1.25;
+    }
+
+    .about-kardosh__content p {
+        max-width: 36rem;
+    }
+}
+
+/* Shared inline section headlines (Get in touch, etc.) */
 .about-kardosh__headline {
     display: flex;
     flex-wrap: wrap;

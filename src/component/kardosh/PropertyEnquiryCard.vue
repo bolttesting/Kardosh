@@ -1,10 +1,6 @@
 <template>
   <div class="property-contact-card">
     <header class="property-contact-card__header">
-      <span
-        v-if="listingLabel"
-        class="property-contact-card__badge"
-      >{{ listingLabel }}</span>
       <p class="property-contact-card__price">
         {{ formatStartingPrice(property) }}
       </p>
@@ -86,14 +82,6 @@ const props = defineProps({
 const hasSpecs = computed(
   () => Boolean(props.property?.completionDate || props.property?.square)
 )
-
-const listingLabel = computed(() => {
-  const type = props.property?.listingType
-  if (type === 'off-plan') return 'Off-Plan'
-  if (type === 'rent') return 'Rent'
-  if (type) return String(type).replace(/-/g, ' ')
-  return null
-})
 
 const contactLink = computed(() => {
   const title = props.property?.title || props.property?.name || 'Property'

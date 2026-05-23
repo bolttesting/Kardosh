@@ -205,22 +205,50 @@ export const teamdata = [
     {
         image: client4,
         name: 'Omar Al Hashimi',
-        title: 'Senior Broker'
+        title: 'Senior Broker',
+        linkedin: '',
+        instagram: '',
+        email: '',
     },
     {
         image: client5,
         name: 'Sarah Mitchell',
-        title: 'Leasing Consultant'
+        title: 'Leasing Consultant',
+        linkedin: '',
+        instagram: '',
+        email: '',
     },
     {
         image: client6,
         name: 'Rajesh Nair',
-        title: 'Investment Advisor'
+        title: 'Investment Advisor',
+        linkedin: '',
+        instagram: '',
+        email: '',
     },
     {
         image: client7,
         name: 'Fatima Al Qasimi',
-        title: 'Off-Plan Specialist'
+        title: 'Off-Plan Specialist',
+        linkedin: '',
+        instagram: '',
+        email: '',
+    },
+    {
+        image: client1,
+        name: 'James Carter',
+        title: 'Sales Director',
+        linkedin: '',
+        instagram: '',
+        email: '',
+    },
+    {
+        image: client8,
+        name: 'Layla Mansour',
+        title: 'Client Relations Manager',
+        linkedin: '',
+        instagram: '',
+        email: '',
     },
 ]
 

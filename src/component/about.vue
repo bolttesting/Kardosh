@@ -31,17 +31,16 @@
           </div>
         </div>
 
-        <div class="lg:col-span-7 order-1 lg:order-2">
+        <div class="about-kardosh__content lg:col-span-7 order-1 lg:order-2 min-w-0">
           <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">About Kardosh Realty</p>
           <h2
             id="about-kardosh-heading"
-            class="about-kardosh__headline text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+            class="text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-snug"
           >
-            <span class="about-kardosh__headline-word">Efficiency.</span>
-            <span class="about-kardosh__headline-word">Transparency.</span>
-            <span class="about-kardosh__headline-word text-slate-600 dark:text-slate-300">Control.</span>
+            Efficiency. Transparency.
+            <span class="text-slate-600 dark:text-slate-300"> Control.</span>
           </h2>
-          <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-xl leading-relaxed">
+          <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-none lg:max-w-2xl leading-relaxed">
             {{ BRAND.tagline }} Browse off-plan and ready properties with transparent AED pricing,
             RERA-aligned workflows, and support from licensed brokers across the Emirates.
           </p>
@@ -68,7 +67,7 @@
             >
               <SwiperSlide v-for="pillar in PILLARS" :key="pillar.title">
                 <article
-                  class="about-pillars-carousel__card rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 md:p-5 transition duration-300 hover:border-primary/30 hover:shadow-sm dark:hover:border-primary/40"
+                  class="about-pillars-carousel__card rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-4 md:p-5 transition duration-300 hover:border-primary/30 hover:shadow-sm dark:hover:border-slate-500"
                 >
                   <div
                     class="flex size-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
@@ -94,23 +93,17 @@
             </button>
           </div>
 
-          <div class="kardosh-btn-row mt-8">
-            <RouterLink
+          <div class="kardosh-btn-row mt-8 flex flex-wrap items-center gap-4">
+            <KardoshSlideButton
               v-if="showAboutCta"
+              label="About us"
               to="/aboutus"
-              class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-6"
-            >
-              About us
-              <ArrowRight class="size-4" aria-hidden="true" />
-            </RouterLink>
-            <RouterLink
+            />
+            <KardoshSlideButton
               v-else
+              label="Browse off-plan"
               to="/off-plan"
-              class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-6"
-            >
-              Browse off-plan
-              <ArrowRight class="size-4" aria-hidden="true" />
-            </RouterLink>
+            />
             <RouterLink
               to="/contact"
               class="btn border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-primary hover:text-primary dark:hover:text-primary rounded-lg inline-flex items-center justify-center px-6"
@@ -158,7 +151,8 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { ArrowRight, ChevronLeft, ChevronRight, Eye, MapPin, Play, SlidersHorizontal, X, Zap } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, Eye, MapPin, Play, SlidersHorizontal, X, Zap } from 'lucide-vue-next'
+import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'

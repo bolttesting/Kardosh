@@ -11,10 +11,12 @@
           <p class="text-white/70 mt-3">
             Speak with Kardosh Realty for curated projects, payment plans, and investor guidance.
           </p>
-          <div class="flex flex-wrap justify-center gap-3 mt-8">
-            <RouterLink to="/contact" class="btn bg-primary hover:bg-primary-dark text-white rounded-lg px-8">
-              Request a consultation
-            </RouterLink>
+          <div class="flex flex-wrap justify-center items-center gap-3 mt-8">
+            <KardoshSlideButton
+              label="Request a consultation"
+              to="/contact"
+              fluid
+            />
             <a
               :href="whatsAppLink()"
               target="_blank"
@@ -31,7 +33,7 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { whatsAppLink } from '@/config/marketing'
 import { SECTION_IMAGES } from '@/config/dubai-images'
 </script>

@@ -1,18 +1,16 @@
 <template>
   <div v-if="amenities?.length" class="property-amenity-grid">
-    <h6 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
-      Amenities & features
-    </h6>
-    <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 list-none p-0 m-0">
+    <h6 class="property-amenity-grid__title">Amenities &amp; features</h6>
+    <ul class="property-amenity-grid__list list-none p-0 m-0">
       <li
         v-for="(name, i) in amenities"
         :key="i"
-        class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/80 hover:border-primary/30 transition"
+        class="property-amenity-grid__card"
       >
-        <span class="shrink-0 size-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <component :is="iconFor(name)" class="size-4 text-primary" />
+        <span class="property-amenity-grid__icon" aria-hidden="true">
+          <component :is="iconFor(name)" class="size-[1.125rem]" />
         </span>
-        <span class="text-sm text-slate-700 dark:text-slate-200 leading-snug pt-0.5">{{ name }}</span>
+        <span class="property-amenity-grid__label">{{ name }}</span>
       </li>
     </ul>
   </div>
@@ -28,6 +26,12 @@ import {
   Shield,
   Wifi,
   Sparkles,
+  ConciergeBell,
+  Sofa,
+  Clapperboard,
+  Cigarette,
+  CarFront,
+  Smartphone,
 } from 'lucide-vue-next'
 
 defineProps({
@@ -35,13 +39,17 @@ defineProps({
 })
 
 const ICON_RULES = [
-  { test: /pool|swim/i, icon: Waves },
-  { test: /gym|fitness/i, icon: Dumbbell },
-  { test: /parking|car\b/i, icon: Car },
-  { test: /park|garden|green/i, icon: Trees },
-  { test: /security|concierge|guard/i, icon: Shield },
-  { test: /wifi|internet/i, icon: Wifi },
+  { test: /pool|swim|infinity/i, icon: Waves },
+  { test: /gym|fitness|yoga/i, icon: Dumbbell },
+  { test: /parking|car\b|chauffeur/i, icon: CarFront },
+  { test: /park|garden|green|beach/i, icon: Trees },
+  { test: /security|concierge|guard/i, icon: ConciergeBell },
+  { test: /wifi|internet|app/i, icon: Smartphone },
   { test: /spa|wellness|luxury/i, icon: Sparkles },
+  { test: /lounge|residents/i, icon: Sofa },
+  { test: /screen|cinema|theatre|theater/i, icon: Clapperboard },
+  { test: /cigar/i, icon: Cigarette },
+  { test: /valet|parking/i, icon: Car },
 ]
 
 function iconFor(name) {

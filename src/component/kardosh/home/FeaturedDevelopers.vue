@@ -14,8 +14,7 @@
               Featured developers
             </h2>
             <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
-              Browse off-plan inventory from established UAE developers — live project data on our
-              Reelly-powered catalogue.
+              Browse off-plan inventory from established UAE developers — with live project data and transparent pricing.
             </p>
 
             <ul class="mt-6 space-y-3.5" role="list">
@@ -39,7 +38,7 @@
               class="mt-8 flex flex-wrap gap-3"
             >
               <div
-                class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900 px-4 py-3 min-w-[7rem]"
+                class="rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 min-w-[7rem]"
               >
                 <p class="text-2xl font-semibold text-slate-900 dark:text-white tabular-nums">
                   {{ catalogStats.developers }}
@@ -47,7 +46,7 @@
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Active developers</p>
               </div>
               <div
-                class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900 px-4 py-3 min-w-[7rem]"
+                class="rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 min-w-[7rem]"
               >
                 <p class="text-2xl font-semibold text-slate-900 dark:text-white tabular-nums">
                   {{ catalogStats.projects }}+
@@ -75,16 +74,10 @@
 
           <div class="lg:col-span-8 min-w-0">
             <div
-              class="flex items-center justify-between gap-4 mb-5 pb-5 border-b border-slate-200/80 dark:border-slate-700/80"
+              v-if="!loading && featured.length"
+              class="flex items-center justify-end gap-4 mb-5 pb-5 border-b border-slate-200/80 dark:border-slate-700/80"
             >
-              <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                <Layers class="size-4 shrink-0 text-primary" aria-hidden="true" />
-                <span>Reelly-powered catalogue</span>
-              </div>
-              <span
-                v-if="!loading && featured.length"
-                class="text-xs font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500"
-              >
+              <span class="text-xs font-medium uppercase tracking-wider text-slate-400 dark:text-slate-400">
                 Top {{ featured.length }} partners
               </span>
             </div>
@@ -115,7 +108,7 @@
                   <SwiperSlide v-for="dev in featuredMobile" :key="`dev-m-${dev.id}`">
                     <RouterLink
                       :to="`/developer/${dev.id}`"
-                      class="group flex h-full items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-primary/40"
+                      class="group flex h-full items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-4 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-slate-500"
                     >
                       <DeveloperCardInner :dev="dev" />
                     </RouterLink>
@@ -128,7 +121,7 @@
                   v-for="dev in featured"
                   :key="dev.id"
                   :to="`/developer/${dev.id}`"
-                  class="group flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 md:p-5 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-primary/40"
+                  class="group flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-4 md:p-5 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-slate-500"
                 >
                   <DeveloperCardInner :dev="dev" />
                 </RouterLink>
@@ -145,7 +138,7 @@
 import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { ArrowRight, Check, Layers } from 'lucide-vue-next'
+import { ArrowRight, Check } from 'lucide-vue-next'
 import { useReelly } from '@/composables/useReelly'
 import DeveloperGridSkeleton from '@/component/kardosh/skeleton/DeveloperGridSkeleton.vue'
 import DeveloperCardInner from '@/component/kardosh/home/DeveloperCardInner.vue'

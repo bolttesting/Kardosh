@@ -1,21 +1,33 @@
 <template>
   <section
     class="relative"
-    :class="mt ? 'lg:mt-24 mt-16' : 'mt-0'"
+    :class="[
+      mt ? 'lg:mt-24 mt-16' : 'mt-0',
+      pageMode ? 'contact-page-enquiry lg:py-20 py-14' : '',
+    ]"
     aria-labelledby="get-in-touch-heading"
   >
     <div class="container-fluid">
       <div
-        class="get-in-touch-panel rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40 p-6 md:p-10 lg:p-12"
+        :class="[
+          'rounded-3xl border p-6 md:p-10 lg:p-12',
+          pageMode
+            ? 'contact-enquiry-panel border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'
+            : 'get-in-touch-panel border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/40',
+        ]"
       >
         <div class="max-w-3xl mx-auto text-center">
-          <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Contact</p>
           <h2
             id="get-in-touch-heading"
-            class="about-kardosh__headline justify-center text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+            class="about-kardosh__headline justify-center text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white leading-tight"
           >
             <span class="about-kardosh__headline-word">Have a question?</span>
-            <span class="about-kardosh__headline-word text-slate-600 dark:text-slate-300">Get in touch.</span>
+            <span
+              v-if="!pageMode"
+              class="about-kardosh__headline-word text-slate-600 dark:text-slate-300"
+            >
+              Get in touch.
+            </span>
           </h2>
           <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed mx-auto">
             Speak with our DIFC team about off-plan, ready homes, rentals, or selling your property.
@@ -23,8 +35,14 @@
           </p>
         </div>
 
-        <div class="mt-10 lg:mt-12 grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <ul class="lg:col-span-4 space-y-3 xl:space-y-4 order-2 lg:order-1" role="list">
+        <div
+          :class="[
+            'mt-10 lg:mt-12 grid lg:grid-cols-12 items-start',
+            pageMode ? 'contact-enquiry__grid gap-10 lg:gap-12 xl:gap-16' : 'gap-8 lg:gap-10',
+          ]"
+        >
+          <div class="lg:col-span-4 flex flex-col gap-5 order-2 lg:order-1 min-w-0">
+            <ul class="space-y-3 xl:space-y-4 list-none p-0 m-0" role="list">
             <li v-for="channel in contactChannels" :key="channel.label">
               <component
                 :is="channel.external ? 'a' : 'RouterLink'"
@@ -32,7 +50,7 @@
                 :to="!channel.external ? channel.href : undefined"
                 :target="channel.external ? '_blank' : undefined"
                 :rel="channel.external ? 'noopener noreferrer' : undefined"
-                class="group flex items-start gap-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 md:p-4 transition duration-300 hover:border-primary/35 hover:shadow-sm dark:hover:border-primary/40"
+                class="group flex items-start gap-3 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-3.5 md:p-4 transition duration-300 hover:border-primary/35 hover:shadow-sm dark:hover:border-slate-500"
               >
                 <span
                   class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary transition-colors group-hover:bg-primary group-hover:text-white dark:group-hover:text-slate-900"
@@ -46,11 +64,41 @@
                 </span>
               </component>
             </li>
-          </ul>
+            </ul>
 
-          <div class="lg:col-span-8 min-w-0 order-1 lg:order-2">
+            <div v-if="pageMode" class="contact-enquiry__social flex flex-wrap gap-3">
+              <a
+                :href="SOCIAL.linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary"
+              >
+                <Linkedin class="size-4" aria-hidden="true" />
+                LinkedIn
+              </a>
+              <a
+                :href="SOCIAL.instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary"
+              >
+                <Instagram class="size-4" aria-hidden="true" />
+                Instagram
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="lg:col-span-8 min-w-0 order-1 lg:order-2"
+            :class="pageMode ? 'contact-enquiry__form-col' : ''"
+          >
             <div
-              class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 md:p-8 shadow-sm h-full"
+              :class="[
+                'rounded-2xl border p-6 md:p-8 h-full',
+                pageMode
+                  ? 'contact-enquiry__form border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80'
+                  : 'border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 shadow-sm',
+              ]"
             >
               <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
                 {{ pageMode ? 'Send your enquiry' : 'Send a quick enquiry' }}
@@ -76,7 +124,7 @@
                       type="text"
                       required
                       autocomplete="name"
-                      class="form-input border border-slate-200! dark:border-slate-700! mt-1.5 w-full rounded-lg"
+                      class="form-input border border-slate-200! dark:border-slate-600! mt-1.5 w-full rounded-lg placeholder:text-slate-400 dark:placeholder:text-slate-400"
                       placeholder="Your name"
                     />
                   </div>
@@ -87,7 +135,7 @@
                       v-model="form.email"
                       type="email"
                       autocomplete="email"
-                      class="form-input border border-slate-200! dark:border-slate-700! mt-1.5 w-full rounded-lg"
+                      class="form-input border border-slate-200! dark:border-slate-600! mt-1.5 w-full rounded-lg placeholder:text-slate-400 dark:placeholder:text-slate-400"
                       placeholder="you@email.com"
                     />
                   </div>
@@ -101,7 +149,7 @@
                       v-model="form.phone"
                       type="tel"
                       autocomplete="tel"
-                      class="form-input border border-slate-200! dark:border-slate-700! mt-1.5 w-full rounded-lg"
+                      class="form-input border border-slate-200! dark:border-slate-600! mt-1.5 w-full rounded-lg placeholder:text-slate-400 dark:placeholder:text-slate-400"
                       placeholder="+971 50 …"
                     />
                   </div>
@@ -110,7 +158,7 @@
                     <select
                       :id="`${fieldPrefix}-type`"
                       v-model="form.listingType"
-                      class="form-select form-input border border-slate-200! dark:border-slate-700! mt-1.5 w-full rounded-lg"
+                      class="form-select form-input border border-slate-200! dark:border-slate-600! mt-1.5 w-full rounded-lg"
                     >
                       <option value="sale">Buy / Off-plan</option>
                       <option value="rent">Rent</option>
@@ -125,7 +173,7 @@
                     :id="`${fieldPrefix}-message`"
                     v-model="form.message"
                     rows="4"
-                    class="form-input border border-slate-200! dark:border-slate-700! mt-1.5 w-full rounded-lg textarea"
+                    class="form-input border border-slate-200! dark:border-slate-600! mt-1.5 w-full rounded-lg textarea placeholder:text-slate-400 dark:placeholder:text-slate-400"
                     placeholder="Tell us about your budget, community, or timeline…"
                   />
                 </div>
@@ -153,6 +201,20 @@
             </div>
           </div>
         </div>
+
+        <div
+          v-if="pageMode && showMap"
+          class="contact-enquiry__map mt-10 lg:mt-12 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 min-h-[280px] md:min-h-[360px] lg:min-h-[420px]"
+        >
+          <iframe
+            title="Kardosh Realty office — DIFC Dubai"
+            :src="GOOGLE_MAP_EMBED"
+            class="w-full h-full min-h-[280px] md:min-h-[360px] lg:min-h-[420px] border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -161,9 +223,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-vue-next'
-import { BRAND } from '@/config/brand'
-import { CONTACT } from '@/config/uae'
+import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-vue-next'
+import { BRAND, SOCIAL } from '@/config/brand'
+import { CONTACT, GOOGLE_MAP_EMBED } from '@/config/uae'
 import { whatsAppLink } from '@/config/marketing'
 import { submitLead } from '@/services/leads'
 
@@ -171,6 +233,8 @@ const props = defineProps({
   mt: { type: Boolean, default: true },
   /** Full contact page: hide link to /contact and use distinct field ids */
   pageMode: { type: Boolean, default: false },
+  /** Embed office map below enquiry grid (contact page) */
+  showMap: { type: Boolean, default: false },
 })
 
 const fieldPrefix = computed(() => (props.pageMode ? 'contact' : 'home-contact'))

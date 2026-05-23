@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex size-14 md:size-16 shrink-0 items-center justify-center rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 p-2 transition-colors duration-300 group-hover:border-primary/20 group-hover:bg-primary/5"
+    class="flex size-14 md:size-16 shrink-0 items-center justify-center rounded-xl border border-slate-100 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/80 p-2 transition-colors duration-300 group-hover:border-primary/20 group-hover:bg-primary/5 dark:group-hover:bg-slate-600"
   >
     <img
       v-if="dev.logo?.url"

@@ -69,6 +69,10 @@
 @import "./custom/components/_kardosh-buttons.css";
 @import "./custom/pages/_hero.css";
 @import "./custom/pages/_map-page.css";
+@import "./custom/pages/_communities-page.css";
+@import "./custom/pages/_developers-page.css";
+@import "./custom/pages/_why-dubai-page.css";
+@import "./custom/pages/_about-page.css";
 @import "./custom/pages/_countdown.css";
 @import "./custom/pages/_contact.css";
 @import "./custom/pages/_swiper-slider.css";
@@ -76,13 +80,20 @@
 @import "./custom/components/_testimonials-columns.css";
 @import "./custom/components/_footer-hover.css";
 @import "./custom/components/_property-listing-card.css";
+@import "./custom/components/_property-amenity-grid.css";
+@import "./custom/components/_property-detail-tabs.css";
+@import "./custom/components/_blur-vignette.css";
 @import "./custom/components/_investor-favourites-carousel.css";
 @import "./custom/components/_about-pillars-carousel.css";
+@import "./custom/components/_about-team-carousel.css";
 @import "./custom/components/_kardosh-mobile-carousel.css";
+@import "./custom/components/_kardosh-slide-button.css";
+@import "./custom/components/_why-invest-advantages.css";
 @import "./custom/components/_property-image-watermark.css";
 @import "./custom/components/_developer.css";
 @import "./custom/_rtl.css";
 @import "./custom/pages/_choices.css";
+@import "./custom/_kardosh-dark-mode.css";
 
 
 /* For Pagination */

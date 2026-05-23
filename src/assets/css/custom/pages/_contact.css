@@ -1,6 +1,88 @@
 /*********************************/
 /*             Contact           */
 /*===============================*/
+
+/* Contact page enquiry block — flat panel, spaced columns */
+.contact-enquiry-panel {
+    box-shadow: none;
+}
+
+@media (min-width: 1024px) {
+    .contact-enquiry__grid {
+        column-gap: 3.5rem;
+    }
+
+    .contact-enquiry__form-col {
+        padding-inline-start: 0.5rem;
+        border-inline-start: 1px solid rgb(226 232 240);
+    }
+
+    .dark .contact-enquiry__form-col {
+        border-inline-start-color: rgb(71 85 105);
+    }
+}
+
+@media (min-width: 1280px) {
+    .contact-enquiry__grid {
+        column-gap: 4rem;
+    }
+
+    .contact-enquiry__form-col {
+        padding-inline-start: 1rem;
+    }
+}
+
+.contact-enquiry__form {
+    box-shadow: none;
+}
+
+.contact-enquiry__social {
+    padding-top: 0.25rem;
+}
+
+.contact-enquiry__map {
+    position: relative;
+    z-index: 1;
+}
+
+/* CTA — blur vignette panel (matches communities / developers / about) */
+.contact-cta__vignette {
+    border: 1px solid rgb(255 255 255 / 0.12);
+    box-shadow:
+        0 24px 48px rgb(15 23 42 / 0.2),
+        0 8px 16px rgb(15 23 42 / 0.1);
+}
+
+.dark .contact-cta__vignette {
+    border-color: rgb(71 85 105 / 0.5);
+    box-shadow:
+        0 24px 48px rgb(0 0 0 / 0.45),
+        0 8px 16px rgb(0 0 0 / 0.3);
+}
+
+.contact-cta__content {
+    pointer-events: auto;
+}
+
+.contact-cta__content .btn {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-cta__btn-primary {
+    color: var(--kardosh-ink, #0a0a0a) !important;
+}
+
+.dark .contact-cta__btn-primary {
+    color: var(--kardosh-ink, #0a0a0a) !important;
+    background: var(--kardosh-paper, #fafafa) !important;
+}
+
+.dark .contact-cta__btn-primary:hover {
+    background: rgb(245 245 245) !important;
+    color: var(--kardosh-ink, #0a0a0a) !important;
+}
+
 .form-input {
     @apply w-full py-2 px-3 border border-inherit  dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 rounded-sm h-10 outline-none bg-transparent;
     &:focus {

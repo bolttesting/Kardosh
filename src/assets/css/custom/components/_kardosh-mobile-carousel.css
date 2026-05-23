@@ -138,14 +138,10 @@
         display: none;
     }
 
-    .why-invest-advantages--desktop {
-        display: none;
-    }
 }
 
 @media (min-width: 768px) {
-    .why-invest-stats-carousel,
-    .why-invest-advantages-carousel {
+    .why-invest-stats-carousel {
         display: none;
     }
 }

@@ -23,12 +23,7 @@
             class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm overflow-hidden"
           >
             <header class="property-detail-header p-6 md:p-8 border-b border-slate-100 dark:border-slate-800">
-              <span
-                class="inline-block text-xs uppercase tracking-wider font-semibold text-primary dark:text-white bg-primary/10 dark:bg-white/10 px-3 py-1 rounded-full"
-              >
-                {{ property.listingType === 'off-plan' ? 'Off-Plan' : property.listingType }}
-              </span>
-              <h1 class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight">
+              <h1 class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white leading-tight">
                 {{ property.title || property.name }}
               </h1>
               <p v-if="locationLabel" class="text-slate-500 dark:text-slate-400 mt-2 flex items-start gap-2 text-sm">
@@ -111,92 +106,110 @@
           />
 
           <!-- Details tabs -->
-          <div class="mt-10">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Property details</h2>
-            <ul class="property-detail-tabs flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700 list-none p-0 m-0">
-            <li v-for="tab in visibleTabs" :key="tab.id">
+          <section class="property-details-section" aria-label="Property details">
+            <header class="property-details-section__head">
+              <h2 class="property-details-section__title">Property details</h2>
+            </header>
+
+            <nav
+              class="property-details-section__nav listings-search-glass"
+              role="tablist"
+              aria-label="Property detail sections"
+            >
               <button
+                v-for="tab in visibleTabs"
+                :key="tab.id"
                 type="button"
-                :class="activeTab === tab.id ? 'border-primary text-primary' : 'border-transparent text-slate-500'"
-                class="px-4 py-2 border-b-2 font-medium text-sm"
+                role="tab"
+                class="property-details-tab"
+                :class="{ 'property-details-tab--active': activeTab === tab.id }"
+                :aria-selected="activeTab === tab.id"
                 @click="activeTab = tab.id"
               >
                 {{ tab.label }}
               </button>
-            </li>
-          </ul>
+            </nav>
 
-          <!-- Units + floor plans -->
-          <div v-show="activeTab === 'units'" class="mt-6">
-            <p v-if="unitsRestricted" class="text-slate-700 bg-slate-100 dark:bg-slate-800/80 dark:text-slate-200 p-4 rounded-lg text-sm mb-6 border border-slate-200 dark:border-slate-700">
-              {{ unitsMessage }}
-            </p>
+            <div class="property-details-section__panel" role="tabpanel">
+              <!-- Units + floor plans -->
+              <div v-show="activeTab === 'units'">
+                <p v-if="unitsRestricted" class="property-details-notice">
+                  {{ unitsMessage }}
+                </p>
 
-            <PropertyFloorPlanGroups
-              v-if="floorPlanGroups.length || property.projectFloorPlanImages?.length"
-              :groups="floorPlanGroups"
-              :project-plans="property.projectFloorPlanImages || []"
-              @open-plan="openPlanLightbox"
-            />
+                <PropertyFloorPlanGroups
+                  v-if="floorPlanGroups.length || property.projectFloorPlanImages?.length"
+                  :groups="floorPlanGroups"
+                  :project-plans="property.projectFloorPlanImages || []"
+                  @open-plan="openPlanLightbox"
+                />
 
-            <div
-              v-if="property.floorPlanPdfs?.length"
-              class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800"
-            >
-              <h5 class="font-semibold text-slate-900 dark:text-white mb-1">Building & layout PDFs</h5>
-              <p class="text-sm text-slate-500 mb-4">Downloadable floor plans and layout brochures for this project.</p>
-              <PropertyDocumentList :documents="property.floorPlanPdfs" />
+                <div
+                  v-if="property.floorPlanPdfs?.length"
+                  class="property-details-panel__divider"
+                >
+                  <h3 class="property-details-panel__subhead">Building & layout PDFs</h3>
+                  <p class="property-details-panel__sublead">
+                    Downloadable floor plans and layout brochures for this project.
+                  </p>
+                  <PropertyDocumentList :documents="property.floorPlanPdfs" />
+                </div>
+
+                <p
+                  v-if="!hasUnitsTabContent"
+                  class="property-details-panel__empty"
+                >
+                  No unit configurations listed for this project.
+                </p>
+              </div>
+
+              <div v-show="activeTab === 'brochure'">
+                <p class="property-details-panel__lead">
+                  Official marketing brochure with project highlights, visuals, and key information.
+                </p>
+                <PropertyDocumentList
+                  :documents="property.marketingBrochure ? [property.marketingBrochure] : []"
+                  empty-text="No marketing brochure available for this project."
+                />
+              </div>
+
+              <div v-show="activeTab === 'payment'">
+                <p class="property-details-panel__lead">
+                  Official developer payment structure for this project. Percentages show the split before and after handover where applicable.
+                </p>
+                <PropertyPaymentPlans :plans="property.paymentPlans" />
+              </div>
+
+              <div v-show="activeTab === 'documents'">
+                <p class="property-details-panel__lead">
+                  Additional project documents (excluding marketing brochure and floor plan PDFs).
+                </p>
+                <PropertyDocumentList
+                  :documents="property.documents || []"
+                  empty-text="No additional documents for this project."
+                />
+              </div>
+
+              <div v-show="activeTab === 'buildings'">
+                <PropertyBuildings
+                  v-if="property.buildings?.length"
+                  :buildings="property.buildings"
+                />
+                <p v-else class="property-details-panel__empty">
+                  No buildings listed for this project.
+                </p>
+              </div>
             </div>
 
-            <p
-              v-if="!hasUnitsTabContent"
-              class="text-slate-400"
-            >No unit configurations listed for this project.</p>
-          </div>
-
-          <div v-show="activeTab === 'brochure'" class="mt-6">
-            <p class="text-sm text-slate-500 mb-4">
-              Official marketing brochure with project highlights, visuals, and key information.
-            </p>
-            <PropertyDocumentList
-              :documents="property.marketingBrochure ? [property.marketingBrochure] : []"
-              empty-text="No marketing brochure available for this project."
+            <PropertyLocationSection
+              class="property-details-section__location"
+              :location="property.location"
+              :location-label="locationLabel"
+              :latitude="property.latitude"
+              :longitude="property.longitude"
+              :project-title="property.title || property.name"
             />
-          </div>
-
-          <div v-show="activeTab === 'payment'" class="mt-6">
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              Official developer payment structure for this project. Percentages show the split before and after handover where applicable.
-            </p>
-            <PropertyPaymentPlans :plans="property.paymentPlans" />
-          </div>
-
-          <div v-show="activeTab === 'documents'" class="mt-6">
-            <p class="text-sm text-slate-500 mb-4">
-              Additional project documents (excluding marketing brochure and floor plan PDFs).
-            </p>
-            <PropertyDocumentList
-              :documents="property.documents || []"
-              empty-text="No additional documents for this project."
-            />
-          </div>
-
-          <div v-show="activeTab === 'buildings'" class="mt-6">
-            <PropertyBuildings
-              v-if="property.buildings?.length"
-              :buildings="property.buildings"
-            />
-            <p v-else class="text-slate-400">No buildings listed for this project.</p>
-          </div>
-
-          <PropertyLocationSection
-            :location="property.location"
-            :location-label="locationLabel"
-            :latitude="property.latitude"
-            :longitude="property.longitude"
-            :project-title="property.title || property.name"
-          />
-          </div>
+          </section>
         </div>
 
         <aside class="xl:col-span-4 mt-8 xl:mt-0 min-w-0">

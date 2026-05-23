@@ -4,7 +4,6 @@
   <PageHero
     title="Why invest in Dubai?"
     subtitle="Tax efficiency, regulated off-plan, residency pathways, and one of the world's most active property markets — guided by Kardosh Realty."
-    eyebrow="Investors"
     :image="PAGE_HERO_IMAGES.whyDubai"
   />
 
@@ -12,13 +11,13 @@
   <section class="relative z-10 -mt-8 lg:-mt-10">
     <div class="container-fluid">
       <ul
-        class="kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
+        class="why-dubai-stats listings-search-glass kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none m-0"
       >
         <li v-for="stat in WHY_DUBAI_STATS" :key="stat.label" class="text-center px-2">
-          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
+          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold tabular-nums">
             {{ stat.value }}
           </p>
-          <p class="kardosh-profile-stats__label text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
+          <p class="kardosh-profile-stats__label text-xs md:text-sm mt-1">{{ stat.label }}</p>
         </li>
       </ul>
     </div>
@@ -71,13 +70,13 @@
                 {{ point }}
               </li>
             </ul>
-            <RouterLink
-              to="/off-plan"
-              class="mt-8 btn bg-primary text-white rounded-lg inline-flex items-center justify-center gap-2 px-6 font-semibold"
-            >
-              Browse off-plan
-              <ArrowRight class="size-4" aria-hidden="true" />
-            </RouterLink>
+            <div class="why-dubai-intro__cta mt-8">
+              <KardoshSlideButton
+                label="Browse off-plan"
+                to="/off-plan"
+                fluid
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -90,11 +89,10 @@
     aria-labelledby="advantages-heading"
   >
     <div class="container-fluid">
-      <div class="max-w-3xl">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Market fundamentals</p>
+      <div class="why-dubai-advantages__intro">
         <h2
           id="advantages-heading"
-          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white leading-tight"
         >
           Six reasons investors choose Dubai
         </h2>
@@ -103,35 +101,29 @@
         </p>
       </div>
 
-      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      <div class="why-dubai-advantages__grid mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
         <article
           v-for="(item, i) in INVESTMENT_ADVANTAGES"
           :key="item.title"
-          class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 transition hover:border-primary/30 hover:shadow-md"
+          class="why-dubai-advantage-card group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 transition hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-md"
         >
-          <div
-            class="flex size-12 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary transition group-hover:bg-primary group-hover:text-white"
-          >
+          <div class="why-dubai-advantage-card__icon">
             <component :is="ADVANTAGE_ICONS[i]" class="size-5" aria-hidden="true" />
           </div>
           <h3 class="font-semibold text-slate-900 dark:text-white mt-4">{{ item.title }}</h3>
           <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.desc }}</p>
         </article>
       </div>
-      <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-8 max-w-2xl mx-auto">
-        Figures are indicative — speak with our DIFC team for project-specific yields and visa eligibility.
-      </p>
     </div>
   </section>
 
   <!-- Buyer journey -->
   <section class="lg:py-20 py-14" aria-labelledby="journey-heading">
     <div class="container-fluid">
-      <div class="max-w-3xl mx-auto text-center">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">How it works</p>
+      <div class="why-dubai-journey__intro">
         <h2
           id="journey-heading"
-          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3"
+          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white"
         >
           Your path from enquiry to keys
         </h2>
@@ -140,17 +132,17 @@
         </p>
       </div>
 
-      <ol class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-5 list-none p-0">
+      <ol class="why-dubai-journey__grid mt-12 list-none p-0 m-0">
         <li
           v-for="step in BUYER_JOURNEY_STEPS"
           :key="step.step"
-          class="relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6"
+          class="why-dubai-journey-card listings-search-glass group"
         >
-          <span class="text-3xl font-semibold text-slate-200 dark:text-slate-700 tabular-nums">
-            {{ step.step }}
-          </span>
-          <h3 class="font-semibold text-slate-900 dark:text-white mt-3">{{ step.title }}</h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ step.text }}</p>
+          <span class="why-dubai-journey-card__step">{{ step.step }}</span>
+          <div class="why-dubai-journey-card__content relative z-[1]">
+            <h3 class="why-dubai-journey-card__title">{{ step.title }}</h3>
+            <p class="why-dubai-journey-card__text">{{ step.text }}</p>
+          </div>
         </li>
       </ol>
     </div>
@@ -236,7 +228,7 @@
     aria-labelledby="rera-heading"
   >
     <div class="container-fluid">
-      <div class="max-w-3xl">
+      <div class="why-dubai-rera__intro">
         <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Regulation</p>
         <h2
           id="rera-heading"
@@ -248,15 +240,17 @@
           Dubai’s framework is designed to protect off-plan buyers — understand the basics before you sign.
         </p>
       </div>
-      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="why-dubai-rera__grid mt-10">
         <article
           v-for="item in RERA_SAFEGUARDS"
           :key="item.title"
-          class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 md:p-6"
+          class="why-dubai-rera-card listings-search-glass group"
         >
-          <ShieldCheck class="size-6 text-primary mb-3" aria-hidden="true" />
-          <h3 class="font-semibold text-slate-900 dark:text-white">{{ item.title }}</h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.text }}</p>
+          <div class="why-dubai-rera-card__icon" aria-hidden="true">
+            <ShieldCheck class="size-5" />
+          </div>
+          <h3 class="why-dubai-rera-card__title">{{ item.title }}</h3>
+          <p class="why-dubai-rera-card__text">{{ item.text }}</p>
         </article>
       </div>
     </div>
@@ -265,43 +259,55 @@
   <!-- Top districts -->
   <section class="lg:py-20 py-14" aria-labelledby="districts-heading">
     <div class="container-fluid">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 max-w-3xl">
-        <div>
-          <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Where to buy</p>
-          <h2
-            id="districts-heading"
-            class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3"
-          >
-            Popular investment corridors
-          </h2>
-          <p class="text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
-            Explore community pages for live off-plan stock in each area.
-          </p>
-        </div>
-        <RouterLink
-          to="/communities"
-          class="text-sm font-semibold text-primary hover:underline shrink-0"
+      <div class="why-dubai-districts__intro">
+        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Where to buy</p>
+        <h2
+          id="districts-heading"
+          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3"
         >
-          All UAE communities →
+          Popular investment corridors
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+          Explore community pages for live off-plan stock in each area.
+        </p>
+        <RouterLink to="/communities" class="why-dubai-districts__all-link">
+          All UAE communities
+          <ArrowRight class="size-4" aria-hidden="true" />
         </RouterLink>
       </div>
 
-      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <RouterLink
+      <div class="why-dubai-districts__grid mt-10">
+        <article
           v-for="d in TOP_INVESTMENT_DISTRICTS"
           :key="d.slug"
-          :to="`/communities/${d.slug}`"
-          class="group rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 md:p-6 hover:border-primary/40 hover:shadow-md transition"
+          class="why-dubai-district-card community-card--luxury kardosh-property-card--luxury listings-search-glass group flex flex-col"
         >
-          <h3 class="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-            {{ d.name }}
-          </h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ d.tagline }}</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
-            View community
-            <ArrowUpRight class="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-        </RouterLink>
+          <div class="why-dubai-district-card__content flex flex-1 flex-col min-w-0">
+            <RouterLink
+              :to="`/communities/${d.slug}`"
+              class="why-dubai-district-card__title"
+            >
+              {{ d.name }}
+            </RouterLink>
+            <p class="why-dubai-district-card__tagline">{{ d.tagline }}</p>
+            <div class="community-card__footer">
+              <div>
+                <p class="kardosh-property-card__price-label">Community</p>
+                <p class="kardosh-property-card__price-value">{{ d.name }}</p>
+              </div>
+              <RouterLink
+                :to="`/communities/${d.slug}`"
+                class="kardosh-property-card__cta"
+                :aria-label="`Visit ${d.name}`"
+              >
+                <span class="kardosh-property-card__cta-text">Visit</span>
+                <span class="kardosh-property-card__cta-icon" aria-hidden="true">
+                  <ArrowRight class="size-5" />
+                </span>
+              </RouterLink>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -387,7 +393,6 @@
 import { RouterLink } from 'vue-router'
 import {
   ArrowRight,
-  ArrowUpRight,
   Award,
   CalendarClock,
   Check,
@@ -402,6 +407,7 @@ import Navbar from '@/component/navbar.vue'
 import Footer from '@/component/footer.vue'
 import Switcher from '@/component/switcher.vue'
 import PageHero from '@/component/kardosh/PageHero.vue'
+import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { PAGE_HERO_IMAGES, SECTION_IMAGES } from '@/config/dubai-images'
 import {
   WHY_DUBAI_STATS,

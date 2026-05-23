@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="showSection"
-    class="related-properties border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/40"
+    class="related-properties bg-white dark:bg-slate-950"
   >
     <div class="container-fluid py-12 md:py-16">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
@@ -38,6 +38,7 @@
           v-for="item in items"
           :key="`${item.source || 'listing'}-${item.id}`"
           :item="item"
+          variant="luxury"
         />
       </div>
     </div>

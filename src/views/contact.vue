@@ -4,7 +4,6 @@
   <PageHero
     title="Contact Kardosh Realty"
     subtitle="Speak with our DIFC team about off-plan, ready homes, rentals, and investor advisory across the UAE."
-    eyebrow="Get in touch"
     :image="PAGE_HERO_IMAGES.contact"
   />
 
@@ -24,106 +23,8 @@
     </div>
   </section>
 
-  <!-- Enquiry form + channels -->
-  <HomeGetInTouch :mt="false" page-mode />
-
-  <!-- Map & office -->
-  <section class="lg:py-20 py-14 bg-slate-50 dark:bg-slate-900/50" aria-labelledby="office-heading">
-    <div class="container-fluid">
-      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
-        <div class="lg:col-span-5 flex flex-col gap-6">
-          <div>
-            <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Visit us</p>
-            <h2
-              id="office-heading"
-              class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
-            >
-              DIFC, Dubai
-            </h2>
-            <p class="text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
-              {{ CONTACT.address }}
-            </p>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{{ CONTACT.hours }}</p>
-          </div>
-
-          <ul class="space-y-3 list-none p-0" role="list">
-            <li>
-              <a
-                :href="CONTACT.phoneTel"
-                class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 hover:border-primary/40 transition"
-              >
-                <Phone class="size-5 text-primary shrink-0" aria-hidden="true" />
-                <span>
-                  <span class="block text-sm font-semibold text-slate-900 dark:text-white">Phone</span>
-                  <span class="block text-sm text-slate-500 dark:text-slate-400">{{ CONTACT.phone }}</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                :href="`mailto:${BRAND.email}`"
-                class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 hover:border-primary/40 transition"
-              >
-                <Mail class="size-5 text-primary shrink-0" aria-hidden="true" />
-                <span>
-                  <span class="block text-sm font-semibold text-slate-900 dark:text-white">Email</span>
-                  <span class="block text-sm text-slate-500 dark:text-slate-400">{{ BRAND.email }}</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                :href="mapsDirectionsUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 hover:border-primary/40 transition"
-              >
-                <MapPin class="size-5 text-primary shrink-0" aria-hidden="true" />
-                <span>
-                  <span class="block text-sm font-semibold text-slate-900 dark:text-white">Directions</span>
-                  <span class="block text-sm text-primary">Open in Google Maps</span>
-                </span>
-              </a>
-            </li>
-          </ul>
-
-          <div class="flex flex-wrap gap-3">
-            <a
-              :href="SOCIAL.linkedin"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary"
-            >
-              <Linkedin class="size-4" aria-hidden="true" />
-              LinkedIn
-            </a>
-            <a
-              :href="SOCIAL.instagram"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary"
-            >
-              <Instagram class="size-4" aria-hidden="true" />
-              Instagram
-            </a>
-          </div>
-        </div>
-
-        <div
-          class="lg:col-span-7 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm min-h-[320px] lg:min-h-[480px]"
-        >
-          <iframe
-            title="Kardosh Realty office — DIFC Dubai"
-            :src="GOOGLE_MAP_EMBED"
-            class="w-full h-full min-h-[320px] lg:min-h-[480px] border-0"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          />
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Enquiry, visit details & map (single panel) -->
+  <HomeGetInTouch :mt="false" page-mode show-map />
 
   <!-- What to expect -->
   <section class="lg:py-20 py-14" aria-labelledby="expect-heading">
@@ -195,31 +96,50 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="pb-20 lg:pb-24">
+  <!-- CTA — blur vignette (matches communities / developers / about) -->
+  <section class="contact-cta pb-20 lg:pb-24">
     <div class="container-fluid">
-      <div
-        class="rounded-3xl border border-slate-200 dark:border-slate-700 bg-primary px-8 py-10 md:px-12 md:py-14 text-center text-white"
+      <BlurVignette
+        root-class="contact-cta__vignette w-full min-h-[20rem] md:min-h-[22rem] aspect-auto"
+        radius="1.5rem"
+        inset="10px"
+        transition-length="100px"
+        blur="15px"
       >
-        <h2 class="text-2xl md:text-3xl font-semibold">Explore while you wait</h2>
-        <p class="text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
-          Browse live off-plan stock, UAE communities, or our Why Dubai investor guide.
-        </p>
-        <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
-          <RouterLink
-            to="/off-plan"
-            class="btn bg-white text-primary hover:bg-slate-100 rounded-lg inline-flex items-center justify-center px-8 font-semibold"
-          >
-            View off-plan
-          </RouterLink>
-          <RouterLink
-            to="/why-dubai"
-            class="btn border border-white/40 text-white hover:bg-white/10 rounded-lg inline-flex items-center justify-center px-8"
-          >
-            Why Dubai
-          </RouterLink>
+        <img
+          :src="PAGE_HERO_IMAGES.contact"
+          alt="UAE skyline"
+          class="absolute inset-0 z-0 h-full w-full object-cover scale-105 transition-transform duration-700 hover:scale-110"
+          loading="lazy"
+        />
+        <div
+          class="absolute inset-0 z-[1] bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/25"
+          aria-hidden="true"
+        />
+        <BlurVignetteArticle />
+        <div
+          class="contact-cta__content relative z-10 flex min-h-[20rem] md:min-h-[22rem] flex-col items-center justify-center px-8 py-10 text-center text-white md:px-12 md:py-14"
+        >
+          <h2 class="text-2xl font-semibold md:text-3xl">Explore while you wait</h2>
+          <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
+            Browse live off-plan stock, UAE communities, or our Why Dubai investor guide.
+          </p>
+          <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
+            <RouterLink
+              to="/off-plan"
+              class="contact-cta__btn-primary btn inline-flex items-center justify-center rounded-lg bg-white px-8 font-semibold hover:bg-slate-100"
+            >
+              View off-plan
+            </RouterLink>
+            <RouterLink
+              to="/why-dubai"
+              class="btn inline-flex items-center justify-center rounded-lg border border-white/40 px-8 text-white hover:bg-white/10"
+            >
+              Why Dubai
+            </RouterLink>
+          </div>
         </div>
-      </div>
+      </BlurVignette>
     </div>
   </section>
 
@@ -229,21 +149,18 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
-import { ChevronDown, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-vue-next'
+import { ChevronDown } from 'lucide-vue-next'
 import Navbar from '@/component/navbar.vue'
 import Footer from '@/component/footer.vue'
 import Switcher from '@/component/switcher.vue'
 import PageHero from '@/component/kardosh/PageHero.vue'
+import BlurVignette from '@/component/ui/BlurVignette.vue'
+import BlurVignetteArticle from '@/component/ui/BlurVignetteArticle.vue'
 import HomeGetInTouch from '@/component/kardosh/home/HomeGetInTouch.vue'
-import { BRAND, SOCIAL } from '@/config/brand'
-import { CONTACT, GOOGLE_MAP_EMBED } from '@/config/uae'
 import { PAGE_HERO_IMAGES } from '@/config/dubai-images'
 import {
   CONTACT_PAGE_STATS,
   CONTACT_EXPECTATIONS,
   CONTACT_FAQ,
 } from '@/config/contact-page'
-
-const mapsDirectionsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Index+Tower+DIFC+Dubai'
 </script>

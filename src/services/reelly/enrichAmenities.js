@@ -1,7 +1,7 @@
 import { fetchProjectById } from './client'
-import { extractProjectAmenities } from './mapProject'
+import { extractProjectAmenities, extractProjectBedrooms } from './mapProject'
 
-const amenityCache = new Map()
+const detailCache = new Map()
 
 async function runPool(items, worker, concurrency = 8) {
   let index = 0
@@ -15,7 +15,7 @@ async function runPool(items, worker, concurrency = 8) {
 }
 
 /**
- * List `/projects` responses omit `project_amenities`; fetch detail per project.
+ * List `/projects` responses omit amenities and often typical_units; fetch detail per project.
  * Mutates listing objects in place and caches by project id for the session.
  */
 export async function enrichProjectsWithAmenities(projects, { concurrency = 8 } = {}) {
@@ -23,11 +23,14 @@ export async function enrichProjectsWithAmenities(projects, { concurrency = 8 } 
   if (!reelly.length) return
 
   for (const p of reelly) {
-    const cached = amenityCache.get(p.id)
-    if (cached?.length) p.amenities = cached
+    const cached = detailCache.get(p.id)
+    if (cached) {
+      if (cached.amenities?.length) p.amenities = cached.amenities
+      if (cached.bedrooms?.length) p.bedrooms = cached.bedrooms
+    }
   }
 
-  const pending = reelly.filter((p) => !p.amenities?.length)
+  const pending = reelly.filter((p) => !p.amenities?.length || !p.bedrooms?.length)
   if (!pending.length) return
 
   await runPool(
@@ -40,11 +43,19 @@ export async function enrichProjectsWithAmenities(projects, { concurrency = 8 } 
           preferred_area_unit: 'm2',
         })
         const amenities = extractProjectAmenities(raw)
-        amenityCache.set(listing.id, amenities)
+        const bedrooms = extractProjectBedrooms(raw)
+        detailCache.set(listing.id, { amenities, bedrooms })
         listing.amenities = amenities
+        listing.bedrooms = bedrooms
+        if (listing._raw) {
+          listing._raw.typical_units = raw.typical_units ?? listing._raw.typical_units
+          listing._raw.available_unit_types =
+            raw.available_unit_types ?? listing._raw.available_unit_types
+        }
       } catch {
-        amenityCache.set(listing.id, [])
+        detailCache.set(listing.id, { amenities: [], bedrooms: [] })
         listing.amenities = []
+        listing.bedrooms = []
       }
     },
     concurrency

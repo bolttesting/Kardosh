@@ -53,9 +53,6 @@
                 watermark-size="lg"
                 wrapper-class="absolute inset-0"
               />
-              <span class="property-gallery-slide-label">
-                {{ item.label }}
-              </span>
             </div>
           </SwiperSlide>
         </Swiper>
@@ -75,7 +72,10 @@
           >
             <ChevronRight class="size-6" />
           </button>
-          <div class="property-gallery-pagination absolute bottom-3 left-0 right-0 z-10 flex justify-center gap-1" />
+          <div
+            v-if="filtered.length > 1"
+            class="property-gallery-pagination absolute bottom-[4.25rem] left-0 right-0 z-10 flex justify-center gap-1"
+          />
         </template>
 
         <span
@@ -85,17 +85,23 @@
           {{ slideDisplay }} / {{ filtered.length }}
         </span>
 
-        <button
+        <div
           v-if="filtered.length"
-          type="button"
-          class="absolute end-4 z-20 flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-md bg-black/60 text-white backdrop-blur-sm hover:bg-primary transition"
-          :class="filtered.length > 1 ? 'bottom-12' : 'bottom-4'"
-          aria-label="View full size"
-          @click="openLightbox(activeIndex)"
+          class="property-gallery-main__bottom absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-3 px-4 pb-4 pt-8 pointer-events-none bg-gradient-to-t from-black/55 via-black/25 to-transparent"
         >
-          <Maximize2 class="size-4" />
-          View full
-        </button>
+          <span class="property-gallery-slide-label">
+            {{ activeSlideLabel }}
+          </span>
+          <button
+            type="button"
+            class="property-gallery-view-full pointer-events-auto flex shrink-0 items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-md bg-black/60 text-white backdrop-blur-sm hover:bg-primary transition"
+            aria-label="View full size"
+            @click="openLightbox(activeIndex)"
+          >
+            <Maximize2 class="size-4" />
+            View full
+          </button>
+        </div>
       </div>
 
       <!-- 2. Thumbnails — fixed-height slot so layout never jumps -->
@@ -248,6 +254,11 @@ const slideDisplay = computed(() => {
   return (activeIndex.value % n) + 1
 })
 
+const activeSlideLabel = computed(() => {
+  const item = filtered.value[activeIndex.value]
+  return item?.label || 'Photo'
+})
+
 function thumbBtnClass(index) {
   return activeIndex.value === index
     ? 'property-gallery-thumb-btn property-gallery-thumb-btn--active'
@@ -310,18 +321,28 @@ watch(filtered, (list) => {
   height: auto;
 }
 
+.property-gallery-main__bottom {
+  min-height: 3.5rem;
+}
+
 .property-gallery-slide-label {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  display: inline-block;
+  max-width: min(100%, 14rem);
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 600;
+  line-height: 1.25;
   color: #fff;
   background: rgb(0 0 0 / 0.55);
   border-radius: 0.375rem;
   backdrop-filter: blur(4px);
   pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .property-gallery-slide-label {
+    max-width: min(50%, 20rem);
+  }
 }
 
 /* Fixed height — prevents page jump when filter has 1 vs many images */

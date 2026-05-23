@@ -15,7 +15,7 @@
             <button
               type="button"
               :disabled="currentPage <= 1"
-              class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white dark:bg-slate-900 hover:text-white shadow-xs disabled:opacity-40"
+              class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 hover:border-primary hover:text-primary dark:hover:text-primary shadow-xs disabled:opacity-40"
               @click="currentPage--"
             >
               <ChevronLeft class="text-[20px]" />
@@ -26,8 +26,8 @@
               type="button"
               :class="
                 page === currentPage
-                  ? 'text-white bg-primary'
-                  : 'text-slate-400 bg-white dark:bg-slate-900 hover:bg-primary hover:text-white'
+                  ? 'pagination-page--active'
+                  : 'text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 hover:border-primary hover:text-primary dark:hover:text-primary'
               "
               class="size-10 inline-flex justify-center items-center mx-1 rounded-full shadow-xs"
               @click="currentPage = page"
@@ -39,7 +39,7 @@
             <button
               type="button"
               :disabled="currentPage >= totalPages"
-              class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white dark:bg-slate-900 hover:text-white shadow-xs disabled:opacity-40"
+              class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 hover:border-primary hover:text-primary dark:hover:text-primary shadow-xs disabled:opacity-40"
               @click="currentPage++"
             >
               <ChevronRight class="text-[20px]" />
@@ -80,3 +80,17 @@ watch(
   }
 )
 </script>
+
+<style scoped>
+.pagination-page--active {
+  color: #ffffff;
+  background: var(--color-primary, #0a0a0a);
+  border: 1px solid transparent;
+}
+
+.dark .pagination-page--active {
+  color: var(--kardosh-ink, #0a0a0a);
+  background: var(--kardosh-paper, #fafafa);
+  border-color: var(--kardosh-paper, #fafafa);
+}
+</style>

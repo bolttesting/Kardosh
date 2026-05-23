@@ -6,17 +6,30 @@
     @apply relative py-6 lg:py-8 bg-slate-50 dark:bg-slate-950;
 }
 
-/* Toolbar card — overlaps hero wave like off-plan search */
+/* Toolbar card — overlaps hero wave; glass via .listings-search-glass */
 .map-page__tools {
-    @apply relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-5 sm:p-6 mb-6 -mt-16 sm:-mt-20 bg-white dark:bg-slate-900 rounded-xl shadow-md dark:shadow-gray-700 border border-slate-100 dark:border-slate-800;
+    @apply relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6 -mt-16 sm:-mt-20;
 }
 
-.map-page__count {
-    @apply text-sm text-slate-500 dark:text-slate-400 m-0;
+.map-page__tools.listings-search-glass .map-page__count {
+    @apply text-sm m-0 relative z-[1];
+    color: rgb(71 85 105);
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__count {
+    color: rgb(203 213 225);
+}
+
+.map-page__tools.listings-search-glass .map-page__count .font-semibold {
+    color: rgb(15 23 42);
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__count .font-semibold {
+    color: #ffffff;
 }
 
 .map-page__tools-actions {
-    @apply flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:shrink-0;
+    @apply flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:shrink-0 relative z-[1];
 }
 
 .map-page__search {
@@ -28,7 +41,47 @@
 }
 
 .map-page__search-input {
-    @apply w-full h-11 ps-10 pe-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white outline-none focus:border-primary;
+    @apply w-full h-11 ps-10 pe-4 rounded-lg border text-sm outline-none;
+}
+
+.map-page__tools.listings-search-glass .map-page__search-input {
+    background: #ffffff !important;
+    border: 1px solid rgb(203 213 225) !important;
+    color: rgb(15 23 42) !important;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+}
+
+.map-page__tools.listings-search-glass .map-page__search-input::placeholder {
+    color: rgb(100 116 139);
+    opacity: 1;
+}
+
+.map-page__tools.listings-search-glass .map-page__search-input:focus {
+    border-color: rgb(15 23 42) !important;
+    box-shadow: 0 0 0 3px rgb(15 23 42 / 0.08);
+}
+
+.map-page__tools.listings-search-glass .map-page__search-icon {
+    color: rgb(100 116 139);
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__search-input {
+    background: rgb(15 23 42) !important;
+    border: 1px solid rgb(71 85 105) !important;
+    color: rgb(248 250 252) !important;
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__search-input::placeholder {
+    color: rgb(148 163 184);
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__search-input:focus {
+    border-color: rgb(148 163 184) !important;
+    box-shadow: 0 0 0 3px rgb(255 255 255 / 0.08);
+}
+
+.dark .map-page__tools.listings-search-glass .map-page__search-icon {
+    color: rgb(148 163 184);
 }
 
 .map-page__layout {

@@ -4,13 +4,12 @@
   <PageHero
     title="Off-plan map"
     subtitle="Explore UAE off-plan projects on the map. Select a marker or list item for full details."
-    eyebrow="Map"
     :image="PAGE_HERO_IMAGES.map"
   />
 
   <section class="map-page">
     <div class="container-fluid">
-      <div class="map-page__tools">
+      <div class="map-page__tools listings-search-glass">
         <p class="map-page__count">
           <span class="font-semibold text-slate-900 dark:text-white">{{ filteredMarkers.length }}</span>
           project{{ filteredMarkers.length === 1 ? '' : 's' }} on the map

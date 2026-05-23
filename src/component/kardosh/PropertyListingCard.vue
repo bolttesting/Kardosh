@@ -17,7 +17,6 @@
           wrapper-class="h-full w-full"
         />
       </RouterLink>
-      <div class="kardosh-property-card__shade" aria-hidden="true" />
       <span
         v-if="item.listingType === 'off-plan'"
         class="kardosh-property-card__type"
@@ -25,7 +24,7 @@
       <span
         v-else-if="item.listingType === 'rent'"
         class="kardosh-property-card__type"
-      >For rent</span>
+      >Rent</span>
       <span
         v-if="badge"
         class="kardosh-property-card__badge"
@@ -84,9 +83,12 @@
         <RouterLink
           :to="`/property-detail/${item.id}`"
           class="kardosh-property-card__cta"
-          :aria-label="`View ${item.name}`"
+          :aria-label="`Visit ${item.name}`"
         >
-          <ArrowUpRight class="size-4" aria-hidden="true" />
+          <span class="kardosh-property-card__cta-text">Visit</span>
+          <span class="kardosh-property-card__cta-icon" aria-hidden="true">
+            <ArrowRight class="size-5" />
+          </span>
         </RouterLink>
       </div>
     </div>
@@ -177,7 +179,7 @@ import { RouterLink } from 'vue-router'
 import { formatArea, formatStartingPrice } from '@/config/uae'
 import ListingPrice from '@/component/listing-price.vue'
 import ProtectedPropertyImage from '@/component/kardosh/ProtectedPropertyImage.vue'
-import { ArrowUpRight, Maximize } from 'lucide-vue-next'
+import { ArrowRight, Maximize } from 'lucide-vue-next'
 
 const props = defineProps({
   item: { type: Object, required: true },

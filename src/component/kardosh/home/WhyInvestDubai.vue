@@ -1,11 +1,10 @@
 <template>
-  <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="why-dubai-heading">
+  <section class="why-invest-section lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="why-dubai-heading">
     <div class="container-fluid">
       <div class="max-w-3xl mx-auto text-center">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Why invest in Dubai</p>
         <h2
           id="why-dubai-heading"
-          class="kardosh-section-heading text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="kardosh-section-heading text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white leading-tight"
         >
           A global hub built for property investors
         </h2>
@@ -72,7 +71,7 @@
 
         <div class="lg:col-span-5 flex flex-col">
           <div
-            class="flex flex-1 flex-col rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900 p-5 md:p-8 shadow-sm"
+            class="flex flex-1 flex-col rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-5 md:p-8 shadow-sm"
           >
             <h3 class="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white leading-snug">
               Dubai off-plan for international investors
@@ -115,64 +114,38 @@
         </div>
       </div>
 
-      <!-- Desktop: advantage grid -->
-      <div class="why-invest-advantages--desktop mt-10 lg:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+      <div
+        class="why-invest-advantages-grid mt-10 lg:mt-16 grid grid-cols-1 gap-5 rounded-2xl border border-slate-200 bg-slate-100/90 p-5 sm:grid-cols-2 sm:p-6 lg:grid-cols-3 lg:gap-6 lg:p-8 dark:border-slate-700 dark:bg-slate-800/80"
+      >
         <article
           v-for="(item, i) in INVESTMENT_ADVANTAGES"
-          :key="`adv-d-${item.title}`"
-          class="group relative rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 transition duration-300 hover:border-primary/30 hover:shadow-md dark:hover:border-primary/40"
+          :key="item.title"
+          class="why-invest-advantage-card group relative isolate flex min-h-[13.5rem] flex-col gap-4 overflow-hidden rounded-2xl border-2 border-slate-300 bg-white p-6 shadow-[0_12px_32px_rgba(15,23,42,0.12)] transition duration-300 hover:-translate-y-1 hover:border-slate-900 hover:shadow-[0_20px_48px_rgba(15,23,42,0.18)] dark:border-slate-500 dark:bg-slate-800 dark:shadow-[0_12px_36px_rgba(0,0,0,0.45)] dark:hover:border-slate-400"
         >
-          <div class="flex items-start gap-4">
-            <div
-              class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
-            >
-              <component :is="ADVANTAGE_ICONS[i]" class="size-5" aria-hidden="true" />
-            </div>
-            <div class="min-w-0">
-              <span class="text-[11px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                {{ String(i + 1).padStart(2, '0') }}
-              </span>
-              <h3 class="font-semibold text-slate-900 dark:text-white mt-1">{{ item.title }}</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.desc }}</p>
-            </div>
+          <span
+            class="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-primary"
+            aria-hidden="true"
+          />
+          <span
+            class="why-invest-advantage-card__index pointer-events-none absolute top-4 end-4 text-4xl font-bold leading-none text-slate-200 dark:text-slate-700"
+            aria-hidden="true"
+          >
+            {{ String(i + 1).padStart(2, '0') }}
+          </span>
+          <div
+            class="why-invest-advantage-card__icon relative z-1 mt-1 inline-flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md transition duration-300 group-hover:scale-105 dark:bg-white dark:text-primary"
+          >
+            <component :is="ADVANTAGE_ICONS[i]" class="size-7" aria-hidden="true" />
           </div>
+          <h3 class="relative z-1 pe-12 text-lg font-bold leading-snug text-slate-900 dark:text-white">
+            {{ item.title }}
+          </h3>
+          <p class="relative z-1 text-[0.9375rem] leading-relaxed text-slate-600 dark:text-slate-300">
+            {{ item.desc }}
+          </p>
         </article>
       </div>
 
-      <!-- Mobile: swipe through advantages -->
-      <div class="why-invest-advantages-carousel kardosh-mobile-carousel mt-8">
-        <Swiper
-          :slides-per-view="1.12"
-          :space-between="12"
-          :breakpoints="statBreakpoints"
-          class="kardosh-mobile-carousel__swiper"
-        >
-          <SwiperSlide v-for="(item, i) in INVESTMENT_ADVANTAGES" :key="`adv-m-${item.title}`">
-            <article
-              class="h-full rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5"
-            >
-              <div class="flex items-start gap-4">
-                <div
-                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-primary"
-                >
-                  <component :is="ADVANTAGE_ICONS[i]" class="size-5" aria-hidden="true" />
-                </div>
-                <div class="min-w-0">
-                  <span class="text-[11px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    {{ String(i + 1).padStart(2, '0') }}
-                  </span>
-                  <h3 class="font-semibold text-slate-900 dark:text-white mt-1">{{ item.title }}</h3>
-                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.desc }}</p>
-                </div>
-              </div>
-            </article>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-
-      <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-4 md:mt-6 max-w-2xl mx-auto">
-        Figures are indicative market benchmarks — speak with our team for project-specific yields and visa eligibility.
-      </p>
     </div>
   </section>
 </template>

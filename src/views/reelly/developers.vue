@@ -4,20 +4,19 @@
   <PageHero
     title="UAE property developers"
     subtitle="Explore established and emerging developers with active off-plan stock across the Emirates — powered by Reelly and curated on Kardosh Realty."
-    eyebrow="Developers"
     :image="PAGE_HERO_IMAGES.developers"
   />
 
   <section class="relative z-10 -mt-8 lg:-mt-10">
     <div class="container-fluid">
       <ul
-        class="kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
+        class="developers-stats listings-search-glass kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none m-0"
       >
         <li v-for="stat in pageStats" :key="stat.label" class="text-center px-2">
-          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">
+          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold tabular-nums">
             {{ stat.value }}
           </p>
-          <p class="kardosh-profile-stats__label text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
+          <p class="kardosh-profile-stats__label text-xs md:text-sm mt-1">{{ stat.label }}</p>
         </li>
       </ul>
     </div>
@@ -25,11 +24,10 @@
 
   <section class="lg:py-20 py-14" aria-labelledby="developers-grid-heading">
     <div class="container-fluid">
-      <div class="max-w-3xl">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Developer directory</p>
+      <div class="developers-directory">
         <h2
           id="developers-grid-heading"
-          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white leading-tight"
         >
           Compare UAE developer pipelines
         </h2>
@@ -39,29 +37,27 @@
         </p>
       </div>
 
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <label class="relative flex-1 max-w-md">
+      <div class="developers-search-panel listings-search-glass">
+        <label class="developers-search">
           <span class="sr-only">Search developers</span>
           <Search
-            class="absolute start-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 pointer-events-none"
+            class="developers-search__icon absolute start-3 top-1/2 -translate-y-1/2 size-4 pointer-events-none"
             aria-hidden="true"
           />
           <input
             v-model="searchQuery"
             type="search"
             placeholder="Search by developer name…"
-            class="w-full ps-10 pe-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            class="developers-search__input"
+            autocomplete="off"
           />
         </label>
-        <p class="text-sm text-slate-500 dark:text-slate-400 shrink-0">
-          {{ filteredDevelopers.length }} developer{{ filteredDevelopers.length === 1 ? '' : 's' }}
-        </p>
       </div>
 
       <DeveloperGridSkeleton
         v-if="loading"
         :count="8"
-        grid-class="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-7"
+        grid-class="developers-grid mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6"
       />
       <p
         v-else-if="!filteredDevelopers.length"
@@ -72,7 +68,7 @@
 
       <div
         v-else
-        class="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-7"
+        class="developers-grid mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6"
       >
         <DeveloperCard
           v-for="dev in filteredDevelopers"
@@ -85,40 +81,58 @@
 
   <section
     v-if="featuredDevelopers.length && !loading"
-    class="lg:py-16 py-12 bg-slate-50 dark:bg-slate-900/50"
+    class="developers-leaderboard lg:py-20 py-14"
     aria-labelledby="featured-developers-heading"
   >
     <div class="container-fluid">
-      <div class="max-w-3xl">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Most active</p>
+      <div class="developers-leaderboard__intro">
         <h2
           id="featured-developers-heading"
-          class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white mt-3"
+          class="developers-leaderboard__title"
         >
           Largest UAE pipelines in our catalogue
         </h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 text-sm leading-relaxed">
+        <p class="developers-leaderboard__lead">
           Ranked by the number of active off-plan projects currently listed for each developer.
         </p>
       </div>
-      <ol class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 list-none p-0">
+
+      <ol class="developers-leaderboard__grid list-none p-0 m-0">
         <li
           v-for="(dev, index) in featuredDevelopers"
           :key="dev.id"
         >
           <RouterLink
             :to="`/developer/${dev.id}`"
-            class="flex items-center gap-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 hover:border-primary/40 hover:shadow-md transition-all"
+            class="developers-leaderboard-card listings-search-glass group"
+            :aria-label="`Rank ${index + 1}: ${dev.name}, ${dev.projectCount} projects`"
           >
-            <span class="text-2xl font-semibold text-slate-300 dark:text-slate-600 tabular-nums w-8">
+            <span
+              class="developers-leaderboard-card__rank"
+              :class="index === 0 && 'developers-leaderboard-card__rank--first'"
+            >
               {{ index + 1 }}
             </span>
-            <div class="min-w-0 flex-1">
-              <p class="font-semibold text-slate-900 dark:text-white truncate">{{ dev.name }}</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                {{ dev.projectCount }} projects
-              </p>
+            <div class="developers-leaderboard-card__logo">
+              <img
+                v-if="dev.logo?.url"
+                :src="dev.logo.url"
+                :alt="dev.name"
+                class="max-h-full max-w-full object-contain p-2"
+                loading="lazy"
+              />
+              <span v-else class="developers-leaderboard-card__initial">
+                {{ dev.name?.charAt(0) }}
+              </span>
             </div>
+            <h3 class="developers-leaderboard-card__name">{{ dev.name }}</h3>
+            <p class="developers-leaderboard-card__meta">
+              {{ dev.projectCount }} active project{{ dev.projectCount === 1 ? '' : 's' }}
+            </p>
+            <span class="developers-leaderboard-card__cta">
+              View profile
+              <ArrowRight class="size-4 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            </span>
           </RouterLink>
         </li>
       </ol>
@@ -156,30 +170,48 @@
     </div>
   </section>
 
-  <section class="pb-20 lg:pb-24">
+  <!-- CTA — blur vignette over UAE developers hero image -->
+  <section class="developers-cta pb-20 lg:pb-24">
     <div class="container-fluid">
-      <div
-        class="rounded-3xl border border-slate-200 dark:border-slate-700 bg-primary px-8 py-10 md:px-12 md:py-14 text-center text-white"
+      <BlurVignette
+        root-class="developers-cta__vignette w-full min-h-[20rem] md:min-h-[22rem] aspect-auto"
+        radius="1.5rem"
+        inset="10px"
+        transition-length="100px"
+        blur="15px"
       >
-        <h2 class="text-2xl md:text-3xl font-semibold">Browse all UAE off-plan</h2>
-        <p class="text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
-          Filter by price, area, or community — or contact our DIFC team for a shortlist from your preferred developers.
-        </p>
-        <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
-          <RouterLink
-            to="/off-plan"
-            class="btn bg-white text-primary hover:bg-slate-100 rounded-lg inline-flex items-center justify-center px-8 font-semibold"
-          >
-            View off-plan catalogue
-          </RouterLink>
-          <RouterLink
-            to="/contact"
-            class="btn border border-white/40 text-white hover:bg-white/10 rounded-lg inline-flex items-center justify-center px-8"
-          >
-            Contact advisory
-          </RouterLink>
+        <img
+          :src="PAGE_HERO_IMAGES.developers"
+          alt="UAE property developers"
+          class="absolute inset-0 z-0 h-full w-full object-cover scale-105 transition-transform duration-700 hover:scale-110"
+          loading="lazy"
+        />
+        <div
+          class="absolute inset-0 z-[1] bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/25"
+          aria-hidden="true"
+        />
+        <BlurVignetteArticle />
+        <div class="developers-cta__content relative z-10 flex min-h-[20rem] md:min-h-[22rem] flex-col items-center justify-center px-8 py-10 text-center text-white md:px-12 md:py-14">
+          <h2 class="text-2xl font-semibold md:text-3xl">Browse all UAE off-plan</h2>
+          <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
+            Filter by price, area, or community — or contact our DIFC team for a shortlist from your preferred developers.
+          </p>
+          <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
+            <RouterLink
+              to="/off-plan"
+              class="developers-cta__btn-primary btn inline-flex items-center justify-center rounded-lg bg-white px-8 font-semibold hover:bg-slate-100"
+            >
+              View off-plan catalogue
+            </RouterLink>
+            <RouterLink
+              to="/contact"
+              class="btn inline-flex items-center justify-center rounded-lg border border-white/40 px-8 text-white hover:bg-white/10"
+            >
+              Contact advisory
+            </RouterLink>
+          </div>
         </div>
-      </div>
+      </BlurVignette>
     </div>
   </section>
 
@@ -190,12 +222,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { Building2, Handshake, MapPin, Shield, Search } from 'lucide-vue-next'
+import { ArrowRight, Building2, Handshake, MapPin, Shield, Search } from 'lucide-vue-next'
 import Navbar from '@/component/navbar.vue'
 import Footer from '@/component/footer.vue'
 import Switcher from '@/component/switcher.vue'
 import PageHero from '@/component/kardosh/PageHero.vue'
 import DeveloperCard from '@/component/kardosh/DeveloperCard.vue'
+import BlurVignette from '@/component/ui/BlurVignette.vue'
+import BlurVignetteArticle from '@/component/ui/BlurVignetteArticle.vue'
 import DeveloperGridSkeleton from '@/component/kardosh/skeleton/DeveloperGridSkeleton.vue'
 import { PAGE_HERO_IMAGES } from '@/config/dubai-images'
 import { useReelly } from '@/composables/useReelly'

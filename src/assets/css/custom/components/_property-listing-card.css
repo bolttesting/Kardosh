@@ -11,8 +11,7 @@
     background: #ffffff;
     transition:
         border-color 0.35s ease,
-        box-shadow 0.35s ease,
-        transform 0.35s ease;
+        box-shadow 0.35s ease;
 }
 
 .dark .kardosh-property-card--luxury {
@@ -25,7 +24,6 @@
     box-shadow:
         0 24px 48px -12px rgb(0 0 0 / 0.12),
         0 0 0 1px rgb(0 0 0 / 0.04);
-    transform: translateY(-2px);
 }
 
 .dark .kardosh-property-card--luxury:hover {
@@ -56,35 +54,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.kardosh-property-card--luxury:hover .kardosh-property-card__img,
-.kardosh-property-card--luxury:hover .protected-property-image--fill > img {
-    transform: scale(1.05);
 }
 
 .kardosh-property-card--luxury .kardosh-property-card__media-link {
     position: relative;
     z-index: 2;
-}
-
-.kardosh-property-card--luxury .kardosh-property-card__shade {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-        180deg,
-        transparent 45%,
-        rgb(0 0 0 / 0.35) 100%
-    );
-    opacity: 0.65;
-    transition: opacity 0.35s ease;
-}
-
-.kardosh-property-card--luxury:hover .kardosh-property-card__shade {
-    opacity: 0.85;
 }
 
 .kardosh-property-card--luxury .kardosh-property-card__type {
@@ -224,16 +198,10 @@
 }
 
 .kardosh-property-card__chip--amenity {
-    color: var(--color-primary, #0a0a0a);
+    color: var(--kardosh-ink, #0a0a0a);
     background: rgb(0 0 0 / 0.06);
     border: 1px solid rgb(0 0 0 / 0.08);
     max-width: 9.5rem;
-}
-
-.dark .kardosh-property-card__chip--amenity {
-    color: rgb(248 250 252);
-    background: rgb(255 255 255 / 0.08);
-    border-color: rgb(255 255 255 / 0.12);
 }
 
 .kardosh-property-card__chip--more {
@@ -253,10 +221,18 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.5rem;
     margin-top: auto;
     padding-top: 1.125rem;
     border-top: 1px solid rgb(244 244 245);
+    min-width: 0;
+    overflow: hidden;
+}
+
+.kardosh-property-card--luxury .kardosh-property-card__footer > div:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
 }
 
 .dark .kardosh-property-card--luxury .kardosh-property-card__footer {
@@ -274,56 +250,245 @@
 
 .kardosh-property-card--luxury .kardosh-property-card__price-value {
     margin: 0.25rem 0 0;
-    font-size: 1.125rem;
+    font-size: clamp(0.9375rem, 2.2vw, 1.125rem);
     font-weight: 600;
     letter-spacing: -0.02em;
     color: rgb(15 23 42);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .dark .kardosh-property-card--luxury .kardosh-property-card__price-value {
     color: #ffffff;
 }
 
-.kardosh-property-card--luxury .kardosh-property-card__cta {
+/* Expand-on-hover “Visit” / “Explore” pill — icon only below xl so it stays inside narrow cards */
+.kardosh-property-card--luxury .kardosh-property-card__cta,
+.community-card--luxury .kardosh-property-card__cta,
+.emirate-overview-card--luxury .kardosh-property-card__cta {
+    position: relative;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    color: rgb(113 113 122);
-    border: 1px solid rgb(228 228 231);
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
     border-radius: 9999px;
-    transition:
-        color 0.2s ease,
-        border-color 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.dark .kardosh-property-card--luxury .kardosh-property-card__cta {
-    color: rgb(161 161 170);
-    border-color: rgb(63 63 70);
-}
-
-.kardosh-property-card--luxury:hover .kardosh-property-card__cta {
-    color: #ffffff;
+    border: 2px solid var(--color-primary, #0a0a0a);
     background: var(--color-primary, #0a0a0a);
-    border-color: var(--color-primary, #0a0a0a);
+    color: rgb(250 250 250);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+        width 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
 }
 
-.dark .kardosh-property-card--luxury:hover .kardosh-property-card__cta {
-    color: rgb(15 23 42);
-    background: #ffffff;
-    border-color: #ffffff;
+.dark .kardosh-property-card--luxury .kardosh-property-card__cta,
+.dark .community-card--luxury .kardosh-property-card__cta,
+.dark .emirate-overview-card--luxury .kardosh-property-card__cta {
+    border-color: var(--kardosh-paper, #fafafa);
+    background: var(--kardosh-paper, #fafafa);
+    color: var(--kardosh-ink, #0a0a0a);
+}
+
+.kardosh-property-card--luxury .kardosh-property-card__cta-text,
+.community-card--luxury .kardosh-property-card__cta-text,
+.emirate-overview-card--luxury .kardosh-property-card__cta-text {
+    display: inline-flex;
+    white-space: nowrap;
+    opacity: 0;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.kardosh-property-card--luxury .kardosh-property-card__cta-icon,
+.community-card--luxury .kardosh-property-card__cta-icon,
+.emirate-overview-card--luxury .kardosh-property-card__cta-icon {
+    position: absolute;
+    right: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.kardosh-property-card__cta svg {
+    color: currentColor;
+}
+
+@media (min-width: 1280px) {
+    .kardosh-property-card--luxury .kardosh-property-card__cta,
+    .community-card--luxury .kardosh-property-card__cta,
+.emirate-overview-card--luxury .kardosh-property-card__cta {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible,
+    .community-card--luxury:hover .kardosh-property-card__cta,
+    .community-card--luxury .kardosh-property-card__cta:hover,
+    .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible {
+        width: 8rem;
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.18);
+    }
+
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta-text,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .community-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text {
+        opacity: 1;
+        transform: translateX(-0.75rem);
+    }
+
+    .dark .kardosh-property-card--luxury:hover .kardosh-property-card__cta,
+    .dark .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .dark .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .community-card--luxury:hover .kardosh-property-card__cta,
+    .dark .community-card--luxury .kardosh-property-card__cta:hover,
+    .dark .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .emirate-overview-card--luxury:hover .kardosh-property-card__cta,
+    .dark .emirate-overview-card--luxury .kardosh-property-card__cta:hover,
+    .dark .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible {
+        box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+    }
+}
+
+@media (max-width: 1279px) {
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .community-card--luxury:hover .kardosh-property-card__cta,
+    .community-card--luxury .kardosh-property-card__cta:hover,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover {
+        width: 2.75rem;
+    }
+
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta-text,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text {
+        opacity: 0;
+        transform: none;
+    }
+}
+
+/* Off-plan / communities / developers / emirates / why-dubai grids: expand on button hover only */
+@media (min-width: 1280px) {
+    .listings-property-grid .kardosh-property-card--luxury:hover .kardosh-property-card__cta,
+    .communities-grid .community-card--luxury:hover .kardosh-property-card__cta,
+    .developers-grid .community-card--luxury:hover .kardosh-property-card__cta,
+    .emirates-overview-grid .emirate-overview-card--luxury:hover .kardosh-property-card__cta,
+    .why-dubai-districts__grid .community-card--luxury:hover .kardosh-property-card__cta,
+    .about-services__grid .community-card--luxury:hover .kardosh-property-card__cta {
+        width: 3rem;
+        box-shadow: none;
+    }
+
+    .listings-property-grid .kardosh-property-card--luxury:hover .kardosh-property-card__cta-text,
+    .communities-grid .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .developers-grid .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .emirates-overview-grid .emirate-overview-card--luxury:hover .kardosh-property-card__cta-text,
+    .why-dubai-districts__grid .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .about-services__grid .community-card--luxury:hover .kardosh-property-card__cta-text {
+        opacity: 0;
+        transform: none;
+    }
+
+    .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible,
+    .communities-grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .communities-grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .developers-grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .developers-grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:hover,
+    .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible,
+    .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .about-services__grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .about-services__grid .community-card--luxury .kardosh-property-card__cta:focus-visible {
+        width: 8rem;
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.18);
+    }
+
+    .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .communities-grid .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .communities-grid .community-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .developers-grid .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .developers-grid .community-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text,
+    .about-services__grid .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .about-services__grid .community-card--luxury .kardosh-property-card__cta:focus-visible .kardosh-property-card__cta-text {
+        opacity: 1;
+        transform: translateX(-0.75rem);
+    }
+
+    .dark .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .dark .listings-property-grid .kardosh-property-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .communities-grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .dark .communities-grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .developers-grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .dark .developers-grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:hover,
+    .dark .emirates-overview-grid .emirate-overview-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .dark .why-dubai-districts__grid .community-card--luxury .kardosh-property-card__cta:focus-visible,
+    .dark .about-services__grid .community-card--luxury .kardosh-property-card__cta:hover,
+    .dark .about-services__grid .community-card--luxury .kardosh-property-card__cta:focus-visible {
+        box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .kardosh-property-card--luxury,
-    .kardosh-property-card--luxury .kardosh-property-card__img {
+    .community-card--luxury,
+    .emirate-overview-card--luxury,
+    .kardosh-property-card--luxury .kardosh-property-card__cta,
+    .community-card--luxury .kardosh-property-card__cta,
+    .emirate-overview-card--luxury .kardosh-property-card__cta,
+    .kardosh-property-card--luxury .kardosh-property-card__cta-text,
+    .community-card--luxury .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury .kardosh-property-card__cta-text {
         transition: none;
     }
 
-    .kardosh-property-card--luxury:hover {
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover,
+    .community-card--luxury:hover .kardosh-property-card__cta,
+    .community-card--luxury .kardosh-property-card__cta:hover,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover {
+        width: 3rem;
+    }
+
+    .kardosh-property-card--luxury:hover .kardosh-property-card__cta-text,
+    .kardosh-property-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .community-card--luxury:hover .kardosh-property-card__cta-text,
+    .community-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury:hover .kardosh-property-card__cta-text,
+    .emirate-overview-card--luxury .kardosh-property-card__cta:hover .kardosh-property-card__cta-text {
+        opacity: 0;
         transform: none;
     }
 }

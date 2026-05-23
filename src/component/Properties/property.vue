@@ -1,8 +1,7 @@
 <template>
   <div class="container-fluid lg:mt-24 mt-16 home-section-compact scroll-mt-24">
     <div class="max-w-3xl mx-auto text-center pb-6 md:pb-8">
-      <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Curated catalogue</p>
-      <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold text-slate-900 dark:text-white mt-3">
+      <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold text-slate-900 dark:text-white">
         Featured off-plan projects
       </h3>
       <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -33,6 +32,8 @@
           :slides-per-group="1"
           :breakpoints="carouselBreakpoints"
           :watch-overflow="true"
+          :loop="displayedMobile.length > 1"
+          :autoplay="featuredAutoplay"
           :navigation="{
             prevEl: '.featured-offplan-carousel__nav--prev',
             nextEl: '.featured-offplan-carousel__nav--next',
@@ -68,17 +69,17 @@
     </template>
 
     <p class="text-center mt-6 md:mt-8 home-cta-strip">
-      <RouterLink to="/off-plan" class="btn bg-primary hover:bg-primary-dark text-white rounded-md">View all off-plan</RouterLink>
+      <KardoshSlideButton to="/off-plan" />
     </p>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { useReelly } from '@/composables/useReelly'
 import PropertyListingCard from '@/component/kardosh/PropertyListingCard.vue'
 import ListingGridSkeleton from '@/component/kardosh/skeleton/ListingGridSkeleton.vue'
@@ -87,11 +88,13 @@ import { HOME_PROPERTY_CAROUSEL, toSwiperBreakpoints } from '@/config/home-carou
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
 
 const MOBILE_SLIDE_COUNT = 6
 const DESKTOP_COUNT = 8
+const AUTOPLAY_MS = 1000
 
-const modules = [Navigation, Pagination]
+const modules = [Navigation, Pagination, Autoplay]
 const carouselBreakpoints = toSwiperBreakpoints(HOME_PROPERTY_CAROUSEL)
 
 const { loading: reellyLoading, error: reellyError, projects, loadProjects } = useReelly()
@@ -100,4 +103,16 @@ onMounted(() => loadProjects())
 
 const displayed = computed(() => projects.value.slice(0, DESKTOP_COUNT))
 const displayedMobile = computed(() => projects.value.slice(0, MOBILE_SLIDE_COUNT))
+
+const featuredAutoplay = computed(() => {
+  if (displayedMobile.value.length < 2) return false
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return false
+  }
+  return {
+    delay: AUTOPLAY_MS,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+  }
+})
 </script>

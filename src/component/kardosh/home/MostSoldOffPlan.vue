@@ -2,10 +2,9 @@
   <section class="lg:mt-24 mt-16 home-section-compact scroll-mt-24" aria-labelledby="most-sold-off-plan-heading">
     <div class="container-fluid">
       <div class="max-w-3xl mx-auto text-center">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Investor favourites</p>
         <h2
           id="most-sold-off-plan-heading"
-          class="text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-slate-900 dark:text-white leading-tight"
         >
           Most sold off-plan properties
         </h2>
@@ -48,6 +47,8 @@
           :slides-per-group="1"
           :breakpoints="carouselBreakpoints"
           :watch-overflow="false"
+          :loop="loopEnabled"
+          :autoplay="autoplayOptions"
           :navigation="{
             prevEl: '.investor-favourites-carousel__nav--prev',
             nextEl: '.investor-favourites-carousel__nav--next',
@@ -73,13 +74,7 @@
       </div>
 
       <div v-if="!loading && displayed.length" class="investor-favourites-carousel__footer">
-        <RouterLink
-          to="/off-plan"
-          class="btn bg-primary hover:bg-primary-dark text-white rounded-lg inline-flex items-center justify-center gap-2 px-8"
-        >
-          View all off-plan
-          <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
-        </RouterLink>
+        <KardoshSlideButton to="/off-plan" />
       </div>
     </div>
   </section>
@@ -88,9 +83,10 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import KardoshSlideButton from '@/components/ui/KardoshSlideButton.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation } from 'swiper/modules'
+import { Autoplay, Navigation } from 'swiper/modules'
 import { useReelly } from '@/composables/useReelly'
 import PropertyListingCard from '@/component/kardosh/PropertyListingCard.vue'
 import PropertyCardSkeleton from '@/component/kardosh/skeleton/PropertyCardSkeleton.vue'
@@ -98,12 +94,15 @@ import { demandBadge, pickMostSoldOffPlan } from '@/utils/offPlanRanking'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
+import 'swiper/css/autoplay'
 
 /** 8 slides total; 4 visible per row on xl — slide to reveal 5–8 */
 const SLIDE_COUNT = 8
 const VISIBLE_COUNT = 4
 
-const modules = [Navigation]
+const AUTOPLAY_MS = 1000
+
+const modules = [Navigation, Autoplay]
 
 const carouselBreakpoints = {
   480: { slidesPerView: 1.35, spaceBetween: 18, slidesPerGroup: 1 },
@@ -117,6 +116,20 @@ const { loading, error, projects, loadProjects } = useReelly()
 const displayed = computed(() =>
   pickMostSoldOffPlan(projects.value, { limit: SLIDE_COUNT })
 )
+
+const loopEnabled = computed(() => displayed.value.length > 1)
+
+const autoplayOptions = computed(() => {
+  if (!displayed.value.length || displayed.value.length < 2) return false
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return false
+  }
+  return {
+    delay: AUTOPLAY_MS,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+  }
+})
 
 onMounted(() => loadProjects())
 </script>

@@ -3,7 +3,6 @@
   <PageHero
     title="Explore the UAE by community"
     subtitle="Off-plan and investment opportunities across Dubai, Abu Dhabi, Sharjah, Ajman, Ras Al Khaimah, and the wider Emirates — curated on Kardosh Realty."
-    eyebrow="United Arab Emirates"
     :image="PAGE_HERO_IMAGES.communities"
   />
 
@@ -11,11 +10,11 @@
   <section class="relative z-10 -mt-8 lg:-mt-10">
     <div class="container-fluid">
       <ul
-        class="communities-stats kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none p-0 m-0 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md px-4 py-6 md:px-8"
+        class="communities-stats listings-search-glass kardosh-profile-stats kardosh-profile-stats--cols-4 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 list-none m-0"
       >
         <li v-for="stat in PAGE_STATS" :key="stat.label" class="text-center px-2">
-          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tabular-nums">{{ stat.value }}</p>
-          <p class="kardosh-profile-stats__label text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{{ stat.label }}</p>
+          <p class="kardosh-profile-stats__value text-2xl md:text-3xl font-semibold tabular-nums">{{ stat.value }}</p>
+          <p class="kardosh-profile-stats__label text-xs md:text-sm mt-1">{{ stat.label }}</p>
         </li>
       </ul>
     </div>
@@ -24,11 +23,10 @@
   <!-- Community grid -->
   <section class="lg:py-20 py-14" aria-labelledby="communities-grid-heading">
     <div class="container-fluid">
-      <div class="max-w-3xl">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Browse by area</p>
+      <div class="communities-browse">
         <h2
           id="communities-grid-heading"
-          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3 leading-tight"
+          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white leading-tight"
         >
           Find your next UAE address
         </h2>
@@ -38,7 +36,7 @@
       </div>
 
       <div
-        class="mt-8 flex flex-wrap gap-2"
+        class="communities-filters"
         role="tablist"
         aria-label="Filter by emirate"
       >
@@ -49,10 +47,8 @@
           role="tab"
           :aria-selected="activeEmirate === tab.id"
           :class="[
-            'px-4 py-2 rounded-full text-sm font-medium border transition-colors',
-            activeEmirate === tab.id
-              ? 'bg-primary text-white border-primary'
-              : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-primary',
+            'communities-filter-pill',
+            activeEmirate === tab.id && 'communities-filter-pill--active',
           ]"
           @click="activeEmirate = tab.id"
         >
@@ -60,7 +56,7 @@
         </button>
       </div>
 
-      <div class="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-7">
+      <div class="communities-grid mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
         <CommunityCard
           v-for="c in filteredCommunities"
           :key="c.slug"
@@ -78,45 +74,57 @@
   </section>
 
   <!-- By emirate -->
-  <section class="lg:py-20 py-14 bg-slate-50 dark:bg-slate-900/50" aria-labelledby="emirates-heading">
+  <section class="communities-emirates lg:py-24 py-16" aria-labelledby="emirates-heading">
     <div class="container-fluid">
-      <div class="max-w-3xl mx-auto text-center">
-        <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">Seven emirates</p>
+      <div class="communities-emirates__intro">
         <h2
           id="emirates-heading"
-          class="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white mt-3"
+          class="communities-emirates__title"
         >
           One country, multiple investment corridors
         </h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+        <p class="communities-emirates__lead">
           Kardosh Realty covers the UAE — not Dubai alone. Each emirate offers distinct price points, lifestyles, and developer pipelines.
         </p>
       </div>
 
-      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="emirates-overview-grid">
         <article
           v-for="em in EMIRATE_OVERVIEWS"
           :key="em.id"
-          class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 md:p-7 flex flex-col"
+          class="emirate-overview-card emirate-overview-card--luxury listings-search-glass group flex flex-col"
         >
-          <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ em.name }}</h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 leading-relaxed flex-1">{{ em.tagline }}</p>
-          <ul class="mt-4 flex flex-wrap gap-2 list-none p-0">
-            <li
-              v-for="(h, i) in em.highlights"
-              :key="i"
-              class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium"
-            >
-              {{ h }}
-            </li>
-          </ul>
-          <button
-            type="button"
-            class="mt-6 text-sm font-semibold text-primary hover:underline text-start"
-            @click="activeEmirate = em.id; scrollToGrid()"
-          >
-            View {{ em.name }} communities →
-          </button>
+          <div class="emirate-overview-card__content relative z-[1] flex flex-1 flex-col min-w-0">
+            <span class="emirate-overview-card__badge">UAE · {{ em.name }}</span>
+            <h3 class="emirate-overview-card__name">{{ em.name }}</h3>
+            <p class="emirate-overview-card__tagline">{{ em.tagline }}</p>
+            <ul class="emirate-overview-card__highlights list-none p-0 m-0">
+              <li
+                v-for="(h, i) in em.highlights"
+                :key="i"
+                class="emirate-overview-card__chip"
+              >
+                {{ h }}
+              </li>
+            </ul>
+            <div class="emirate-overview-card__footer">
+              <div>
+                <p class="kardosh-property-card__price-label">Off-plan</p>
+                <p class="kardosh-property-card__price-value">{{ em.name }}</p>
+              </div>
+              <button
+                type="button"
+                class="kardosh-property-card__cta"
+                :aria-label="`View ${em.name} communities`"
+                @click="activeEmirate = em.id; scrollToGrid()"
+              >
+                <span class="kardosh-property-card__cta-text">View</span>
+                <span class="kardosh-property-card__cta-icon" aria-hidden="true">
+                  <ArrowRight class="size-5" />
+                </span>
+              </button>
+            </div>
+          </div>
         </article>
       </div>
     </div>
@@ -153,31 +161,48 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="pb-20 lg:pb-24">
+  <!-- CTA — blur vignette (ui-layouts) over UAE hero image -->
+  <section class="communities-cta pb-20 lg:pb-24">
     <div class="container-fluid">
-      <div
-        class="rounded-3xl border border-slate-200 dark:border-slate-700 bg-primary px-8 py-10 md:px-12 md:py-14 text-center text-white"
+      <BlurVignette
+        root-class="communities-cta__vignette w-full min-h-[20rem] md:min-h-[22rem] aspect-auto"
+        radius="1.5rem"
+        inset="10px"
+        transition-length="100px"
+        blur="15px"
       >
-        <h2 class="text-2xl md:text-3xl font-semibold">Ready to browse UAE off-plan?</h2>
-        <p class="text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
-          Search the full catalogue or speak with our DIFC team about a specific emirate or community.
-        </p>
-        <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
-          <RouterLink
-            to="/off-plan"
-            class="btn bg-white text-primary hover:bg-slate-100 rounded-lg inline-flex items-center justify-center px-8 font-semibold"
-          >
-            View all off-plan
-          </RouterLink>
-          <RouterLink
-            to="/contact"
-            class="btn border border-white/40 text-white hover:bg-white/10 rounded-lg inline-flex items-center justify-center px-8"
-          >
-            Contact advisory
-          </RouterLink>
+        <img
+          :src="PAGE_HERO_IMAGES.communities"
+          alt="UAE skyline and communities"
+          class="absolute inset-0 z-0 h-full w-full object-cover scale-105 transition-transform duration-700 hover:scale-110"
+          loading="lazy"
+        />
+        <div
+          class="absolute inset-0 z-[1] bg-gradient-to-t from-slate-950/85 via-slate-950/45 to-slate-950/25"
+          aria-hidden="true"
+        />
+        <BlurVignetteArticle />
+        <div class="communities-cta__content relative z-10 flex min-h-[20rem] md:min-h-[22rem] flex-col items-center justify-center px-8 py-10 text-center text-white md:px-12 md:py-14">
+          <h2 class="text-2xl font-semibold md:text-3xl">Ready to browse UAE off-plan?</h2>
+          <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
+            Search the full catalogue or speak with our DIFC team about a specific emirate or community.
+          </p>
+          <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
+            <RouterLink
+              to="/off-plan"
+              class="communities-cta__btn-primary btn inline-flex items-center justify-center rounded-lg bg-white px-8 font-semibold hover:bg-slate-100"
+            >
+              View all off-plan
+            </RouterLink>
+            <RouterLink
+              to="/contact"
+              class="btn inline-flex items-center justify-center rounded-lg border border-white/40 px-8 text-white hover:bg-white/10"
+            >
+              Contact advisory
+            </RouterLink>
+          </div>
         </div>
-      </div>
+      </BlurVignette>
     </div>
   </section>
 
@@ -188,12 +213,14 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { Building2, MapPin, TrendingUp, Shield } from 'lucide-vue-next'
+import { ArrowRight, Building2, MapPin, TrendingUp, Shield } from 'lucide-vue-next'
 import Navbar from '@/component/navbar.vue'
 import Footer from '@/component/footer.vue'
 import Switcher from '@/component/switcher.vue'
 import PageHero from '@/component/kardosh/PageHero.vue'
 import CommunityCard from '@/component/kardosh/CommunityCard.vue'
+import BlurVignette from '@/component/ui/BlurVignette.vue'
+import BlurVignetteArticle from '@/component/ui/BlurVignetteArticle.vue'
 import {
   UAE_COMMUNITIES,
   COMMUNITY_EMIRATES,

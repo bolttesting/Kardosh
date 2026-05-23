@@ -9,16 +9,9 @@
         class="flex flex-col items-center justify-center max-w-3xl mx-auto text-center testimonials-header"
         :class="{ 'is-visible': headerVisible }"
       >
-        <div class="flex justify-center">
-          <span
-            class="border border-slate-200 dark:border-slate-700 py-1 px-4 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300"
-          >
-            Testimonials
-          </span>
-        </div>
         <h2
           id="testimonials-heading"
-          class="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white mt-5"
+          class="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white"
         >
           What our clients say
         </h2>
