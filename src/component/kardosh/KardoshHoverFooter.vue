@@ -121,7 +121,9 @@
         </div>
 
         <p class="text-center md:text-end text-slate-500">
-          © {{ year }} {{ BRAND.name }}.
+          <span class="block sm:inline">{{ RERA_LICENSE_LABEL }}</span>
+          <span class="hidden sm:inline mx-2" aria-hidden="true">·</span>
+          <span class="block sm:inline">© {{ year }} {{ BRAND.name }}.</span>
           <a
             href="https://logixcontact.com/"
             target="_blank"
@@ -137,8 +139,8 @@
 <script setup>
 import { reactive } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ChevronDown, Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from 'lucide-vue-next'
-import { BRAND, SOCIAL } from '@/config/brand'
+import { ChevronDown, Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, Shield } from 'lucide-vue-next'
+import { BRAND, RERA_LICENSE_LABEL, SOCIAL } from '@/config/brand'
 import { CONTACT } from '@/config/uae'
 import { whatsAppLink } from '@/config/marketing'
 import BrandLogo from '@/component/kardosh/BrandLogo.vue'
@@ -199,6 +201,11 @@ const contactInfo = [
   {
     icon: MapPin,
     text: CONTACT.addressShort,
+    href: undefined,
+  },
+  {
+    icon: Shield,
+    text: RERA_LICENSE_LABEL,
     href: undefined,
   },
   {

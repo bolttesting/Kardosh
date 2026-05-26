@@ -1,10 +1,12 @@
 /** Content for /contact */
 
+import { BRAND } from './brand'
+
 export const CONTACT_PAGE_STATS = [
   { value: '24h', label: 'Typical response time' },
-  { value: 'DIFC', label: 'Dubai headquarters' },
+  { value: 'Business Bay', label: 'Dubai headquarters' },
   { value: 'EN · AR · PT', label: 'Advisory languages' },
-  { value: 'Free', label: 'Initial consultation' },
+  { value: BRAND.reraLicense, label: 'RERA license no.' },
 ]
 
 export const CONTACT_EXPECTATIONS = [

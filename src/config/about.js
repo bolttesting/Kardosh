@@ -1,9 +1,11 @@
 /** Content for /aboutus */
 
+import { BRAND } from './brand'
+
 export const ABOUT_STATS = [
   { value: '1,500+', label: 'UAE off-plan projects' },
   { value: '7', label: 'Emirates covered' },
-  { value: 'DIFC', label: 'Dubai headquarters' },
+  { value: 'Business Bay', label: 'Dubai headquarters' },
   { value: 'AED', label: 'Transparent pricing' },
 ]
 
@@ -97,14 +99,14 @@ export const ABOUT_DIFFERENTIATORS = [
   },
   {
     title: 'Licensed brokerage',
-    text: 'RERA-regulated workflows and escrow-aware off-plan processes.',
+    text: `RERA License No. ${BRAND.reraLicense} — regulated workflows and escrow-aware off-plan processes.`,
   },
   {
     title: 'International buyers',
     text: 'English, Arabic, and Portuguese-friendly advisory for overseas clients.',
   },
   {
-    title: 'DIFC presence',
-    text: 'Based in Dubai International Financial Centre — a trusted address for cross-border deals.',
+    title: 'Business Bay office',
+    text: 'Floor 10, Metropolis Tower — a central Dubai address for cross-border deals.',
   },
 ]

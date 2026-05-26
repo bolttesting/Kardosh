@@ -3,8 +3,8 @@ import { BRAND } from './brand'
 export const SITE_TAGLINE = BRAND.tagline
 
 export const CONTACT = {
-  address: 'Office 1204, Index Tower, DIFC, Dubai, UAE',
-  addressShort: 'DIFC, Dubai, UAE',
+  address: 'Floor 10, Office 1003, Metropolis Tower, Business Bay, Dubai, UAE',
+  addressShort: 'Business Bay, Dubai, UAE',
   email: BRAND.email,
   phone: BRAND.phone,
   phoneTel: BRAND.phoneTel,
@@ -12,7 +12,10 @@ export const CONTACT = {
 }
 
 export const GOOGLE_MAP_EMBED =
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178509925!2d55.2744!3d25.1972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e27a403e6b57!2sBurj%20Khalifa!5e0!3m2!1sen!2sae!4v1!5m2!1sen!2sae'
+  'https://maps.google.com/maps?q=Metropolis+Tower,+Business+Bay,+Dubai,+UAE&hl=en&z=16&output=embed'
+
+export const GOOGLE_MAPS_DIRECTIONS =
+  'https://www.google.com/maps/search/?api=1&query=Metropolis+Tower+Business+Bay+Dubai+UAE'
 
 export const CURRENCY = 'AED'
 export const AREA_UNIT = 'sqm'

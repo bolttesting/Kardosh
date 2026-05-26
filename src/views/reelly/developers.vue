@@ -202,7 +202,7 @@
         <div class="developers-cta__content relative z-10 flex min-h-[20rem] md:min-h-[22rem] flex-col items-center justify-center px-8 py-10 text-center text-white md:px-12 md:py-14">
           <h2 class="text-2xl font-semibold md:text-3xl">Browse all UAE off-plan</h2>
           <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
-            Filter by price, area, or community — or contact our DIFC team for a shortlist from your preferred developers.
+            Filter by price, area, or community — or contact our Dubai team for a shortlist from your preferred developers.
           </p>
           <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
             <RouterLink

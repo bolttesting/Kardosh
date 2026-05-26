@@ -3,7 +3,7 @@
 
   <PageHero
     title="Contact Kardosh Realty"
-    subtitle="Speak with our DIFC team about off-plan, ready homes, rentals, and investor advisory across the UAE."
+    subtitle="Speak with our Dubai team about off-plan, ready homes, rentals, and investor advisory across the UAE."
     :image="PAGE_HERO_IMAGES.contact"
   />
 

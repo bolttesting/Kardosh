@@ -359,7 +359,7 @@
       >
         <h2 class="text-2xl md:text-3xl font-semibold">Start your Dubai property journey</h2>
         <p class="text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
-          Browse live off-plan projects, explore communities, or speak with our DIFC advisory team.
+          Browse live off-plan projects, explore communities, or speak with our Dubai advisory team.
         </p>
         <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
           <RouterLink

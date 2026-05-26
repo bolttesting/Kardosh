@@ -30,7 +30,7 @@
             </span>
           </h2>
           <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed mx-auto">
-            Speak with our DIFC team about off-plan, ready homes, rentals, or selling your property.
+            Speak with our Dubai team about off-plan, ready homes, rentals, or selling your property.
             We typically respond within one business day.
           </p>
         </div>
@@ -207,7 +207,7 @@
           class="contact-enquiry__map mt-10 lg:mt-12 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 min-h-[280px] md:min-h-[360px] lg:min-h-[420px]"
         >
           <iframe
-            title="Kardosh Realty office — DIFC Dubai"
+            title="Kardosh Realty office — Business Bay, Dubai"
             :src="GOOGLE_MAP_EMBED"
             class="w-full h-full min-h-[280px] md:min-h-[360px] lg:min-h-[420px] border-0"
             loading="lazy"
@@ -223,9 +223,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-vue-next'
-import { BRAND, SOCIAL } from '@/config/brand'
-import { CONTACT, GOOGLE_MAP_EMBED } from '@/config/uae'
+import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone, Send, Shield } from 'lucide-vue-next'
+import { BRAND, RERA_LICENSE_LABEL, SOCIAL } from '@/config/brand'
+import { CONTACT, GOOGLE_MAP_EMBED, GOOGLE_MAPS_DIRECTIONS } from '@/config/uae'
 import { whatsAppLink } from '@/config/marketing'
 import { submitLead } from '@/services/leads'
 
@@ -250,9 +250,6 @@ const form = ref({
 const submitting = ref(false)
 const formError = ref('')
 const formSuccess = ref('')
-
-const GOOGLE_MAPS_DIRECTIONS =
-  'https://www.google.com/maps/search/?api=1&query=Index+Tower+DIFC+Dubai'
 
 const contactChannels = computed(() => [
   {
@@ -286,6 +283,14 @@ const contactChannels = computed(() => [
     hint: CONTACT.address,
     icon: MapPin,
     external: props.pageMode,
+  },
+  {
+    label: 'RERA',
+    value: RERA_LICENSE_LABEL,
+    href: props.pageMode ? undefined : '/contact',
+    hint: 'Dubai Real Estate Regulatory Agency',
+    icon: Shield,
+    external: false,
   },
 ])
 

@@ -10,7 +10,7 @@
                         </li>
                         <li class="inline-flex items-center ms-2">
                             <MapPin class="text-primary size-4"/>
-                            <span class="ms-2 text-slate-300">DIFC, Dubai, UAE</span>
+                            <span class="ms-2 text-slate-300">Business Bay, Dubai, UAE</span>
                         </li>
                     </ul>
 

@@ -41,6 +41,7 @@ const height = computed(() => {
   if (props.size === 'footer') return 68
   if (props.size === 'hero') return 72
   if (props.size === 'inline') return 36
+  if (props.size === 'nav') return 48
   return 40
 })
 

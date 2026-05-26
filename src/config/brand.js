@@ -5,7 +5,11 @@ export const BRAND = {
   email: import.meta.env.VITE_CONTACT_EMAIL || 'info@kardoshrealty.ae',
   phone: import.meta.env.VITE_CONTACT_PHONE || '+971 4 123 4567',
   phoneTel: `tel:${(import.meta.env.VITE_CONTACT_PHONE || '+97141234567').replace(/\s/g, '')}`,
+  reraLicense: import.meta.env.VITE_RERA_LICENSE || '1484387',
 }
+
+/** Display label for footer, contact, and trust sections */
+export const RERA_LICENSE_LABEL = `RERA License No. ${BRAND.reraLicense}`
 
 /** Official social profiles */
 export const SOCIAL = {

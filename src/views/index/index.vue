@@ -9,6 +9,7 @@
     <FeaturedDevelopers />
     <MostSoldOffPlan />
     <About />
+    <InternationalBrokerStrip />
     <Client />
     <HomeCta />
     <GetInTuch />
@@ -30,6 +31,9 @@ const WhyInvestDubai = defineAsyncComponent(() => import('@/component/kardosh/ho
 const FeaturedDevelopers = defineAsyncComponent(() => import('@/component/kardosh/home/FeaturedDevelopers.vue'))
 const MostSoldOffPlan = defineAsyncComponent(() => import('@/component/kardosh/home/MostSoldOffPlan.vue'))
 const About = defineAsyncComponent(() => import('@/component/about.vue'))
+const InternationalBrokerStrip = defineAsyncComponent(
+  () => import('@/component/kardosh/home/InternationalBrokerStrip.vue')
+)
 const Client = defineAsyncComponent(() => import('@/component/client.vue'))
 const HomeCta = defineAsyncComponent(() => import('@/component/kardosh/home/HomeCta.vue'))
 const GetInTuch = defineAsyncComponent(() => import('@/component/get-in-tuch.vue'))

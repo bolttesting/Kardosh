@@ -64,7 +64,7 @@
                                 <div class="flex mt-6">
                                     <MapPin class="size-5 text-primary me-3"/>
                                     <div class="">
-                                        <h6 class="text-slate-400 mb-2">Office 1204, Index Tower, <br /> DIFC, Dubai, UAE</h6>
+                                        <h6 class="text-slate-400 mb-2">Floor 10, Office 1003, Metropolis Tower, <br /> Business Bay, Dubai, UAE</h6>
                                         <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178509925!2d55.2744!3d25.1972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e27a403e6b57!2sBurj%20Khalifa!5e0!3m2!1sen!2sae!4v1!5m2!1sen!2sae" data-type="iframe" class="text-primary hover:text-primary-dark duration-500 ease-in-out lightbox">View on Google map</a>
                                     </div>
                                 </div>

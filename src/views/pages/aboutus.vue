@@ -24,6 +24,8 @@
     </div>
   </section>
 
+  <InternationalBrokerStrip on-about-page :show-story-link="false" />
+
   <!-- Story + pillars (reuse About block) -->
   <About />
 
@@ -422,7 +424,7 @@
         >
           <h2 class="text-2xl font-semibold md:text-3xl">Ready to explore the UAE market?</h2>
           <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
-            Browse off-plan projects, open the map, or book a call with our DIFC team.
+            Browse off-plan projects, open the map, or book a call with our Dubai team.
           </p>
           <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
             <RouterLink
@@ -472,6 +474,7 @@ import PageHero from '@/component/kardosh/PageHero.vue'
 import BlurVignette from '@/component/ui/BlurVignette.vue'
 import BlurVignetteArticle from '@/component/ui/BlurVignetteArticle.vue'
 import About from '@/component/about.vue'
+import InternationalBrokerStrip from '@/component/kardosh/home/InternationalBrokerStrip.vue'
 import HomeGetInTouch from '@/component/kardosh/home/HomeGetInTouch.vue'
 import { BRAND, SOCIAL } from '@/config/brand'
 import { PAGE_HERO_IMAGES } from '@/config/dubai-images'

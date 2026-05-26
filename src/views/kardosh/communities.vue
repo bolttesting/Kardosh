@@ -185,7 +185,7 @@
         <div class="communities-cta__content relative z-10 flex min-h-[20rem] md:min-h-[22rem] flex-col items-center justify-center px-8 py-10 text-center text-white md:px-12 md:py-14">
           <h2 class="text-2xl font-semibold md:text-3xl">Ready to browse UAE off-plan?</h2>
           <p class="mt-3 max-w-2xl leading-relaxed text-white/85">
-            Search the full catalogue or speak with our DIFC team about a specific emirate or community.
+            Search the full catalogue or speak with our Dubai team about a specific emirate or community.
           </p>
           <div class="kardosh-btn-row kardosh-btn-row--center mt-8">
             <RouterLink

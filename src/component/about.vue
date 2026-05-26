@@ -16,7 +16,7 @@
                 class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-md"
               >
                 <MapPin class="size-3.5 shrink-0" aria-hidden="true" />
-                DIFC · Dubai, UAE
+                Business Bay · Dubai, UAE
               </span>
             </div>
             <button
@@ -160,7 +160,6 @@ import 'swiper/css/navigation'
 import { BRAND } from '@/config/brand'
 import { HERO_YOUTUBE_ID, heroYouTubeEmbedUrl } from '@/config/marketing'
 import { SECTION_IMAGES } from '@/config/dubai-images'
-
 const image = SECTION_IMAGES.about
 
 const swiperModules = [Navigation]
