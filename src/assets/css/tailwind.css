@@ -38,8 +38,8 @@
    --color-primary-dark: #000000;
    --color-red: #404040;
    /* Font Sizes */
-   --text-base: 17px;
-   --text-base--line-height: 24px;
+   --text-base: 18px;
+   --text-base--line-height: 28px;
    /* Shadows */
    --shadow-xs: 0 2px 4px 0 rgb(0 0 0 / 0.1);
    --shadow-sm: 0 0 3px rgb(0 0 0 / 0.1);
@@ -57,6 +57,7 @@
 @import "./custom/_brand.css";
 @import "./custom/_page-transitions.css";
 @import "./custom/_general.css";
+@import "./custom/_site-contrast.css";
 @import "./custom/_responsive.css";
 @import "./custom/pages/_helper.css";
 @import "./custom/structure/_topnav.css";

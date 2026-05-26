@@ -407,17 +407,23 @@ function openPlanLightbox(plans, index) {
 }
 
 onMounted(async () => {
-  await loadDeveloperLogos()
-  property.value = await getListingById(route.params.id)
+  void loadDeveloperLogos()
+
+  try {
+    property.value = await getListingById(route.params.id)
+  } finally {
+    loading.value = false
+  }
 
   if (property.value?.source === 'reelly') {
     const typical = property.value.typicalUnitsWithPlans || []
-    const unitsResult = await fetchProjectUnitsSafe(route.params.id, typical)
-    liveUnits.value = unitsResult.units
-    unitsRestricted.value = unitsResult.restricted
-    unitsMessage.value = unitsResult.message || ''
+    fetchProjectUnitsSafe(route.params.id, typical)
+      .then((unitsResult) => {
+        liveUnits.value = unitsResult.units
+        unitsRestricted.value = unitsResult.restricted
+        unitsMessage.value = unitsResult.message || ''
+      })
+      .catch(() => {})
   }
-
-  loading.value = false
 })
 </script>

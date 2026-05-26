@@ -109,9 +109,9 @@
                   :breakpoints="devCarouselBreakpoints"
                   class="kardosh-mobile-carousel__swiper"
                 >
-                  <SwiperSlide v-for="dev in featuredMobile" :key="`dev-m-${dev.id}`">
+                  <SwiperSlide v-for="dev in featuredMobile" :key="`dev-m-${dev.id || dev.name}`">
                     <RouterLink
-                      :to="`/developer/${dev.id}`"
+                      :to="developerProfileRoute(dev)"
                       class="group flex h-full items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-4 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-slate-500"
                     >
                       <DeveloperCardInner :dev="dev" />
@@ -123,8 +123,8 @@
               <div class="hidden md:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <RouterLink
                   v-for="dev in featured"
-                  :key="dev.id"
-                  :to="`/developer/${dev.id}`"
+                  :key="dev.id || dev.name"
+                  :to="developerProfileRoute(dev)"
                   class="group flex items-center gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 p-4 md:p-5 transition duration-300 hover:border-primary/35 hover:shadow-md dark:hover:border-slate-500"
                 >
                   <DeveloperCardInner :dev="dev" />
@@ -148,6 +148,7 @@ import { useReelly } from '@/composables/useReelly'
 import DeveloperGridSkeleton from '@/component/kardosh/skeleton/DeveloperGridSkeleton.vue'
 import DeveloperCardInner from '@/component/kardosh/home/DeveloperCardInner.vue'
 import { HOME_STRIP_CAROUSEL, toSwiperBreakpoints } from '@/config/home-carousels'
+import { developerProfileRoute } from '@/utils/mapDeveloper'
 
 import 'swiper/css'
 
@@ -186,6 +187,6 @@ const catalogStats = computed(() => ({
 
 const { root: sectionRoot } = useDeferredCatalogLoad(async () => {
   await loadProjects()
-  await loadDeveloperLogos()
+  void loadDeveloperLogos()
 })
 </script>

@@ -40,6 +40,8 @@ export default defineConfig(({ mode }) => {
         '/api/reelly': {
           target: 'https://api-reelly.up.railway.app',
           changeOrigin: true,
+          timeout: 120_000,
+          proxyTimeout: 120_000,
           rewrite: (p) => p.replace(/^\/api\/reelly/, '/api/v2/clients'),
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq) => {

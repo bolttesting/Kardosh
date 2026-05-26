@@ -67,12 +67,13 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight } from 'lucide-vue-next'
+import { developerProfileRoute } from '@/utils/mapDeveloper'
 
 const props = defineProps({
   developer: { type: Object, required: true },
 })
 
-const profileTo = computed(() => `/developer/${props.developer.id}`)
+const profileTo = computed(() => developerProfileRoute(props.developer))
 
 const projectCountLabel = computed(() => {
   const n = props.developer.projectCount

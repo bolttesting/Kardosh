@@ -20,7 +20,26 @@ function buildQuery(params = {}) {
 async function reellyFetch(path, params = {}) {
   const qs = buildQuery(params)
   const url = qs ? `${BASE}${path}?${qs}` : `${BASE}${path}`
-  const res = await fetch(url, { headers: { Accept: 'application/json' } })
+  const controller = new AbortController()
+  const timeoutMs = 90_000
+  const timer = setTimeout(() => controller.abort(), timeoutMs)
+
+  let res
+  try {
+    res = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      signal: controller.signal,
+    })
+  } catch (e) {
+    if (e?.name === 'AbortError') {
+      const err = new Error('Reelly API timed out — the server took too long to respond.')
+      err.status = 408
+      throw err
+    }
+    throw e
+  } finally {
+    clearTimeout(timer)
+  }
 
   if (!res.ok) {
     const err = new Error(`Reelly API error: ${res.status}`)

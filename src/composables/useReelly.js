@@ -25,9 +25,41 @@ let projectsPromise = null
 let markersPromise = null
 let logosPromise = null
 
+const PROJECTS_CACHE_KEY = 'kardosh-reelly-projects-v1'
+const LOGOS_CACHE_KEY = 'kardosh-reelly-developer-logos-v1'
+const CACHE_TTL_MS = 1000 * 60 * 60 * 12
+
+function readCache(key, { arrayOnly = true } = {}) {
+  try {
+    const raw = localStorage.getItem(key)
+    if (!raw) return null
+    const { savedAt, data } = JSON.parse(raw)
+    if (Date.now() - savedAt > CACHE_TTL_MS) return null
+    if (arrayOnly && !Array.isArray(data)) return null
+    if (data == null) return null
+    return data
+  } catch {
+    return null
+  }
+}
+
+function writeCache(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), data }))
+  } catch {
+    /* quota / private mode */
+  }
+}
+
 export async function loadProjects(force = false) {
   if (projects.value.length && !force) return projects.value
   if (projectsPromise && !force) return projectsPromise
+
+  const cached = !force ? readCache(PROJECTS_CACHE_KEY) : null
+  if (cached?.length) {
+    projects.value = cached
+    return cached
+  }
 
   loading.value = true
   error.value = null
@@ -35,6 +67,7 @@ export async function loadProjects(force = false) {
   projectsPromise = fetchProjects({ limit: '50', offset: '0' })
     .then(async ({ results }) => {
       projects.value = results.map((p) => mapReellyProject(p))
+      if (projects.value.length) writeCache(PROJECTS_CACHE_KEY, projects.value)
       void enrichProjectsWithAmenities(projects.value)
       return projects.value
     })
@@ -75,26 +108,50 @@ export async function loadDeveloperLogos(force = false) {
   if (developerLogos.value.length && !force) return developerLogos.value
   if (logosPromise && !force) return logosPromise
 
+  const cached = !force ? readCache(LOGOS_CACHE_KEY) : null
+  if (cached?.length) {
+    developerLogos.value = cached
+    return cached
+  }
+
   logosPromise = fetchDeveloperLogos()
     .then(({ results }) => {
       developerLogos.value = results
+      if (results.length) writeCache(LOGOS_CACHE_KEY, results)
       return results
     })
     .catch(() => {
-      developerLogos.value = []
-      return []
+      /* Grid still works from project stats; logos enrich when available */
+      return developerLogos.value
     })
 
   return logosPromise
 }
 
+const projectDetailMemory = new Map()
+const PROJECT_DETAIL_CACHE_PREFIX = 'kardosh-reelly-project-'
+
 export async function fetchFullProject(id) {
-  const raw = await fetchProjectById(id, {
+  const numericId = Number(id)
+  if (projectDetailMemory.has(numericId)) {
+    return projectDetailMemory.get(numericId)
+  }
+
+  const cached = readCache(`${PROJECT_DETAIL_CACHE_PREFIX}${numericId}`, { arrayOnly: false })
+  if (cached) {
+    projectDetailMemory.set(numericId, cached)
+    return cached
+  }
+
+  const raw = await fetchProjectById(numericId, {
     language: 'en-us',
     preferred_currency: 'AED',
     preferred_area_unit: 'm2',
   })
-  return mapReellyProject(raw, { full: true })
+  const mapped = mapReellyProject(raw, { full: true })
+  projectDetailMemory.set(numericId, mapped)
+  writeCache(`${PROJECT_DETAIL_CACHE_PREFIX}${numericId}`, mapped)
+  return mapped
 }
 
 export async function fetchProjectUnitsSafe(projectId, typicalUnitsWithPlans = []) {
@@ -111,6 +168,9 @@ export async function fetchProjectUnitsSafe(projectId, typicalUnitsWithPlans = [
         message:
           'Live unit inventory requires a Reelly Business package. Typical units and brochures are still available below.',
       }
+    }
+    if (e.status === 408 || e.status === 502 || e.status === 504) {
+      return { units: [], count: 0, restricted: false }
     }
     throw e
   }
@@ -214,12 +274,23 @@ export function useReelly() {
 
   const developerStatsByName = computed(() => buildDeveloperStats(projects.value))
 
-  /** Developers with active UAE projects, sorted by catalogue size */
+  /**
+   * Developers with active UAE projects.
+   * Built from project stats first so the grid works even if /developers/logos is slow or fails.
+   */
   const uaeDevelopers = computed(() => {
     const stats = developerStatsByName.value
-    return developerLogos.value
-      .filter((d) => stats[d.name]?.projectCount > 0)
-      .map((d) => enrichDeveloperLogo(d, stats))
+    const logoByName = new Map(developerLogos.value.map((d) => [d.name, d]))
+
+    const names = Object.keys(stats).filter((name) => stats[name]?.projectCount > 0)
+    if (!names.length) return []
+
+    return names
+      .map((name) => {
+        const logo = logoByName.get(name)
+        const row = logo || { id: null, name }
+        return enrichDeveloperLogo(row, stats)
+      })
       .sort((a, b) => b.projectCount - a.projectCount)
   })
 
@@ -250,7 +321,13 @@ export async function getListingById(id) {
   try {
     return await fetchFullProject(numericId)
   } catch {
-    await loadProjects()
+    if (!projects.value.length) {
+      const cachedList = readCache(PROJECTS_CACHE_KEY)
+      if (cachedList?.length) {
+        projects.value = cachedList
+      }
+    }
+    if (!projects.value.length) await loadProjects()
     return projects.value.find((p) => p.id === numericId) || null
   }
 }

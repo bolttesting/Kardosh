@@ -203,38 +203,9 @@
    }
 }
 
+/* Large outline “KARDOSH” brand stage removed per client feedback */
 .kardosh-hover-footer__brand-stage {
-   position: relative;
-   overflow: hidden;
-}
-
-.kardosh-hover-footer__brand-text {
-   position: relative;
-   z-index: 2;
-   width: 100%;
-}
-
-.kardosh-hover-footer__brand-stage .footer-text-hover__ghost {
-   stroke: rgb(82 82 82);
-}
-
-.kardosh-hover-footer__brand-stage .footer-text-hover__draw {
-   stroke: rgb(163 163 163);
-}
-
-@keyframes footer-text-stroke-draw {
-   from {
-      stroke-dashoffset: 1000;
-   }
-   to {
-      stroke-dashoffset: 0;
-   }
-}
-
-.footer-text-hover__draw {
-   stroke-dasharray: 1000;
-   stroke-dashoffset: 1000;
-   animation: footer-text-stroke-draw 4s ease-in-out forwards;
+   display: none !important;
 }
 
 .footer-hover-gradient stop {
@@ -242,11 +213,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-   .footer-text-hover__draw {
-      animation: none;
-      stroke-dashoffset: 0;
-   }
-
    .kardosh-footer-accordion__panel {
       transition: none;
    }

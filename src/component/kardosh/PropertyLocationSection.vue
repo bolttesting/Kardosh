@@ -168,18 +168,13 @@ const showSection = computed(
 </script>
 
 <style scoped>
-.property-location {
-  margin-top: 0;
-  padding-top: 0;
-}
-
 .property-location__header {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
 .property-location__title-wrap {

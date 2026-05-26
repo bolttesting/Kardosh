@@ -131,17 +131,11 @@
         </p>
       </div>
     </div>
-
-    <div
-      class="kardosh-hover-footer__brand-stage hidden lg:flex h-[28rem] -mt-48 -mb-32 relative z-10 pointer-events-auto"
-    >
-      <TextHoverEffect :text="hoverBrandText" class="kardosh-hover-footer__brand-text" />
-    </div>
   </footer>
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue'
+import { reactive } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ChevronDown, Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from 'lucide-vue-next'
 import { BRAND, SOCIAL } from '@/config/brand'
@@ -150,10 +144,8 @@ import { whatsAppLink } from '@/config/marketing'
 import BrandLogo from '@/component/kardosh/BrandLogo.vue'
 import FooterLanguageSwitcher from '@/component/kardosh/FooterLanguageSwitcher.vue'
 import FooterBackgroundGradient from '@/component/ui/FooterBackgroundGradient.vue'
-import TextHoverEffect from '@/component/ui/TextHoverEffect.vue'
 
 const year = new Date().getFullYear()
-const hoverBrandText = computed(() => BRAND.name.split(' ')[0] || 'Kardosh')
 
 const openSections = reactive({
   explore: false,

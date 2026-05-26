@@ -92,7 +92,7 @@ const subheading = computed(() => {
 
 async function loadRelated() {
   loading.value = true
-  await loadDeveloperLogos()
+  void loadDeveloperLogos()
   const result = await getRelatedListings({
     currentId: props.propertyId,
     developer: props.developer,

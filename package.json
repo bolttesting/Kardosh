@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "audit:reelly": "node scripts/audit-reelly-apis.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.1",

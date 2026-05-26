@@ -92,6 +92,13 @@ export function mapDeveloper(raw) {
 }
 
 /** Attach catalogue stats to a logo row from /developers/logos */
+/** Profile link when Reelly id is known; otherwise off-plan filtered by name */
+export function developerProfileRoute(dev) {
+  if (!dev?.name) return '/developers'
+  if (dev.id) return `/developer/${dev.id}`
+  return { path: '/off-plan', query: { developer: dev.name } }
+}
+
 export function enrichDeveloperLogo(logo, statsByName = {}) {
   const stats = statsByName[logo.name] || { projectCount: 0, regions: [] }
   return {

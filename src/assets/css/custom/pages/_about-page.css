@@ -11,10 +11,13 @@
 
 .about-stats.listings-search-glass .kardosh-profile-stats__value {
     color: rgb(15 23 42);
+    font-weight: 700;
 }
 
 .about-stats.listings-search-glass .kardosh-profile-stats__label {
-    color: rgb(71 85 105);
+    color: rgb(51 65 85);
+    font-size: 0.9375rem;
+    font-weight: 500;
 }
 
 .dark .about-stats.listings-search-glass .kardosh-profile-stats__value {
@@ -618,4 +621,46 @@
 .dark .about-cta__btn-primary:hover {
     background: rgb(245 245 245) !important;
     color: var(--kardosh-ink, #0a0a0a) !important;
+}
+
+/* About page — extra emphasis on stats / pillars */
+.about-page .about-stats.listings-search-glass {
+    border-width: 2px;
+    box-shadow: 0 12px 36px -18px rgb(15 23 42 / 0.16);
+}
+
+.about-page .about-service-card__desc,
+.about-page .about-process-card__text {
+    color: rgb(51 65 85);
+    font-size: 0.9375rem;
+}
+
+.about-page .about-pillars-carousel__card {
+    background: rgb(255 255 255);
+    border-color: rgb(203 213 225) !important;
+    box-shadow: 0 4px 16px -8px rgb(15 23 42 / 0.1);
+}
+
+.about-page .about-kardosh__content h2 span {
+    color: rgb(30 41 59);
+}
+
+.about-glossy-zone {
+    background: linear-gradient(
+        180deg,
+        rgb(226 232 240) 0%,
+        rgb(241 245 249) 45%,
+        rgb(226 232 240) 100%
+    );
+    border-block-color: rgb(203 213 225);
+}
+
+.dark .about-glossy-zone {
+    background: linear-gradient(
+        180deg,
+        rgb(15 23 42) 0%,
+        rgb(30 41 59) 50%,
+        rgb(15 23 42) 100%
+    );
+    border-block-color: rgb(51 65 85);
 }

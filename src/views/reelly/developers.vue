@@ -54,8 +54,16 @@
         </label>
       </div>
 
+      <p
+        v-if="error"
+        class="text-center text-amber-700 dark:text-amber-200 py-8 mt-10 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40"
+        role="alert"
+      >
+        {{ error }} — check your connection and that <code class="text-sm">REELLY_API_KEY</code> is set, then refresh.
+      </p>
+
       <DeveloperGridSkeleton
-        v-if="loading"
+        v-else-if="loading"
         :count="8"
         grid-class="developers-grid mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6"
       />
@@ -100,10 +108,10 @@
       <ol class="developers-leaderboard__grid list-none p-0 m-0">
         <li
           v-for="(dev, index) in featuredDevelopers"
-          :key="dev.id"
+          :key="dev.id || dev.name"
         >
           <RouterLink
-            :to="`/developer/${dev.id}`"
+            :to="developerProfileRoute(dev)"
             class="developers-leaderboard-card listings-search-glass group"
             :aria-label="`Rank ${index + 1}: ${dev.name}, ${dev.projectCount} projects`"
           >
@@ -233,8 +241,9 @@ import BlurVignetteArticle from '@/component/ui/BlurVignetteArticle.vue'
 import DeveloperGridSkeleton from '@/component/kardosh/skeleton/DeveloperGridSkeleton.vue'
 import { PAGE_HERO_IMAGES } from '@/config/dubai-images'
 import { useReelly } from '@/composables/useReelly'
+import { developerProfileRoute } from '@/utils/mapDeveloper'
 
-const { uaeDevelopers, loading, loadProjects, loadDeveloperLogos } = useReelly()
+const { uaeDevelopers, loading, error, loadProjects, loadDeveloperLogos } = useReelly()
 const searchQuery = ref('')
 
 const filteredDevelopers = computed(() => {
@@ -282,6 +291,6 @@ const valuePoints = [
 
 onMounted(async () => {
   await loadProjects()
-  await loadDeveloperLogos()
+  void loadDeveloperLogos()
 })
 </script>

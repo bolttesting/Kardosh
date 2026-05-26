@@ -227,7 +227,14 @@
 }
 
 .property-details-section__location {
-    margin-top: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .property-details-section__location {
+        margin-top: 3.5rem;
+    }
 }
 
 /* Floor plan accordions inside panel */

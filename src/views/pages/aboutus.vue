@@ -1,6 +1,7 @@
 <template>
   <Navbar nav-class="navbar-white" />
 
+  <div class="about-page">
   <PageHero
     title="About Kardosh Realty"
     :subtitle="BRAND.tagline"
@@ -28,12 +29,12 @@
 
   <!-- Mission statement -->
   <section
-    class="py-12 lg:py-14 bg-slate-50 dark:bg-slate-900/50"
+    class="about-page__band py-12 lg:py-14"
     aria-labelledby="mission-heading"
   >
     <div class="container-fluid">
       <article
-        class="max-w-3xl mx-auto text-center rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 py-8 md:px-10 md:py-10"
+        class="about-page__mission-card max-w-3xl mx-auto text-center rounded-2xl px-6 py-8 md:px-10 md:py-10"
       >
         <p class="text-primary text-sm font-semibold uppercase tracking-[0.2em]">
           {{ ABOUT_MISSION.eyebrow }}
@@ -44,7 +45,7 @@
         >
           {{ ABOUT_MISSION.title }}
         </h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+        <p class="about-lead mt-4">
           {{ ABOUT_MISSION.body }}
         </p>
       </article>
@@ -62,7 +63,7 @@
         >
           One brokerage, full UAE coverage
         </h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+        <p class="about-lead mt-4">
           From off-plan launches to rentals and resale — explore the tools we built for modern property buyers.
         </p>
       </div>
@@ -102,7 +103,7 @@
 
   <!-- How we work -->
   <section
-    class="lg:py-20 py-14 bg-slate-50 dark:bg-slate-900/50"
+    class="about-page__band lg:py-20 py-14"
     aria-labelledby="process-heading"
   >
     <div class="container-fluid">
@@ -143,7 +144,7 @@
           >
             Built for serious UAE property buyers
           </h2>
-          <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+          <p class="about-lead mt-4">
             We combine live market data with human advisory — so you compare like with like before you commit.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
@@ -171,11 +172,11 @@
           <article
             v-for="item in ABOUT_DIFFERENTIATORS"
             :key="item.title"
-            class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 md:p-6"
+            class="about-highlight-card rounded-2xl p-5 md:p-6"
           >
             <CheckCircle2 class="size-5 text-primary mb-3" aria-hidden="true" />
             <h3 class="font-semibold text-slate-900 dark:text-white">{{ item.title }}</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{{ item.text }}</p>
+            <p class="text-sm about-lead mt-2">{{ item.text }}</p>
           </article>
         </div>
       </div>
@@ -232,7 +233,7 @@
           >
             Licensed advisors across the UAE
           </h2>
-          <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+          <p class="about-lead mt-4">
             Specialists in off-plan, leasing, and investment advisory — here to guide every step of your transaction.
           </p>
         </div>
@@ -348,7 +349,7 @@
         >
           What our clients say
         </h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+        <p class="about-lead mt-4">
           Real experiences from buyers and investors who worked with Kardosh Realty in Dubai.
         </p>
       </div>
@@ -386,6 +387,8 @@
       </div>
     </div>
     </section>
+  </div>
+
   </div>
 
   <!-- Contact -->
